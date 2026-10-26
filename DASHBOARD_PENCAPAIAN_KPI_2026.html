@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard KPI Pelan Strategik DOFS 2026</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- SortableJS untuk Drag & Drop -->
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+    
+    body { 
+      font-family: 'Plus Jakarta Sans', sans-serif; 
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
+      background-attachment: fixed;
+    }
+    
+    .glass-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 10px -6px rgba(15, 23, 42, 0.03);
+    }
+    
+    .glass-header {
+      background: linear-gradient(135deg, #0f172a 0%, #0d9488 50%, #047857 100%);
+      box-shadow: 0 10px 30px -10px rgba(13, 148, 136, 0.3);
+    }
+
+    .stat-card-glow {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .stat-card-glow:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 25px -5px rgba(13, 148, 136, 0.15), 0 8px 10px -6px rgba(13, 148, 136, 0.1);
+    }
+
+    .drag-handle { cursor: grab; }
+    .drag-handle:active { cursor: grabbing; }
+
+    @media print {
+      .no-print { display: none !important; }
+      body { background: white !important; }
+    }
+  </style>
+
+  <!-- SKRIP UNTUK MENDAFTARKAN FUNGSI GLOBAL SEBELUM ELEMEN DIBINA -->
+  <script>
+    window.isEditMode = false;
+    window.ADMIN_PASSWORD = "Atikah101209";
+
+    window.toggleEditMode = function() {
+      if(!window.isEditMode) {
+        var inputPass = prompt("Masukkan Kata Laluan Pentadbir (Admin) untuk membolehkan suntingan:");
+        if(inputPass === window.ADMIN_PASSWORD) {
+          window.isEditMode = true;
+          alert("Akses Edit Dibenarkan!");
+          if(window.updateEditUI) window.updateEditUI();
+        } else if(inputPass !== null && inputPass !== "") {
+          alert("Kata laluan salah!");
+        }
+      } else {
+        window.isEditMode = false;
+        alert("Mod Edit Telah Dimatikan (Read-Only).");
+        if(window.updateEditUI) window.updateEditUI();
+      }
+    };
+  </script>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col">
+
+  <!-- Dynamic Vibrant Header Banner -->
+  <header class="glass-header text-white border-b border-teal-500/20 shadow-xl relative overflow-hidden no-print">
+    <div class="absolute -top-24 -left-20 w-96 h-96 bg-teal-300/20 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute -bottom-20 -right-20 w-96 h-96 bg-emerald-300/20 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7 relative z-10">
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+        <div>
+          <div class="flex flex-wrap items-center gap-2.5 mb-2">
+            <span class="bg-white/15 text-white text-xs font-bold px-3 py-1 rounded-full border border-white/20 flex items-center gap-1.5 shadow-sm backdrop-blur-md">
+              <i class="fa-solid fa-fish-fins text-teal-300"></i> JABATAN PERIKANAN SABAH (DOFS)
+            </span>
+            <span id="live-badge" class="bg-emerald-400/20 text-emerald-200 text-xs font-semibold px-3 py-1 rounded-full border border-emerald-400/30 flex items-center gap-2 shadow-sm backdrop-blur-md">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+              <span class="w-2 h-2 rounded-full bg-emerald-400 -ml-4"></span> Real-time Live Sync
+            </span>
+          </div>
+          <h1 class="text-2xl sm:text-4xl font-black tracking-tight text-white flex items-center gap-3">
+            Dashboard KPI Pelan Strategik 2026
+          </h1>
+          <p class="text-teal-100 text-xs sm:text-sm mt-1 font-medium flex items-center gap-2">
+            <i class="fa-solid fa-chart-line text-emerald-300"></i> Pemantauan & Pelaporan Prestasi Keseluruhan (Penilaian 2 Penggal Setahun)
+          </p>
+        </div>
+
+        <!-- Action Controls -->
+        <div class="flex flex-wrap items-center gap-2.5">
+          <button id="btn-lock" onclick="window.toggleEditMode()" type="button" class="cursor-pointer bg-slate-900/80 hover:bg-slate-900 text-amber-300 border border-amber-400/40 px-3.5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-200 flex items-center gap-2 shadow-lg backdrop-blur-md">
+            <i class="fa-solid fa-lock" id="lock-icon"></i> <span id="lock-text">Mod Read-Only</span>
+          </button>
+          
+          <button onclick="window.openModal()" class="admin-only hidden bg-emerald-500 hover:bg-emerald-400 text-white px-3.5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-200 flex items-center gap-2 shadow-lg shadow-emerald-900/30">
+            <i class="fa-solid fa-plus"></i> Tambah KPI
+          </button>
+
+          <button onclick="window.exportDataJSON()" class="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-3.5 py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all duration-200 flex items-center gap-2 backdrop-blur-md" title="Simpan Salinan Backup (JSON)">
+            <i class="fa-solid fa-download"></i> Eksport
+          </button>
+
+          <button onclick="window.triggerImport()" class="admin-only hidden bg-white/10 hover:bg-white/20 text-sky-200 border border-white/20 px-3.5 py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all duration-200 flex items-center gap-2 backdrop-blur-md" title="Muat Naik Fail Backup (JSON)">
+            <i class="fa-solid fa-upload"></i> Import
+          </button>
+          <input type="file" id="import-file-input" accept=".json" onchange="window.importDataJSON(event)" class="hidden">
+
+          <button onclick="window.print()" class="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-3.5 py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all duration-200 flex items-center gap-2 backdrop-blur-md">
+            <i class="fa-solid fa-print"></i> Cetak
+          </button>
+          <button onclick="window.resetData()" class="admin-only hidden bg-rose-500/30 hover:bg-rose-500/50 text-rose-100 border border-rose-300/30 px-3.5 py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all duration-200" title="Reset Data Asal">
+            <i class="fa-solid fa-rotate-left"></i> Reset
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+
+    <!-- Bright Stat Hero Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+      
+      <div class="glass-card rounded-2xl p-4 stat-card-glow flex flex-col justify-between border-l-4 border-l-indigo-500">
+        <div class="flex items-center justify-between">
+          <p class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Jumlah Strategi</p>
+          <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-lg shadow-sm">
+            <i class="fa-solid fa-diagram-project"></i>
+          </div>
+        </div>
+        <div class="mt-3">
+          <h3 id="stat-total-strategi" class="text-3xl font-black text-slate-900">0</h3>
+          <p class="text-[11px] text-slate-500 font-medium mt-0.5">Strategi Objektif Jabatan</p>
+        </div>
+      </div>
+
+      <div class="glass-card rounded-2xl p-4 stat-card-glow flex flex-col justify-between border-l-4 border-l-teal-500">
+        <div class="flex items-center justify-between">
+          <p class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Jumlah Program/Inisiatif</p>
+          <div class="w-10 h-10 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center text-lg shadow-sm">
+            <i class="fa-solid fa-list-check"></i>
+          </div>
+        </div>
+        <div class="mt-3">
+          <h3 id="stat-total-kpi" class="text-3xl font-black text-slate-900">0</h3>
+          <p class="text-[11px] text-slate-500 font-medium mt-0.5">Pelan Tindakan Jabatan (2026)</p>
+        </div>
+      </div>
+
+      <div class="glass-card rounded-2xl p-4 stat-card-glow flex flex-col justify-between border-l-4 border-l-teal-600">
+        <div class="flex items-center justify-between">
+          <p class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Purata P1 (Jan-Jun)</p>
+          <div class="w-10 h-10 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center text-lg shadow-sm">
+            <i class="fa-solid fa-chart-line"></i>
+          </div>
+        </div>
+        <div class="mt-3">
+          <h3 id="stat-avg-p1" class="text-3xl font-black text-teal-600">0%</h3>
+          <div class="w-full bg-slate-100 h-2 rounded-full mt-2 overflow-hidden border border-slate-200">
+            <div id="bar-avg-p1" class="bg-teal-500 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card rounded-2xl p-4 stat-card-glow flex flex-col justify-between border-l-4 border-l-sky-500">
+        <div class="flex items-center justify-between">
+          <p class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Purata P2 (Jul-Dis)</p>
+          <div class="w-10 h-10 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-lg shadow-sm">
+            <i class="fa-solid fa-chart-pie"></i>
+          </div>
+        </div>
+        <div class="mt-3">
+          <h3 id="stat-avg-p2" class="text-3xl font-black text-sky-600">0%</h3>
+          <div class="w-full bg-slate-100 h-2 rounded-full mt-2 overflow-hidden border border-slate-200">
+            <div id="bar-avg-p2" class="bg-sky-500 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card rounded-2xl p-4 stat-card-glow flex flex-col justify-between border-l-4 border-l-emerald-500 bg-gradient-to-br from-white via-emerald-50/30 to-teal-50/50">
+        <div class="flex items-center justify-between">
+          <p class="text-[11px] font-bold uppercase tracking-wider text-emerald-900">Jumlah Keseluruhan</p>
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-600 text-white flex items-center justify-center text-lg shadow-md">
+            <i class="fa-solid fa-trophy"></i>
+          </div>
+        </div>
+        <div class="mt-3">
+          <h3 id="stat-avg-total" class="text-3xl font-black text-emerald-600">0%</h3>
+          <p class="text-[11px] text-emerald-800 font-bold mt-0.5">Pencapaian Keseluruhan</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Summary By Teras Section -->
+    <div class="glass-card rounded-2xl p-6 mb-8">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-5 pb-3 border-b border-slate-200/80">
+        <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+          <i class="fa-solid fa-layer-group text-teal-600"></i>
+          Ringkasan Prestasi & Bilangan Inisiatif Mengikut Teras Strategik
+        </h3>
+        <span class="text-xs bg-teal-100 text-teal-800 font-bold px-3.5 py-1 rounded-full border border-teal-200/80 w-fit">
+          5 Teras Strategik Utama
+        </span>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse text-xs">
+          <thead>
+            <tr class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+              <th class="p-3.5 rounded-l-xl">Teras Strategik</th>
+              <th class="p-3.5 text-center">Bil. Strategi</th>
+              <th class="p-3.5 text-center">Bil. Program / KPI</th>
+              <th class="p-3.5 text-center">Purata P1 (%)</th>
+              <th class="p-3.5 text-center">Purata P2 (%)</th>
+              <th class="p-3.5 text-center bg-teal-50 font-extrabold text-teal-900 rounded-r-xl">Purata Pencapaian Sasaran (%)</th>
+            </tr>
+          </thead>
+          <tbody id="teras-summary-tbody" class="divide-y divide-slate-100"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- CARTA BAHAGIAN & TERAS -->
+    <div class="glass-card rounded-2xl p-6 mb-8 no-print">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-5 pb-3 border-b border-slate-200/80">
+        <div>
+          <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+            <i class="fa-solid fa-sitemap text-indigo-600"></i>
+            Agihan & Bilangan KPI Mengikut Bahagian & Teras
+          </h3>
+          <p class="text-xs text-slate-500 mt-0.5">Analisis taburan inisiatif bagi setiap bahagian mengikut Teras Strategik</p>
+        </div>
+        <span class="text-xs bg-indigo-50 text-indigo-800 font-bold px-3.5 py-1.5 rounded-full border border-indigo-200 w-fit flex items-center gap-1.5">
+          <i class="fa-solid fa-building"></i> <span id="stat-total-bahagian">0</span> Bahagian Terlibat
+        </span>
+      </div>
+      <div class="h-80 w-full"><canvas id="bahagianChart"></canvas></div>
+    </div>
+
+    <!-- Grid 2 Carta Sampingan -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8 no-print">
+      <div class="glass-card p-6 rounded-2xl">
+        <h3 class="text-sm font-bold text-slate-900 mb-4 flex items-center gap-2 pb-2 border-b border-slate-200/80">
+          <i class="fa-solid fa-chart-simple text-teal-600"></i>
+          Pencapaian Purata Menurut Teras (P1 vs P2)
+        </h3>
+        <div class="h-64"><canvas id="terasChart"></canvas></div>
+      </div>
+
+      <!-- CARTA PAI / DONUT HIGH-CONTRAST LIGHT DISPLAY -->
+      <div class="glass-card p-6 rounded-2xl relative">
+        <h3 class="text-sm font-bold text-slate-900 mb-2 flex items-center gap-2 pb-2 border-b border-slate-200/80">
+          <i class="fa-solid fa-chart-pie text-emerald-600"></i>
+          Agihan Status KPI (Pencapaian Sasaran)
+        </h3>
+        
+        <div class="h-64 flex items-center justify-center relative">
+          <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none pb-8">
+            <span class="text-2xl font-black text-slate-900" id="pie-center-total">0</span>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Jumlah KPI</span>
+          </div>
+          <canvas id="statusChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filters & Main KPI Table Section -->
+    <div class="glass-card rounded-2xl overflow-hidden">
+      <div class="p-6 border-b border-slate-200/80 bg-slate-50/70 flex flex-col md:flex-row md:items-center justify-between gap-4 no-print">
+        <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
+          <div class="w-full sm:w-64">
+            <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Tapis Mengikut Teras</label>
+            <select id="filter-teras" onchange="window.filterKPIs()" class="w-full text-xs rounded-xl border-slate-300 shadow-sm p-2.5 border font-semibold focus:ring-2 focus:ring-teal-500 bg-white">
+              <option value="ALL">Semua Teras Strategik (1 - 5)</option>
+              <option value="1">Teras 1: Tadbir Urus yang Cekap dan Berkesan</option>
+              <option value="2">Teras 2: Hasil Sektor Perikanan Mencapai Sasaran</option>
+              <option value="3">Teras 3: Memperkasa Pengurusan Sektor Perikanan</option>
+              <option value="4">Teras 4: Memperkasa Kesejahteraan Golongan Sasar</option>
+              <option value="5">Teras 5: Memperkasa Program Kolaborasi</option>
+            </select>
+          </div>
+          <div class="w-full sm:w-48">
+            <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Fokus Penggal</label>
+            <select id="filter-penggal" onchange="window.filterKPIs()" class="w-full text-xs rounded-xl border-slate-300 shadow-sm p-2.5 border font-semibold focus:ring-2 focus:ring-teal-500 bg-white">
+              <option value="ALL">Paparan Penggal: Semua</option>
+              <option value="P1">Fokus Penggal 1 (Jan - Jun)</option>
+              <option value="P2">Fokus Penggal 2 (Jul - Dis)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="relative w-full md:w-72">
+          <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Carian Pantas</label>
+          <div class="relative">
+            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 transform -translate-y-1/2 text-slate-400 text-xs"></i>
+            <input type="text" id="search-kpi" onkeyup="window.filterKPIs()" placeholder="Inisiatif / Strategi / Bahagian..." class="w-full pl-9 pr-4 py-2 border border-slate-300 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-teal-500 bg-white">
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Table -->
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse text-xs">
+          <thead>
+            <tr class="bg-slate-100/90 text-slate-700 font-bold border-b border-slate-200">
+              <th class="p-4 w-16 text-center">No</th>
+              <th class="p-4 w-48">Teras & Bahagian</th>
+              <th class="p-4 w-52">Strategi</th>
+              <th class="p-4">Program / Inisiatif KPI</th>
+              <th class="p-4 w-28">Sasaran 2026</th>
+              <th class="p-4 w-24 text-center">Penggal 1 %</th>
+              <th class="p-4 w-24 text-center">Penggal 2 %</th>
+              <th class="p-4 w-32 text-center bg-teal-50 border-x border-teal-100 text-teal-900 font-extrabold">Pencapaian Total</th>
+              <th class="p-4 w-52">Ulasan / Status Terkini</th>
+              <th class="p-4 w-20 text-center no-print admin-only hidden">Tindakan</th>
+            </tr>
+          </thead>
+          <tbody id="kpi-table-body" class="divide-y divide-slate-100 bg-white"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal Borang Edit/Tambah -->
+  <div id="kpiModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md flex items-center justify-center p-4 z-50 hidden no-print">
+    <div class="bg-white rounded-3xl max-w-2xl w-full p-7 shadow-2xl border border-slate-100 max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center mb-6 pb-3 border-b border-slate-100">
+        <h3 id="modalTitle" class="text-lg font-bold text-slate-900 flex items-center gap-2">
+          <i class="fa-solid fa-pen-to-square text-teal-600"></i> Kemaskini Maklumat KPI
+        </h3>
+        <button onclick="window.closeModal()" class="text-slate-400 hover:text-slate-600 text-xl transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form id="kpiForm" onsubmit="window.saveKPI(event)">
+        <input type="hidden" id="edit-id">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Teras Strategik</label>
+            <select id="form-teras" class="w-full border border-slate-300 rounded-xl p-2.5 text-xs font-medium" required>
+              <option value="1">Teras 1: Tadbir Urus yang Cekap dan Berkesan</option>
+              <option value="2">Teras 2: Hasil Sektor Perikanan Mencapai Sasaran</option>
+              <option value="3">Teras 3: Memperkasa Pengurusan Sektor Perikanan</option>
+              <option value="4">Teras 4: Memperkasa Kesejahteraan Golongan Sasar</option>
+              <option value="5">Teras 5: Memperkasa Program Kolaborasi</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Bahagian Bertanggungjawab</label>
+            <input type="text" id="form-bahagian" class="w-full border border-slate-300 rounded-xl p-2.5 text-xs font-medium" placeholder="Contoh: Bahagian Perancangan" required>
+          </div>
+
+          <div class="sm:col-span-2">
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Strategi</label>
+            <input type="text" id="form-strategi" class="w-full border border-slate-300 rounded-xl p-2.5 text-xs font-medium" placeholder="Tajuk Strategi..." required>
+          </div>
+
+          <div class="sm:col-span-2">
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Program / Inisiatif KPI</label>
+            <textarea id="form-inisiatif" rows="2" class="w-full border border-slate-300 rounded-xl p-2.5 text-xs font-medium" required></textarea>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Sasaran 2026</label>
+            <input type="text" id="form-sasaran" class="w-full border border-slate-300 rounded-xl p-2.5 text-xs font-medium" placeholder="Contoh: 100% / 10 kali" required>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Pencapaian P1 (%)</label>
+            <input type="number" step="0.1" id="form-p1" oninput="window.calculateModalTotal()" class="w-full border border-slate-300 rounded-xl p-2.5 text-xs font-medium" placeholder="0 - 100">
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Pencapaian P2 (%)</label>
+            <input type="number" step="0.1" id="form-p2" oninput="window.calculateModalTotal()" class="w-full border border-slate-300 rounded-xl p-2.5 text-xs font-medium" placeholder="0 - 100">
+          </div>
+
+          <div class="sm:col-span-2 bg-teal-50 p-3.5 rounded-xl border border-teal-100 flex items-center justify-between">
+            <span class="text-xs font-semibold text-teal-800">Pencapaian Sasaran (Auto Kira: P1 + P2, Max 100%):</span>
+            <span id="form-total-display" class="text-lg font-black text-teal-900">0%</span>
+          </div>
+
+          <div class="sm:col-span-2">
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Ulasan / Status Terkini</label>
+            <textarea id="form-ulasan" rows="3" class="w-full border border-slate-300 rounded-xl p-2.5 text-xs font-medium" placeholder="Catatan kemajuan atau isu..."></textarea>
+          </div>
+        </div>
+
+        <div class="mt-6 flex justify-end gap-3 pt-3 border-t border-slate-100">
+          <button type="button" onclick="window.closeModal()" class="px-4 py-2 border border-slate-300 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50">Batal</button>
+          <button type="submit" class="px-5 py-2 bg-teal-600 hover:bg-teal-500 text-white rounded-xl text-xs font-bold shadow-md shadow-teal-900/20">Simpan KPI</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+    let sortableInstance = null;
+    let dbRef = null;
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCC5XJoaepzbwzo0b5V3cIECXAfcu_4Ixk",
+      authDomain: "kpi-pelan-strategik-2026.firebaseapp.com",
+      databaseURL: "https://kpi-pelan-strategik-2026-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "kpi-pelan-strategik-2026",
+      storageBucket: "kpi-pelan-strategik-2026.firebasestorage.app",
+      messagingSenderId: "919667109028",
+      appId: "1:919667109028:web:8dd9deba17906b9d17ca31",
+      measurementId: "G-2V299VPW1G"
+    };
+
+    const initialKPIData = [
+      { id: 1, teras: 1, bahagian: "Bahagian Perancangan", strategi: "1. Menetapkan halatuju strategik Jabatan", inisiatif: "Mengemaskini Pelan Strategik Jabatan", sasaran: "2 kali", p1: 50, p2: 0, ulasan: "Pautan Google Sheets bagi pengisian Pencapaian Penggal 1 telah diedar pada 17 Ogos 2026." },
+      { id: 2, teras: 1, bahagian: "Bahagian Perancangan", strategi: "2. Mengurus perbelanjaan secara berhemah", inisiatif: "Menyelaras prestasi belanjawan Jabatan (Negeri RM 13,902,000.00)", sasaran: "100%", p1: 9, p2: 0, ulasan: "Perbelanjaan sebenar: RM 1,222,899.25 (9%). Baki peruntukan: RM 12,679,100.75 (91%)." },
+      { id: 3, teras: 1, bahagian: "Bahagian Perancangan", strategi: "2. Mengurus perbelanjaan secara berhemah", inisiatif: "Menyelaras prestasi belanjawan Jabatan (Persekutuan RM 14,000,000.00)", sasaran: "100%", p1: 41, p2: 0, ulasan: "Perbelanjaan sebenar + Tanggungan: RM 10,936,917.30 (66.30%)." },
+      { id: 4, teras: 1, bahagian: "Bahagian Perancangan", strategi: "3. Memantau semula pelaksanaan projek-projek pembangunan Jabatan", inisiatif: "Memantau Projek Pembangunan Jabatan", sasaran: "5 kali", p1: 80, p2: 0, ulasan: "Penggal 1: 4/5 pemantauan dilaksanakan (PPIMS Tg Badak, SPAM Tuaran, Ranau, Keningau, Tenom, Tagal)." },
+      { id: 5, teras: 1, bahagian: "Bahagian Pembangunan Akuakultur Air Tawar", strategi: "4. Memantau halatuju Jabatan selari dengan Dasar kerajaan Negeri", inisiatif: "Mengemaskini Dasar Jabatan (Pelan Hala Tuju Sabah Maju Jaya 2.0)", sasaran: "4 kali", p1: 50, p2: 0, ulasan: "Perbincangan status SMJ 2.0 bersama MAFFI. Kemaskini pencapaian - 2 kali." },
+      { id: 6, teras: 1, bahagian: "Bahagian Pembangunan Akuakultur Air Tawar", strategi: "5. Memastikan infrastruktur dan ladang dalam keadaan yang baik", inisiatif: "Melaksanakan penyelenggaraan infrastruktur dan ladang stesen-stesen akuakultur air tawar", sasaran: "6 kerja fizikal", p1: 83, p2: 0, ulasan: "5/6 stesen selesai (Bingkor, Kebayau, Marakau, Gum Gum, Liwagu). Kerja 2 stesen di bawah JPS." },
+      { id: 7, teras: 1, bahagian: "Bahagian Pembangunan Modal Insan", strategi: "6. Memperkasa Pembangunan Modal Insan dan Tadbir Urus Terbaik", inisiatif: "Pelaksanaan Program-program Peningkatan Kompetensi di kalangan anggota", sasaran: "20% anggota", p1: 100, p2: 0, ulasan: "111 orang anggota hadir kursus/peperiksaan/bengkel setakat 12 Jun 2026 (Sasaran: 70 orang)." },
+      { id: 8, teras: 1, bahagian: "Bahagian Pembangunan Modal Insan", strategi: "6. Memperkasa Pembangunan Modal Insan dan Tadbir Urus Terbaik", inisiatif: "Pelaksanaan Latihan Bersepadu dan aktiviti Jabatan di Pusat Kinarut", sasaran: "8 siri kursus", p1: 100, p2: 0, ulasan: "Setakat 28 Ogos 2026, sebanyak 8 siri kursus/aktiviti telah dilaksanakan." },
+      { id: 9, teras: 1, bahagian: "Bahagian Pembangunan Marin dan Pelesenan", strategi: "7. Memantapkan sistem pengurusan penyelenggaraan vesel Jabatan", inisiatif: "Penyelenggaraan Vesel Jabatan", sasaran: "5 buah vesel", p1: 100, p2: 0, ulasan: "5 buah bot Jabatan siap diselenggara." },
+      { id: 10, teras: 1, bahagian: "Bahagian Pembangunan Marin dan Pelesenan", strategi: "8. Memantapkan sistem pengurusan penyelenggaraan jeti Jabatan", inisiatif: "Penyelenggaraan Jeti Jabatan", sasaran: "3 buah jeti", p1: 30, p2: 0, ulasan: "Jeti Kuala Penyu dan Kota Belud dalam pelaksanaan penyelenggaraan." },
+      { id: 11, teras: 2, bahagian: "Bahagian Pengurusan Industri Perikanan", strategi: "1. Mempertingkatkan pengeluaran ikan untuk memenuhi permintaan", inisiatif: "Memberikan bantuan kepada penanam rumpai laut di Sabah", sasaran: "100 orang", p1: 100, p2: 0, ulasan: "70 penerima bantuan Projek Nukleus & 50 penerima Program Agromakanan." },
+      { id: 12, teras: 2, bahagian: "Bahagian Pengurusan Industri Perikanan", strategi: "1. Mempertingkatkan pengeluaran ikan untuk memenuhi permintaan", inisiatif: "Menyelenggara pelantar-pelantar pengeringan/penjemuran rumpai laut", sasaran: "2 pelantar", p1: 100, p2: 0, ulasan: "1 pelantar di Kunak dan 1 pelantar terapung di Lahad Datu." },
+      { id: 13, teras: 2, bahagian: "Bahagian Pembangunan Akuakultur Marin", strategi: "2. Mempertingkatkan pengeluaran ikan untuk memenuhi permintaan", inisiatif: "Program Keterjaminan Makanan Melalui Peningkatan Penghasilan Akuakultur Marin", sasaran: "50 Pengusaha", p1: 100, p2: 0, ulasan: "125/50 pengusaha diluluskan. Dalam proses bekalan bantuan ke PPD." },
+      { id: 14, teras: 2, bahagian: "Bahagian Pembangunan Akuakultur Marin", strategi: "3. Pembangunan penternak/pengusaha contoh yang aktif", inisiatif: "Program Pengukuhan Keupayaan Akuakultur di bawah RMK-13", sasaran: "32 pengusaha", p1: 100, p2: 0, ulasan: "45/32 pengusaha diluluskan. Dalam proses bekalan bantuan ke PPD." },
+      { id: 15, teras: 3, bahagian: "Bahagian Penguatkuasaan Kawalselia & Siasatan", strategi: "8. Memperkasakan pengurusan sumber dan ekosistem perikanan", inisiatif: "Mengawalselia & menguatkuasakan Enakmen Perikanan Darat & Akuakultur 2003", sasaran: "60 kali tinjauan", p1: 23, p2: 0, ulasan: "14/60 tinjauan dilaksanakan (Kudat, Kuala Penyu, Sandakan, KK, Ranau)." },
+      { id: 16, teras: 3, bahagian: "Bahagian Penguatkuasaan Kawalselia & Siasatan", strategi: "8. Memperkasakan pengurusan sumber dan ekosistem perikanan", inisiatif: "Pemeriksaan pasar-pasar ikan, jeti pendaratan & kawasan persatuan", sasaran: "80 kali setahun", p1: 50, p2: 0, ulasan: "40/80 pemeriksaan dilaksanakan oleh 5 Pangkalan Utama Penguatkuasaan." },
+      { id: 17, teras: 3, bahagian: "Bahagian Biosekuriti", strategi: "18. Mengurus dan melaksana Program Kawalan Rasmi Biosekuriti", inisiatif: "Mengawal penyakit ikan (IPTE & Post Import Inspection)", sasaran: "100% pemeriksaan", p1: 100, p2: 0, ulasan: "Semua permohonan pemeriksaan telah dilaksanakan." },
+      { id: 18, teras: 4, bahagian: "Bahagian Pembangunan Modal Insan", strategi: "3. Memperkasa pembangunan modal insan dan tadbir urus terbaik", inisiatif: "Program peningkatan pengetahuan & kepakaran kumpulan sasar", sasaran: "8 siri kursus", p1: 100, p2: 0, ulasan: "Sebanyak 8 siri kursus telah dilaksanakan setakat 28 Ogos 2026." },
+      { id: 19, teras: 4, bahagian: "Bahagian Pembangunan Marin dan Pelesenan", strategi: "4. Meningkatkan pengeluaran subsektor perikanan tangkap", inisiatif: "Bantuan nelayan pesisir pantai & sosioekonomi nelayan miskin", sasaran: "40 orang nelayan", p1: 100, p2: 0, ulasan: "Pakej bantuan telah diserahkan sepenuhnya." },
+      { id: 20, teras: 5, bahagian: "Bahagian Pengurusan Industri Perikanan", strategi: "1. Mempromosikan industri ikan hiasan melalui kolaborasi", inisiatif: "Kolaborasi dalam pertandingan/pemeran ikan hiasan & tumbuhan akuatik", sasaran: "3 kolaborasi", p1: 100, p2: 0, ulasan: "Sokongan kepada 2 pertandingan & persediaan Ekspo HobbCan 2026." },
+      { id: 21, teras: 5, bahagian: "Bahagian Pembangunan Modal Insan", strategi: "3. Memperkasa kerjasama dengan rakan kolaboratif", inisiatif: "Pelaksanaan latihan industri dengan IPTA", sasaran: "50 orang", p1: 100, p2: 0, ulasan: "115 permohonan latihan industri telah diproses dan dikeluarkan surat penempatan." }
+    ];
+
+    let kpiData = [...initialKPIData];
+    let terasChartInstance = null;
+    let statusChartInstance = null;
+    let bahagianChartInstance = null;
+
+    const terasTitles = {
+      1: "Teras 1: Tadbir Urus yang Cekap dan Berkesan",
+      2: "Teras 2: Hasil Sektor Perikanan Mencapai Sasaran",
+      3: "Teras 3: Memperkasa Pengurusan Sektor Perikanan",
+      4: "Teras 4: Memperkasa Kesejahteraan Golongan Sasar",
+      5: "Teras 5: Memperkasa Program Kolaborasi"
+    };
+
+    function cleanBahagianName(name) {
+      if (!name) return 'Lain-lain';
+      return name.trim().replace(/\s+/g, ' ');
+    }
+
+    function calculateTotalPercent(p1, p2) {
+      const val1 = parseFloat(p1) || 0;
+      const val2 = parseFloat(p2) || 0;
+      const total = val1 + val2;
+      return total > 100 ? 100 : parseFloat(total.toFixed(1));
+    }
+
+    window.updateEditUI = function() {
+      const lockIcon = document.getElementById('lock-icon');
+      const lockText = document.getElementById('lock-text');
+      const lockBtn = document.getElementById('btn-lock');
+
+      if(window.isEditMode) {
+        if(lockIcon) lockIcon.className = "fa-solid fa-lock-open";
+        if(lockText) lockText.innerText = "Mod Edit (Aktif)";
+        if(lockBtn) {
+          lockBtn.classList.remove('text-amber-300');
+          lockBtn.classList.add('text-emerald-400', 'border-emerald-500/50');
+        }
+      } else {
+        if(lockIcon) lockIcon.className = "fa-solid fa-lock";
+        if(lockText) lockText.innerText = "Mod Read-Only";
+        if(lockBtn) {
+          lockBtn.classList.remove('text-emerald-400', 'border-emerald-500/50');
+          lockBtn.classList.add('text-amber-300');
+        }
+      }
+
+      if (sortableInstance) {
+        sortableInstance.option('disabled', !window.isEditMode);
+      }
+
+      const adminElements = document.querySelectorAll('.admin-only');
+      adminElements.forEach(el => {
+        if(window.isEditMode) {
+          el.classList.remove('hidden');
+        } else {
+          el.classList.add('hidden');
+        }
+      });
+      
+      renderTable();
+    };
+
+    window.resetData = function() {
+      if(confirm("Adakah anda pasti ingin me-reset semula data ke tetapan asal? Perubahan ini akan disegerakkan ke semua pengguna!")) {
+        kpiData = [...initialKPIData];
+        saveToCloud(kpiData);
+      }
+    };
+
+    window.exportDataJSON = function() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(kpiData, null, 2));
+      const downloadAnchor = document.createElement('a');
+      const dateStr = new Date().toISOString().slice(0, 10);
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", `Backup_KPI_DOFS_2026_${dateStr}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+    };
+
+    window.triggerImport = function() {
+      if(!window.isEditMode) return;
+      document.getElementById('import-file-input').click();
+    };
+
+    window.importDataJSON = function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        try {
+          const importedData = JSON.parse(event.target.result);
+          if (Array.isArray(importedData) && importedData.length > 0) {
+            if (confirm(`Adakah anda pasti ingin memuat naik ${importedData.length} rekod KPI ini? Data atas talian akan digantikan.`)) {
+              kpiData = importedData;
+              saveToCloud(kpiData);
+              alert("Data KPI berjaya dipulihkan dari fail backup!");
+            }
+          } else {
+            alert("Fail JSON tidak sah.");
+          }
+        } catch (err) {
+          alert("Gagal membaca fail JSON.");
+        }
+      };
+      reader.readAsText(file);
+      e.target.value = '';
+    };
+
+    window.filterKPIs = function() { renderTable(); };
+
+    window.calculateModalTotal = function() {
+      const p1 = document.getElementById('form-p1').value;
+      const p2 = document.getElementById('form-p2').value;
+      const total = calculateTotalPercent(p1, p2);
+      document.getElementById('form-total-display').innerText = `${total}%`;
+    };
+
+    window.openModal = function() {
+      if(!window.isEditMode) return;
+      document.getElementById('edit-id').value = '';
+      document.getElementById('kpiForm').reset();
+      document.getElementById('modalTitle').innerText = 'Tambah KPI Baharu';
+      document.getElementById('form-total-display').innerText = '0%';
+      document.getElementById('kpiModal').classList.remove('hidden');
+    };
+
+    window.closeModal = function() {
+      document.getElementById('kpiModal').classList.add('hidden');
+    };
+
+    window.editKPI = function(id) {
+      if(!window.isEditMode) return;
+      const item = kpiData.find(i => i.id === id);
+      if(!item) return;
+
+      document.getElementById('edit-id').value = item.id;
+      document.getElementById('form-teras').value = item.teras;
+      document.getElementById('form-bahagian').value = cleanBahagianName(item.bahagian);
+      document.getElementById('form-strategi').value = item.strategi;
+      document.getElementById('form-inisiatif').value = item.inisiatif;
+      document.getElementById('form-sasaran').value = item.sasaran;
+      document.getElementById('form-p1').value = item.p1;
+      document.getElementById('form-p2').value = item.p2;
+      document.getElementById('form-ulasan').value = item.ulasan || '';
+
+      window.calculateModalTotal();
+
+      document.getElementById('modalTitle').innerText = 'Kemaskini KPI';
+      document.getElementById('kpiModal').classList.remove('hidden');
+    };
+
+    window.deleteKPI = function(id) {
+      if(!window.isEditMode) return;
+      if(confirm('Adakah anda pasti ingin memadam KPI ini?')) {
+        kpiData = kpiData.filter(i => i.id !== id);
+        saveToCloud(kpiData);
+      }
+    };
+
+    window.saveKPI = function(e) {
+      e.preventDefault();
+      if(!window.isEditMode) return;
+      
+      const id = document.getElementById('edit-id').value;
+      const teras = parseInt(document.getElementById('form-teras').value);
+      const bahagian = cleanBahagianName(document.getElementById('form-bahagian').value);
+      const strategi = document.getElementById('form-strategi').value;
+      const inisiatif = document.getElementById('form-inisiatif').value;
+      const sasaran = document.getElementById('form-sasaran').value;
+      const p1 = parseFloat(document.getElementById('form-p1').value) || 0;
+      const p2 = parseFloat(document.getElementById('form-p2').value) || 0;
+      const ulasan = document.getElementById('form-ulasan').value;
+
+      if(id) {
+        const index = kpiData.findIndex(i => i.id == id);
+        if(index !== -1) {
+          kpiData[index] = { id: parseInt(id), teras, bahagian, strategi, inisiatif, sasaran, p1, p2, ulasan };
+        }
+      } else {
+        const newId = kpiData.length ? Math.max(...kpiData.map(i => i.id)) + 1 : 1;
+        kpiData.push({ id: newId, teras, bahagian, strategi, inisiatif, sasaran, p1, p2, ulasan });
+      }
+
+      saveToCloud(kpiData);
+      window.closeModal();
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      try {
+        if(window.initializeApp && firebaseConfig.apiKey && !firebaseConfig.apiKey.includes("GANTI_DENGAN")) {
+          const app = window.initializeApp(firebaseConfig);
+          const db = window.getDatabase(app);
+          dbRef = window.ref(db, 'dofs_kpi_2026');
+
+          window.onValue(dbRef, (snapshot) => {
+            const val = snapshot.val();
+            if (val && Array.isArray(val) && val.length > 0) {
+              kpiData = val;
+            } else {
+              window.set(dbRef, initialKPIData);
+              kpiData = [...initialKPIData];
+            }
+            renderDashboard();
+          });
+        } else {
+          const stored = localStorage.getItem('dofs_kpi_2026');
+          if(stored) {
+            try { kpiData = JSON.parse(stored); } catch(e){}
+          }
+          renderDashboard();
+        }
+      } catch(e) {
+        console.error("Firebase Error:", e);
+        renderDashboard();
+      }
+
+      initSortable();
+      window.updateEditUI();
+    });
+
+    function saveToCloud(data) {
+      if (dbRef) {
+        window.set(dbRef, data);
+      } else {
+        localStorage.setItem('dofs_kpi_2026', JSON.stringify(data));
+        renderDashboard();
+      }
+    }
+
+    function initSortable() {
+      const tbody = document.getElementById('kpi-table-body');
+      if(typeof Sortable !== 'undefined' && tbody) {
+        sortableInstance = Sortable.create(tbody, {
+          handle: '.drag-handle',
+          animation: 150,
+          disabled: !window.isEditMode,
+          onEnd: function (evt) {
+            const terasFilter = document.getElementById('filter-teras').value;
+            const searchQuery = document.getElementById('search-kpi').value;
+            
+            if (terasFilter === 'ALL' && !searchQuery) {
+              const movedItem = kpiData.splice(evt.oldIndex, 1)[0];
+              kpiData.splice(evt.newIndex, 0, movedItem);
+              saveToCloud(kpiData);
+            } else {
+              alert('Fungsi susun semula kedudukan (Drag & Drop) hanya dibenarkan apabila paparan ditetapkan kepada "Semua Teras" dan tiada carian dibuat.');
+              renderTable();
+            }
+          }
+        });
+      }
+    }
+
+    function renderDashboard() {
+      renderTable();
+      updateStats();
+      renderTerasSummaryTable();
+      renderCharts();
+    }
+
+    function getBahagianBadge(bahagianName) {
+      const name = bahagianName ? bahagianName.trim().toLowerCase() : '';
+      if(name.includes('perancangan')) return `<span class="inline-block px-2.5 py-1 text-xs font-bold rounded-lg bg-indigo-100 text-indigo-800 border border-indigo-200">${bahagianName}</span>`;
+      if(name.includes('air tawar')) return `<span class="inline-block px-2.5 py-1 text-xs font-bold rounded-lg bg-emerald-100 text-emerald-800 border border-emerald-200">${bahagianName}</span>`;
+      if(name.includes('modal insan')) return `<span class="inline-block px-2.5 py-1 text-xs font-bold rounded-lg bg-purple-100 text-purple-800 border border-purple-200">${bahagianName}</span>`;
+      if(name.includes('marin dan pelesenan')) return `<span class="inline-block px-2.5 py-1 text-xs font-bold rounded-lg bg-cyan-100 text-cyan-800 border border-cyan-200">${bahagianName}</span>`;
+      if(name.includes('industri perikanan')) return `<span class="inline-block px-2.5 py-1 text-xs font-bold rounded-lg bg-amber-100 text-amber-800 border border-amber-200">${bahagianName}</span>`;
+      if(name.includes('akuakultur marin')) return `<span class="inline-block px-2.5 py-1 text-xs font-bold rounded-lg bg-teal-100 text-teal-800 border border-teal-200">${bahagianName}</span>`;
+      if(name.includes('penguatkuasaan')) return `<span class="inline-block px-2.5 py-1 text-xs font-bold rounded-lg bg-rose-100 text-rose-800 border border-rose-200">${bahagianName}</span>`;
+      if(name.includes('biosekuriti')) return `<span class="inline-block px-2.5 py-1 text-xs font-bold rounded-lg bg-pink-100 text-pink-800 border border-pink-200">${bahagianName}</span>`;
+      if(name.includes('perangkaan')) return `<span class="inline-block px-2.5 py-1 text-xs font-bold rounded-lg bg-sky-100 text-sky-800 border border-sky-200">${bahagianName}</span>`;
+      if(name.includes('tanah')) return `<span class="inline-block px-2.5 py-1 text-xs font-bold rounded-lg bg-lime-100 text-lime-800 border border-lime-200">${bahagianName}</span>`;
+      if(name.includes('khidmat pengurusan')) return `<span class="inline-block px-2.5 py-1 text-xs font-bold rounded-lg bg-slate-200 text-slate-800 border border-slate-300">${bahagianName}</span>`;
+      if(name.includes('penyelidikan')) return `<span class="inline-block px-2.5 py-1 text-xs font-bold rounded-lg bg-orange-100 text-orange-800 border border-orange-200">${bahagianName}</span>`;
+      if(name.includes('konservasi') || name.includes('sumber')) return `<span class="inline-block px-2.5 py-1 text-xs font-bold rounded-lg bg-green-100 text-green-800 border border-green-200">${bahagianName}</span>`;
+      return `<span class="inline-block px-2.5 py-1 text-xs font-bold rounded-lg bg-blue-100 text-blue-800 border border-blue-200">${bahagianName}</span>`;
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('kpi-table-body');
+      const terasFilter = document.getElementById('filter-teras').value;
+      const penggalFilter = document.getElementById('filter-penggal').value;
+      const searchQuery = document.getElementById('search-kpi').value.toLowerCase();
+
+      tbody.innerHTML = '';
+
+      const filtered = kpiData.filter(item => {
+        const matchTeras = terasFilter === 'ALL' || item.teras == terasFilter;
+        const matchSearch = item.inisiatif.toLowerCase().includes(searchQuery) || 
+                            item.strategi.toLowerCase().includes(searchQuery) ||
+                            cleanBahagianName(item.bahagian).toLowerCase().includes(searchQuery);
+        return matchTeras && matchSearch;
+      });
+
+      if(filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="10" class="text-center py-8 text-slate-400 font-medium">Tiada rekod KPI ditemui yang sepadan dengan carian.</td></tr>`;
+        return;
+      }
+
+      filtered.forEach((item, index) => {
+        const p1Badge = getStatusBadge(item.p1);
+        const p2Badge = getStatusBadge(item.p2);
+        
+        const totalPercent = calculateTotalPercent(item.p1, item.p2);
+        const totalBadge = getStatusBadge(totalPercent);
+
+        const bahagianClean = cleanBahagianName(item.bahagian);
+        const bahagianBadge = getBahagianBadge(bahagianClean);
+
+        const row = document.createElement('tr');
+        row.className = "hover:bg-teal-50/50 transition-all duration-150 border-b border-slate-100";
+        row.innerHTML = `
+          <td class="p-4 text-center font-bold text-slate-400 flex items-center justify-center gap-2">
+            ${window.isEditMode ? '<i class="fa-solid fa-grip-vertical text-slate-300 drag-handle no-print hover:text-slate-600 cursor-grab" title="Tarik untuk ubah kedudukan"></i>' : ''}
+            <span>${index + 1}</span>
+          </td>
+          <td class="p-4">
+            <span class="text-[10px] font-extrabold text-teal-800 uppercase tracking-wider block mb-1">Teras ${item.teras}</span>
+            ${bahagianBadge}
+          </td>
+          <td class="p-4 text-xs font-semibold text-slate-700 max-w-xs leading-relaxed">${item.strategi}</td>
+          <td class="p-4 font-bold text-slate-900 leading-relaxed">${item.inisiatif}</td>
+          <td class="p-4 text-slate-600 font-bold bg-slate-50 rounded-lg border border-slate-100">${item.sasaran}</td>
+          <td class="p-4 text-center ${penggalFilter === 'P2' ? 'opacity-30' : ''}">
+            <div class="font-extrabold text-slate-900 text-sm">${item.p1}%</div>
+            ${p1Badge}
+          </td>
+          <td class="p-4 text-center ${penggalFilter === 'P1' ? 'opacity-30' : ''}">
+            <div class="font-extrabold text-slate-900 text-sm">${item.p2}%</div>
+            ${p2Badge}
+          </td>
+          <td class="p-4 text-center bg-teal-50/70 border-x border-teal-100">
+            <div class="font-black text-teal-950 text-base">${totalPercent}%</div>
+            ${totalBadge}
+          </td>
+          <td class="p-4 text-xs text-slate-600 leading-relaxed max-w-xs">${item.ulasan || '-'}</td>
+          <td class="p-4 text-center no-print admin-only ${window.isEditMode ? '' : 'hidden'}">
+            <div class="flex items-center justify-center gap-2">
+              <button onclick="window.editKPI(${item.id})" class="w-7 h-7 rounded-lg bg-teal-50 text-teal-700 hover:bg-teal-600 hover:text-white transition flex items-center justify-center shadow-sm"><i class="fa-solid fa-pen-to-square"></i></button>
+              <button onclick="window.deleteKPI(${item.id})" class="w-7 h-7 rounded-lg bg-rose-50 text-rose-600 hover:bg-rose-600 hover:text-white transition flex items-center justify-center shadow-sm"><i class="fa-solid fa-trash"></i></button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function getStatusBadge(percent) {
+      if(percent >= 100) return `<span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full border border-emerald-200">Cemerlang</span>`;
+      if(percent >= 80) return `<span class="text-[10px] bg-sky-100 text-sky-800 font-bold px-2 py-0.5 rounded-full border border-sky-200">Memuaskan</span>`;
+      return `<span class="text-[10px] bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded-full border border-amber-200">Perlu Perhatian</span>`;
+    }
+
+    function updateStats() {
+      const totalCount = kpiData.length;
+      document.getElementById('stat-total-kpi').innerText = totalCount;
+      document.getElementById('pie-center-total').innerText = totalCount;
+
+      const uniqueStrategi = new Set(kpiData.map(i => i.strategi.trim())).size;
+      document.getElementById('stat-total-strategi').innerText = uniqueStrategi;
+
+      const uniqueBahagianSet = new Set(kpiData.map(i => cleanBahagianName(i.bahagian)));
+      const uniqueBahagian = uniqueBahagianSet.size;
+      const totalBahagianElem = document.getElementById('stat-total-bahagian');
+      if(totalBahagianElem) totalBahagianElem.innerText = uniqueBahagian;
+
+      const sumP1 = kpiData.reduce((acc, curr) => acc + (parseFloat(curr.p1) || 0), 0);
+      const sumP2 = kpiData.reduce((acc, curr) => acc + (parseFloat(curr.p2) || 0), 0);
+      const sumTotal = kpiData.reduce((acc, curr) => acc + calculateTotalPercent(curr.p1, curr.p2), 0);
+
+      const avgP1 = kpiData.length ? (sumP1 / kpiData.length).toFixed(1) : 0;
+      const avgP2 = kpiData.length ? (sumP2 / kpiData.length).toFixed(1) : 0;
+      const avgTotal = kpiData.length ? (sumTotal / kpiData.length).toFixed(1) : 0;
+
+      document.getElementById('stat-avg-p1').innerText = `${avgP1}%`;
+      document.getElementById('stat-avg-p2').innerText = `${avgP2}%`;
+      document.getElementById('stat-avg-total').innerText = `${avgTotal}%`;
+
+      const barP1 = document.getElementById('bar-avg-p1');
+      const barP2 = document.getElementById('bar-avg-p2');
+      if(barP1) barP1.style.width = `${Math.min(avgP1, 100)}%`;
+      if(barP2) barP2.style.width = `${Math.min(avgP2, 100)}%`;
+    }
+
+    function renderTerasSummaryTable() {
+      const tbody = document.getElementById('teras-summary-tbody');
+      tbody.innerHTML = '';
+
+      [1, 2, 3, 4, 5].forEach(t => {
+        const items = kpiData.filter(i => i.teras == t);
+        const uniqueStrategiCount = new Set(items.map(i => i.strategi.trim())).size;
+        const totalProgramCount = items.length;
+
+        const sumP1 = items.reduce((a, b) => a + (parseFloat(b.p1) || 0), 0);
+        const sumP2 = items.reduce((a, b) => a + (parseFloat(b.p2) || 0), 0);
+        const sumTotal = items.reduce((a, b) => a + calculateTotalPercent(b.p1, b.p2), 0);
+
+        const avgP1 = totalProgramCount ? (sumP1 / totalProgramCount).toFixed(1) : '0.0';
+        const avgP2 = totalProgramCount ? (sumP2 / totalProgramCount).toFixed(1) : '0.0';
+        const avgTotal = totalProgramCount ? (sumTotal / totalProgramCount).toFixed(1) : '0.0';
+
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50 transition border-b border-slate-100 font-medium";
+        tr.innerHTML = `
+          <td class="p-3.5 font-bold text-slate-900">${terasTitles[t]}</td>
+          <td class="p-3.5 text-center font-bold text-indigo-700 bg-indigo-50/50">${uniqueStrategiCount}</td>
+          <td class="p-3.5 text-center font-bold text-teal-700 bg-teal-50/50">${totalProgramCount}</td>
+          <td class="p-3.5 text-center font-semibold text-slate-800">${avgP1}%</td>
+          <td class="p-3.5 text-center font-semibold text-slate-800">${avgP2}%</td>
+          <td class="p-3.5 text-center bg-teal-50/80 font-black text-teal-900">
+            <div class="flex items-center justify-center gap-2">
+              <span>${avgTotal}%</span>
+              <div class="w-16 bg-slate-200 h-2 rounded-full overflow-hidden hidden sm:block border border-slate-300/60">
+                <div class="bg-gradient-to-r from-teal-500 to-emerald-600 h-full rounded-full" style="width: ${Math.min(avgTotal, 100)}%"></div>
+              </div>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderCharts() {
+      // 1. CARTA BAR PENCAPAIAN TERAS (P1 VS P2)
+      const terasLabels = ['Teras 1', 'Teras 2', 'Teras 3', 'Teras 4', 'Teras 5'];
+      const p1Means = [1, 2, 3, 4, 5].map(t => {
+        const items = kpiData.filter(i => i.teras == t);
+        if(!items.length) return 0;
+        return (items.reduce((acc, curr) => acc + (parseFloat(curr.p1) || 0), 0) / items.length).toFixed(1);
+      });
+
+      const p2Means = [1, 2, 3, 4, 5].map(t => {
+        const items = kpiData.filter(i => i.teras == t);
+        if(!items.length) return 0;
+        return (items.reduce((acc, curr) => acc + (parseFloat(curr.p2) || 0), 0) / items.length).toFixed(1);
+      });
+
+      const ctxTeras = document.getElementById('terasChart').getContext('2d');
+      if(terasChartInstance) terasChartInstance.destroy();
+      
+      terasChartInstance = new Chart(ctxTeras, {
+        type: 'bar',
+        data: {
+          labels: terasLabels,
+          datasets: [
+            { label: 'Penggal 1 (%)', data: p1Means, backgroundColor: '#0d9488', borderRadius: 8 },
+            { label: 'Penggal 2 (%)', data: p2Means, backgroundColor: '#0284c7', borderRadius: 8 }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: { 
+            y: { beginAtZero: true, max: 100, grid: { color: '#f1f5f9' } },
+            x: { grid: { display: false } }
+          },
+          plugins: {
+            legend: { position: 'bottom', labels: { usePointStyle: true, boxWidth: 6, font: { family: 'Plus Jakarta Sans', size: 11, weight: '600' } } }
+          }
+        }
+      });
+
+      // 2. CARTA PAI / DONUT HIGH-CONTRAST LIGHT DISPLAY
+      const cemerlang = kpiData.filter(i => calculateTotalPercent(i.p1, i.p2) >= 100).length;
+      const memuaskan = kpiData.filter(i => {
+        const total = calculateTotalPercent(i.p1, i.p2);
+        return total >= 80 && total < 100;
+      }).length;
+      const perlu = kpiData.filter(i => calculateTotalPercent(i.p1, i.p2) < 80).length;
+
+      const ctxStatus = document.getElementById('statusChart').getContext('2d');
+      if(statusChartInstance) statusChartInstance.destroy();
+
+      statusChartInstance = new Chart(ctxStatus, {
+        type: 'doughnut',
+        data: {
+          labels: ['Cemerlang (100%)', 'Memuaskan (80-99%)', 'Perlu Perhatian (<80%)'],
+          datasets: [{
+            data: [cemerlang, memuaskan, perlu],
+            backgroundColor: [
+              '#10b981', // Emerald Green Bright
+              '#0284c7', // Sky Blue
+              '#f59e0b'  // Vibrant Amber
+            ],
+            hoverBackgroundColor: ['#059669', '#0369a1', '#d97706'],
+            borderWidth: 4,
+            borderColor: '#ffffff',
+            hoverOffset: 10
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: '76%',
+          plugins: {
+            legend: { 
+              position: 'bottom', 
+              labels: { 
+                usePointStyle: true, 
+                pointStyle: 'circle',
+                boxWidth: 8,
+                padding: 16,
+                font: { family: 'Plus Jakarta Sans', size: 11, weight: '700' }
+              } 
+            },
+            tooltip: {
+              backgroundColor: '#0f172a',
+              titleFont: { size: 12, weight: 'bold' },
+              bodyFont: { size: 11 },
+              padding: 12,
+              cornerRadius: 10
+            }
+          }
+        }
+      });
+
+      // 3. CARTA BAR AGIHAN BAHAGIAN & TERAS (BEBAS RALAT CURSOR & TOOLTIP)
+      const bahagianList = Array.from(new Set(kpiData.map(i => cleanBahagianName(i.bahagian)))).sort();
+      const terasColors = ['#6366f1', '#0d9488', '#0284c7', '#ec4899', '#f59e0b'];
+
+      const bahagianDatasets = [1, 2, 3, 4, 5].map((t, idx) => {
+        const counts = bahagianList.map(b => {
+          return kpiData.filter(item => item.teras == t && cleanBahagianName(item.bahagian) === b).length;
+        });
+        return {
+          label: `Teras ${t}`,
+          data: counts,
+          backgroundColor: terasColors[idx],
+          borderRadius: 6,
+          borderSkipped: false,
+          barPercentage: 0.65,
+          categoryPercentage: 0.85
+        };
+      });
+
+      const ctxBahagian = document.getElementById('bahagianChart').getContext('2d');
+      if(bahagianChartInstance) bahagianChartInstance.destroy();
+
+      bahagianChartInstance = new Chart(ctxBahagian, {
+        type: 'bar',
+        data: {
+          labels: bahagianList,
+          datasets: bahagianDatasets
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          indexAxis: 'y',
+          interaction: {
+            mode: 'nearest',
+            axis: 'y',
+            intersect: false
+          },
+          scales: {
+            x: {
+              stacked: true,
+              beginAtZero: true,
+              grid: { color: '#e2e8f0' },
+              ticks: { stepSize: 1, font: { family: 'Plus Jakarta Sans', size: 11, weight: '600' } }
+            },
+            y: {
+              stacked: true,
+              grid: { display: false },
+              ticks: { font: { family: 'Plus Jakarta Sans', weight: '700', size: 11 }, color: '#1e293b' }
+            }
+          },
+          plugins: {
+            legend: {
+              position: 'top',
+              align: 'end',
+              labels: {
+                usePointStyle: true,
+                pointStyle: 'circle',
+                boxWidth: 8,
+                boxHeight: 8,
+                font: { family: 'Plus Jakarta Sans', size: 11, weight: '600' },
+                padding: 16
+              }
+            },
+            tooltip: {
+              backgroundColor: '#0f172a',
+              titleFont: { size: 12, weight: 'bold' },
+              bodyFont: { size: 11 },
+              padding: 12,
+              cornerRadius: 10,
+              usePointStyle: true,
+              callbacks: {
+                footer: (tooltipItems) => {
+                  let sum = 0;
+                  tooltipItems.forEach(item => { sum += item.parsed.x; });
+                  return 'Jumlah KPI Bahagian Ini: ' + sum;
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+  </script>
+</body>
+</html>
