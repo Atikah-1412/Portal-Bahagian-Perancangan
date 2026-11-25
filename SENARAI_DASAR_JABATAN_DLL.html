@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Repositori Dokumen, Dasar & Pekeliling - JPS</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; color: #0f172a; }
+    
+    .glass-header { background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%); border: 1px solid #e2e8f0; }
+    .glass-card { background: #ffffff; border: 1px solid #e2e8f0; }
+    
+    /* Gaya Kategori */
+    .kategori-dasar { background: #fef2f2; color: #b91c1c; border: 1px solid #fca5a5; }
+    .kategori-garis-panduan { background: #f0fdf4; color: #15803d; border: 1px solid #86efac; }
+    .kategori-pekeliling { background: #eff6ff; color: #1d4ed8; border: 1px solid #93c5fd; }
+    .kategori-sop { background: #faf5ff; color: #7e22ce; border: 1px solid #d8b4fe; }
+    .kategori-kod { background: #ecfeff; color: #0e7490; border: 1px solid #67e8f9; }
+    .kategori-default { background: #f8fafc; color: #334155; border: 1px solid #cbd5e1; }
+
+    /* Gaya Tema Warna Khas Bahagian (Separated & Dynamic) */
+    .b-biosekuriti { border-left: 6px solid #0284c7 !important; background: linear-gradient(90deg, #f0f9ff 0%, #ffffff 100%); }
+    .b-perancangan { border-left: 6px solid #8b5cf6 !important; background: linear-gradient(90deg, #f5f3ff 0%, #ffffff 100%); }
+    .b-industri-pelaburan { border-left: 6px solid #d97706 !important; background: linear-gradient(90deg, #fffbeb 0%, #ffffff 100%); }
+    .b-pembangunan-wilayah { border-left: 6px solid #0d9488 !important; background: linear-gradient(90deg, #f0fdfa 0%, #ffffff 100%); }
+    .b-lesen-tangkapan { border-left: 6px solid #16a34a !important; background: linear-gradient(90deg, #f0fdf4 0%, #ffffff 100%); }
+    .b-pengurusan-am { border-left: 6px solid #e11d48 !important; background: linear-gradient(90deg, #fff1f2 0%, #ffffff 100%); }
+    .b-default { border-left: 6px solid #64748b !important; background: #ffffff; }
+
+    /* Animasi Baris Jadual */
+    tr.doc-row { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+    tr.doc-row:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02); }
+  </style>
+</head>
+<body class="p-4 sm:p-8 space-y-6 min-h-screen flex flex-col">
+
+  <!-- Header Banner -->
+  <div class="glass-header p-6 rounded-3xl shadow-sm flex flex-wrap items-center justify-between gap-4 border-l-8 border-l-teal-600">
+    <div class="flex items-center gap-4">
+      <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-teal-700 to-teal-500 text-white flex items-center justify-center text-3xl shadow-lg shadow-teal-500/30">
+        <i class="fa-solid fa-folder-tree"></i>
+      </div>
+      <div>
+        <h1 class="text-2xl font-black text-slate-900 tracking-tight">REPOSITORI DOKUMEN, DASAR & PEKELILING</h1>
+        <p class="text-xs text-slate-500 font-semibold mt-0.5"><i class="fa-solid fa-building-columns mr-1 text-teal-600"></i> Jabatan Perikanan Sabah • Portal Carian & Muat Turun Dokumen Rasmi</p>
+      </div>
+    </div>
+    
+    <div class="flex items-center gap-3">
+      <span id="sync-status" class="inline-flex items-center px-4 py-2 rounded-2xl text-xs font-bold bg-amber-50 text-amber-700 border border-amber-200 shadow-xs">
+        <span class="w-2.5 h-2.5 rounded-full bg-amber-500 mr-2.5 animate-ping"></span> Memuatkan Data...
+      </span>
+      <button onclick="fetchFromGoogleSheets()" class="px-5 py-2.5 bg-gradient-to-r from-teal-700 to-teal-600 hover:from-teal-800 hover:to-teal-700 text-white text-xs font-extrabold rounded-2xl transition flex items-center gap-2 shadow-md shadow-teal-700/20 active:scale-95">
+        <i class="fa-solid fa-rotate text-sm"></i> Synchronize Data
+      </button>
+    </div>
+  </div>
+
+  <!-- KPI Metric Cards -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div class="glass-card p-5 rounded-3xl shadow-xs flex justify-between items-center relative overflow-hidden group hover:border-slate-300 transition">
+      <div class="z-10">
+        <p class="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">Jumlah Dokumen</p>
+        <h2 class="text-3xl font-black text-slate-900 mt-1" id="kpi-total">0</h2>
+      </div>
+      <div class="w-12 h-12 bg-slate-100 text-slate-600 rounded-2xl flex items-center justify-center text-2xl group-hover:scale-110 transition z-10"><i class="fa-solid fa-files"></i></div>
+      <div class="absolute -right-4 -bottom-4 w-20 h-20 bg-slate-50 rounded-full z-0"></div>
+    </div>
+
+    <div class="glass-card p-5 rounded-3xl shadow-xs flex justify-between items-center relative overflow-hidden group hover:border-emerald-300 transition">
+      <div class="z-10">
+        <p class="text-[11px] font-extrabold text-emerald-600 uppercase tracking-wider">Status: Awam</p>
+        <h2 class="text-3xl font-black text-emerald-600 mt-1" id="kpi-awam">0</h2>
+      </div>
+      <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl group-hover:scale-110 transition z-10"><i class="fa-solid fa-earth-americas"></i></div>
+      <div class="absolute -right-4 -bottom-4 w-20 h-20 bg-emerald-50/50 rounded-full z-0"></div>
+    </div>
+
+    <div class="glass-card p-5 rounded-3xl shadow-xs flex justify-between items-center relative overflow-hidden group hover:border-blue-300 transition">
+      <div class="z-10">
+        <p class="text-[11px] font-extrabold text-blue-600 uppercase tracking-wider">Status: Dalaman</p>
+        <h2 class="text-3xl font-black text-blue-600 mt-1" id="kpi-dalaman">0</h2>
+      </div>
+      <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-2xl group-hover:scale-110 transition z-10"><i class="fa-solid fa-building-user"></i></div>
+      <div class="absolute -right-4 -bottom-4 w-20 h-20 bg-blue-50/50 rounded-full z-0"></div>
+    </div>
+
+    <div class="glass-card p-5 rounded-3xl shadow-xs flex justify-between items-center relative overflow-hidden group hover:border-rose-300 transition">
+      <div class="z-10">
+        <p class="text-[11px] font-extrabold text-rose-600 uppercase tracking-wider">Status: Terhad / Sulit</p>
+        <h2 class="text-3xl font-black text-rose-600 mt-1" id="kpi-terhad">0</h2>
+      </div>
+      <div class="w-12 h-12 bg-rose-50 text-rose-600 rounded-2xl flex items-center justify-center text-2xl group-hover:scale-110 transition z-10"><i class="fa-solid fa-shield-cat"></i></div>
+      <div class="absolute -right-4 -bottom-4 w-20 h-20 bg-rose-50/50 rounded-full z-0"></div>
+    </div>
+  </div>
+
+  <!-- Filter & Search Controls -->
+  <div class="glass-card p-4 rounded-3xl shadow-xs flex flex-wrap items-center justify-between gap-4">
+    <div class="flex flex-wrap items-center gap-3 w-full lg:w-auto">
+      <div class="relative w-full sm:w-72">
+        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-400 text-xs"></i>
+        <input type="text" id="searchInput" onkeyup="filterData()" placeholder="Cari tajuk / no. pekeliling..." class="w-full bg-slate-50 border border-slate-200 text-xs text-slate-800 font-medium rounded-2xl pl-10 pr-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-teal-500 transition">
+      </div>
+      
+      <select id="filterBahagian" onchange="filterData()" class="bg-slate-50 border border-slate-200 text-xs text-slate-700 font-bold rounded-2xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-teal-500 transition">
+        <option value="ALL">Semua Bahagian</option>
+      </select>
+
+      <select id="filterStatus" onchange="filterData()" class="bg-slate-50 border border-slate-200 text-xs text-slate-700 font-bold rounded-2xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-teal-500 transition">
+        <option value="ALL">Semua Status Dokumen</option>
+        <option value="AWAM">AWAM</option>
+        <option value="DALAMAN">DALAMAN</option>
+        <option value="TERHAD">TERHAD / SULIT</option>
+      </select>
+    </div>
+    <span class="text-xs font-bold text-slate-500 px-2" id="recordCount">Menunjukkan 0 dokumen</span>
+  </div>
+
+  <!-- Data Table Container (Floating Cards Effect) -->
+  <div class="rounded-3xl overflow-hidden shadow-xs border border-slate-200 flex-grow bg-white">
+    <div class="overflow-x-auto">
+      <table class="w-full text-left border-separate border-spacing-y-2 px-3 text-xs">
+        <thead>
+          <tr class="text-slate-500 font-extrabold uppercase tracking-wider text-[11px]">
+            <th class="py-4 px-3 text-center">Bil</th>
+            <th class="py-4 px-3">Bahagian / Unit</th>
+            <th class="py-4 px-3">Kategori</th>
+            <th class="py-4 px-3">Tajuk Dokumen / Pekeliling</th>
+            <th class="py-4 px-3">Tarikh / Tahun</th>
+            <th class="py-4 px-3">No. Rujukan</th>
+            <th class="py-4 px-3 text-center">Status</th>
+            <th class="py-4 px-3 text-center">Tindakan</th>
+          </tr>
+        </thead>
+        <tbody id="documentTableBody" class="font-medium"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Modal View Butiran Dokumen -->
+  <div id="docModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-7 shadow-2xl border border-slate-100 space-y-5">
+      <div class="flex justify-between items-start border-b pb-4">
+        <div>
+          <span id="modal-kategori" class="px-3 py-1 rounded-full text-[10px] font-black uppercase">KATEGORI</span>
+          <h3 class="font-extrabold text-slate-900 text-lg mt-2 leading-snug" id="modal-tajuk">Tajuk Dokumen</h3>
+        </div>
+        <button onclick="closeModal()" class="text-slate-400 hover:text-slate-700 p-1.5 rounded-full hover:bg-slate-100 transition"><i class="fa-solid fa-xmark text-xl"></i></button>
+      </div>
+
+      <div class="space-y-3.5 text-xs">
+        <div class="grid grid-cols-2 gap-3.5">
+          <div class="bg-slate-50 p-3 rounded-2xl border border-slate-100">
+            <span class="text-slate-400 font-extrabold block text-[10px] uppercase">Bahagian</span>
+            <span class="font-bold text-slate-800 text-xs" id="modal-bahagian">-</span>
+          </div>
+          <div class="bg-slate-50 p-3 rounded-2xl border border-slate-100">
+            <span class="text-slate-400 font-extrabold block text-[10px] uppercase">Status Dokumen</span>
+            <span class="font-bold text-xs" id="modal-status">-</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3.5">
+          <div class="bg-slate-50 p-3 rounded-2xl border border-slate-100">
+            <span class="text-slate-400 font-extrabold block text-[10px] uppercase">Tarikh / Tahun</span>
+            <span class="font-bold text-slate-800 text-xs" id="modal-tarikh">-</span>
+          </div>
+          <div class="bg-slate-50 p-3 rounded-2xl border border-slate-100">
+            <span class="text-slate-400 font-extrabold block text-[10px] uppercase">No. Rujukan</span>
+            <span class="font-bold text-slate-800 font-mono text-xs" id="modal-ref">-</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-4 border-t flex justify-end gap-2.5" id="modal-action-container"></div>
+    </div>
+  </div>
+
+  <script>
+    const GOOGLE_SHEETS_API_URL = "https://script.google.com/macros/s/AKfycbzKQR6zNKB0n7krdQQTF9tgG93TrenLh2lEbbPY7nEclxaUE9E69IDbF_YvQabgFb-4/exec";
+
+    let docData = [];
+
+    // Menjana Warna + Icon Khas Bagi Setiap Bahagian (Termasuk Pengurusan Industri vs Pembangunan Wilayah)
+    function getBahagianStyle(bahagian) {
+      const b = (bahagian || "").toUpperCase();
+      
+      if (b.includes("BIOSEKURITI")) {
+        return { rowClass: "b-biosekuriti", badgeClass: "bg-sky-100 text-sky-800 border-sky-300", icon: "fa-shield-virus" };
+      }
+      if (b.includes("PERANCANGAN")) {
+        return { rowClass: "b-perancangan", badgeClass: "bg-purple-100 text-purple-800 border-purple-300", icon: "fa-chart-pie" };
+      }
+      if (b.includes("INDUSTRI") || b.includes("PELABURAN")) {
+        return { rowClass: "b-industri-pelaburan", badgeClass: "bg-amber-100 text-amber-900 border-amber-300", icon: "fa-industry" };
+      }
+      if (b.includes("PEMBANGUNAN WILAYAH") || b.includes("WILAYAH")) {
+        return { rowClass: "b-pembangunan-wilayah", badgeClass: "bg-teal-100 text-teal-900 border-teal-300", icon: "fa-map-location-dot" };
+      }
+      if (b.includes("LESEN") || b.includes("TANGKAPAN")) {
+        return { rowClass: "b-lesen-tangkapan", badgeClass: "bg-emerald-100 text-emerald-800 border-emerald-300", icon: "fa-ship" };
+      }
+      if (b.includes("PENGURUSAN")) {
+        return { rowClass: "b-pengurusan-am", badgeClass: "bg-rose-100 text-rose-800 border-rose-300", icon: "fa-user-gear" };
+      }
+      return { rowClass: "b-default", badgeClass: "bg-slate-100 text-slate-700 border-slate-300", icon: "fa-building" };
+    }
+
+    function getKategoriStyle(kat) {
+      const k = (kat || "").toUpperCase();
+      if (k.includes("DASAR")) return "kategori-dasar";
+      if (k.includes("GARIS PANDUAN")) return "kategori-garis-panduan";
+      if (k.includes("PEKELILING")) return "kategori-pekeliling";
+      if (k.includes("SOP")) return "kategori-sop";
+      if (k.includes("KOD AMALAN")) return "kategori-kod";
+      return "kategori-default";
+    }
+
+    function init() {
+      const bSelect = document.getElementById('filterBahagian');
+      bSelect.innerHTML = '<option value="ALL">Semua Bahagian</option>';
+      const bahagianList = [...new Set(docData.map(d => d.bahagian))].filter(Boolean);
+      bahagianList.forEach(b => {
+        bSelect.innerHTML += `<option value="${b}">${b}</option>`;
+      });
+
+      document.getElementById('filterStatus').value = "ALL";
+      filterData();
+    }
+
+    function filterData() {
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      const filterB = document.getElementById('filterBahagian').value;
+      const filterS = document.getElementById('filterStatus').value;
+
+      const filtered = docData.filter(d => {
+        const matchSearch = (d.tajuk || "").toLowerCase().includes(search) || (d.ref || "").toLowerCase().includes(search);
+        const matchB = filterB === 'ALL' || d.bahagian === filterB;
+        
+        let matchS = filterS === 'ALL';
+        if (!matchS) {
+          const st = (d.status || "").toUpperCase();
+          if (filterS === 'TERHAD') {
+            matchS = st.includes("TERHAD") || st.includes("SULIT");
+          } else {
+            matchS = st.includes(filterS);
+          }
+        }
+        return matchSearch && matchB && matchS;
+      });
+
+      renderTable(filtered);
+    }
+
+    function renderTable(data) {
+      const tbody = document.getElementById('documentTableBody');
+      tbody.innerHTML = '';
+
+      document.getElementById('kpi-total').innerText = docData.length;
+      document.getElementById('kpi-awam').innerText = docData.filter(d => (d.status || "").toUpperCase().includes("AWAM")).length;
+      document.getElementById('kpi-dalaman').innerText = docData.filter(d => (d.status || "").toUpperCase().includes("DALAMAN")).length;
+      document.getElementById('kpi-terhad').innerText = docData.filter(d => {
+        const st = (d.status || "").toUpperCase();
+        return st.includes("TERHAD") || st.includes("SULIT");
+      }).length;
+      
+      document.getElementById('recordCount').innerText = `Menunjukkan ${data.length} dokumen`;
+
+      if (!data.length) {
+        tbody.innerHTML = `<tr><td colspan="8" class="p-8 text-center text-slate-400 font-bold bg-slate-50 rounded-2xl border border-dashed border-slate-200">Tiada rekod dokumen dijumpai.</td></tr>`;
+        return;
+      }
+
+      data.forEach((d, i) => {
+        const statusUpper = (d.status || "AWAM").toUpperCase();
+        const badgeStatus = statusUpper.includes("AWAM") ? "bg-emerald-100 text-emerald-800 border-emerald-300" :
+                            statusUpper.includes("TERHAD") || statusUpper.includes("SULIT") ? "bg-rose-100 text-rose-800 border-rose-300" :
+                            "bg-blue-100 text-blue-800 border-blue-300";
+
+        const hasLink = d.url && d.url !== "#" && d.url.trim() !== "";
+        const bahagianStyle = getBahagianStyle(d.bahagian);
+
+        tbody.innerHTML += `
+          <tr class="doc-row ${bahagianStyle.rowClass} rounded-2xl shadow-2xs border border-slate-200/80">
+            <td class="p-4 text-center font-black text-slate-400 rounded-l-2xl">${i + 1}</td>
+            <td class="p-4">
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-[11px] font-black border shadow-2xs ${bahagianStyle.badgeClass}">
+                <i class="fa-solid ${bahagianStyle.icon} text-[10px]"></i>
+                <span>${d.bahagian}</span>
+              </span>
+            </td>
+            <td class="p-4"><span class="px-3 py-1 rounded-full font-black text-[10px] shadow-2xs ${getKategoriStyle(d.kategori)}">${d.kategori}</span></td>
+            <td class="p-4 font-bold text-slate-900 max-w-sm leading-relaxed">${d.tajuk}</td>
+            <td class="p-4 text-slate-600 font-bold">${d.tarikh}</td>
+            <td class="p-4 text-slate-500 font-mono font-semibold text-[11px]">${d.ref}</td>
+            <td class="p-4 text-center"><span class="px-3 py-1 rounded-full text-[10px] font-black border shadow-2xs ${badgeStatus}">${d.status}</span></td>
+            <td class="p-4 text-center rounded-r-2xl">
+              <div class="flex items-center justify-center gap-2">
+                <button onclick="openModal(${i})" class="p-2 bg-white hover:bg-slate-100 text-slate-700 rounded-xl font-bold border border-slate-200 transition shadow-2xs active:scale-90" title="Lihat Butiran">
+                  <i class="fa-solid fa-eye text-xs"></i>
+                </button>
+                ${hasLink ? `<a href="${d.url}" target="_blank" class="p-2 bg-teal-600 hover:bg-teal-700 text-white rounded-xl font-bold transition shadow-md shadow-teal-600/20 active:scale-90" title="Buka / Muat Turun PDF"><i class="fa-solid fa-download text-xs"></i></a>` : `<span class="p-2 bg-slate-100 text-slate-300 rounded-xl cursor-not-allowed" title="Tiada Pautan Muat Turun"><i class="fa-solid fa-lock text-xs"></i></span>`}
+              </div>
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    function openModal(index) {
+      const item = docData[index];
+      if (!item) return;
+
+      document.getElementById('modal-tajuk').innerText = item.tajuk;
+      document.getElementById('modal-bahagian').innerText = item.bahagian;
+      document.getElementById('modal-kategori').innerText = item.kategori;
+      document.getElementById('modal-kategori').className = `px-3 py-1 rounded-full text-[10px] font-black uppercase ${getKategoriStyle(item.kategori)}`;
+      document.getElementById('modal-tarikh').innerText = item.tarikh;
+      document.getElementById('modal-ref').innerText = item.ref;
+      document.getElementById('modal-status').innerText = item.status;
+
+      const hasLink = item.url && item.url !== "#" && item.url.trim() !== "";
+      const actionContainer = document.getElementById('modal-action-container');
+      
+      actionContainer.innerHTML = `
+        <button onclick="closeModal()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl font-bold transition">Tutup</button>
+        ${hasLink ? `<a href="${item.url}" target="_blank" class="px-5 py-2.5 bg-teal-600 hover:bg-teal-700 text-white rounded-2xl font-bold transition shadow-lg shadow-teal-600/20 flex items-center gap-2"><i class="fa-solid fa-download"></i> Buka / Muat Turun Dokumen</a>` : `<button disabled class="px-5 py-2.5 bg-slate-200 text-slate-400 rounded-2xl font-bold cursor-not-allowed"><i class="fa-solid fa-lock"></i> Tiada Pautan Dokumen</button>`}
+      `;
+
+      document.getElementById('docModal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('docModal').classList.add('hidden');
+    }
+
+    function updateStatusBadge(isSuccess) {
+      const statusBadge = document.getElementById('sync-status');
+      if (!statusBadge) return;
+
+      if (isSuccess) {
+        statusBadge.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-emerald-500 mr-2.5 animate-pulse"></span> Google Sheets Live Sync`;
+        statusBadge.className = "inline-flex items-center px-4 py-2 rounded-2xl text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 shadow-xs";
+      } else {
+        statusBadge.innerHTML = `<i class="fa-solid fa-triangle-exclamation mr-1.5"></i> Ralat Sambungan`;
+        statusBadge.className = "inline-flex items-center px-4 py-2 rounded-2xl text-xs font-bold bg-rose-50 text-rose-700 border border-rose-200 shadow-xs";
+      }
+    }
+
+    async function fetchFromGoogleSheets() {
+      const statusBadge = document.getElementById('sync-status');
+      if (statusBadge) {
+        statusBadge.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-amber-400 mr-2.5 animate-ping"></span> Memuatkan Data...`;
+        statusBadge.className = "inline-flex items-center px-4 py-2 rounded-2xl text-xs font-bold bg-amber-50 text-amber-700 border border-amber-200 shadow-xs";
+      }
+
+      try {
+        const res = await fetch(GOOGLE_SHEETS_API_URL);
+        const json = await res.json();
+        if (Array.isArray(json) && json.length > 0) {
+          docData = json;
+          init();
+          updateStatusBadge(true);
+          return;
+        }
+      } catch (e) {
+        console.warn("Direct fetch gagal, mencuba laluan Proxy...");
+      }
+
+      try {
+        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(GOOGLE_SHEETS_API_URL)}`;
+        const res = await fetch(proxyUrl);
+        const jsonWrapper = await res.json();
+        const json = JSON.parse(jsonWrapper.contents);
+        if (Array.isArray(json) && json.length > 0) {
+          docData = json;
+          init();
+          updateStatusBadge(true);
+          return;
+        }
+      } catch (e) {
+        console.error("Gagal menarik data:", e);
+        updateStatusBadge(false);
+      }
+    }
+
+    window.onload = fetchFromGoogleSheets;
+  </script>
+</body>
+</html>
