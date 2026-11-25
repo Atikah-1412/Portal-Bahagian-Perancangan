@@ -3,100 +3,357 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Galeri Laporan Bergambar - Bahagian Perancangan JPS</title>
+  <title>Galeri Laporan Bergambar | Jabatan Perikanan Sabah</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; color: #0f172a; }
-    .glass-header { background: linear-gradient(135deg, #ffffff 0%, #f5f3ff 100%); border: 1px solid #e2e8f0; }
-    .tab-active { background: linear-gradient(135deg, #7e22ce, #db2777); color: #ffffff; box-shadow: 0 4px 12px rgba(126, 34, 206, 0.25); }
-    .tab-inactive { background: #f1f5f9; color: #475569; }
-    .tab-inactive:hover { background: #e2e8f0; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #eef2f6; color: #0f172a; }
+    
+    /* Top Dark Navy Header */
+    .top-banner { background: linear-gradient(90deg, #1e3a5f 0%, #2c5282 60%, #1e3a5f 100%); }
+    
+    /* Sub-banner Gradient Bar */
+    .repo-banner { background: linear-gradient(90deg, #1e40af 0%, #3b82f6 55%, #60a5fa 100%); }
+
+    /* Card Hover & Folder Badge Effect */
+    .report-card { transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
+    .report-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(30, 58, 95, 0.14), 0 8px 10px -6px rgba(30, 58, 95, 0.08); }
+
+    /* Button Gradient Purple-Pink */
+    .btn-lihat { background: linear-gradient(90deg, #9333ea 0%, #c026d3 100%); }
+    .btn-lihat:hover { background: linear-gradient(90deg, #7e22ce 0%, #a21caf 100%); }
+
+    /* Category Pill Active */
+    .pill-active { background-color: #ffffff; color: #1e3a5f; border: 1.5px solid #3b82f6; box-shadow: 0 2px 6px rgba(59, 130, 246, 0.2); }
+    .pill-inactive { background-color: rgba(255, 255, 255, 0.85); color: #475569; border: 1px solid #cbd5e1; }
+    .pill-inactive:hover { background-color: #ffffff; color: #0f172a; }
   </style>
 </head>
-<body class="p-4 sm:p-8 space-y-6 min-h-screen flex flex-col">
+<body class="min-h-screen flex flex-col">
 
-  <!-- Header Banner -->
-  <div class="glass-header p-6 rounded-3xl shadow-sm flex flex-wrap items-center justify-between gap-4 border-l-8 border-l-purple-600">
-    <div class="flex items-center gap-4">
-      <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-purple-700 to-pink-500 text-white flex items-center justify-center text-3xl shadow-lg shadow-purple-500/30">
-        <i class="fa-solid fa-images"></i>
-      </div>
-      <div>
-        <h1 class="text-2xl font-black text-slate-900 tracking-tight">GALERI LAPORAN BERGAMBAR</h1>
-        <p class="text-xs text-slate-500 font-semibold mt-0.5">
-          <i class="fa-solid fa-chart-pie mr-1 text-purple-600"></i> Bahagian Perancangan • Jabatan Perikanan Sabah
-        </p>
+  <!-- TOP HEADER BAR DENGAN LOGO RASMI TANPA BULATAN PUTIH -->
+  <header class="top-banner text-white px-6 py-3.5 shadow-md flex flex-wrap items-center justify-between gap-4">
+    <div class="flex items-center gap-3.5">
+      <!-- Logo Rasmi Jabatan Perikanan Sabah (Lutsinar tanpa bulatan putih) -->
+      <img src="LOGO PERIKANAN UPDATED (2024).png" alt="Logo Jabatan Perikanan Sabah" class="h-12 w-auto object-contain drop-shadow-md" onerror="this.style.display='none'">
+      <div class="flex items-center gap-2.5">
+        <h1 class="text-lg sm:text-xl font-black tracking-wide uppercase">GALERI LAPORAN BERGAMBAR</h1>
+        <span class="text-blue-200 font-light text-xl hidden sm:inline">|</span>
+        <span class="text-sm sm:text-base font-medium text-blue-100 hidden sm:inline">Jabatan Perikanan Sabah</span>
       </div>
     </div>
-    
-    <div class="flex flex-wrap items-center gap-3">
-      <span class="inline-flex items-center px-4 py-2 rounded-2xl text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 shadow-xs">
-        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 mr-2.5 animate-pulse"></span> Google Drive Live Folder
-      </span>
-      <a href="https://drive.google.com/drive/folders/1vTLtFmY1Ni6YxhoKllIGMLg0CrulZlR3?usp=sharing" target="_blank" class="px-5 py-2.5 bg-gradient-to-r from-purple-700 to-pink-600 hover:from-purple-800 hover:to-pink-700 text-white text-xs font-extrabold rounded-2xl transition flex items-center gap-2 shadow-md shadow-purple-700/20 active:scale-95">
-        <i class="fa-brands fa-google-drive text-sm"></i> Buka Folder & Muat Naik
+
+    <div class="flex items-center gap-2.5">
+      <a href="https://drive.google.com/drive/folders/1vTLtFmY1Ni6YxhoKllIGMLg0CrulZlR3?usp=sharing" target="_blank" class="px-3.5 py-2 bg-white/15 hover:bg-white/25 border border-white/25 rounded-xl text-xs font-bold transition flex items-center gap-2">
+        <i class="fa-brands fa-google-drive"></i> Muat Naik Ke Drive
       </a>
     </div>
-  </div>
+  </header>
 
-  <!-- Bar Kawalan Paparan -->
-  <div class="bg-white p-4 rounded-3xl shadow-xs border border-slate-200 flex flex-wrap items-center justify-between gap-4">
-    <div class="flex items-center gap-2">
-      <button id="btnGrid" onclick="switchView('grid')" class="tab-active px-4 py-2 rounded-xl text-xs font-extrabold transition flex items-center gap-2">
-        <i class="fa-solid fa-grip"></i> Paparan Grid Bergambar
-      </button>
-      <button id="btnList" onclick="switchView('list')" class="tab-inactive px-4 py-2 rounded-xl text-xs font-extrabold transition flex items-center gap-2">
-        <i class="fa-solid fa-list"></i> Paparan Senarai Fail
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-7xl w-full mx-auto p-4 sm:p-6 space-y-5 flex-grow">
+
+    <!-- SEARCH & CATEGORY FILTER BAR -->
+    <div class="bg-gradient-to-r from-slate-200/80 via-purple-100/60 to-slate-200/80 p-3.5 rounded-2xl border border-slate-300/80 shadow-xs flex flex-wrap items-center justify-between gap-3">
+      <div class="relative w-full lg:w-80">
+        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-400 text-xs"></i>
+        <input type="text" id="searchInput" onkeyup="applyFilters()" placeholder="Cari laporan... (Program, Kursus, Lawatan)" class="w-full bg-white border border-slate-200 text-xs text-slate-800 font-semibold rounded-xl pl-9 pr-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-2xs">
+      </div>
+
+      <!-- Dynamic Folder/Category Pills -->
+      <div id="categoryPills" class="flex flex-wrap items-center gap-2 flex-grow">
+        <button onclick="selectCategory('ALL')" class="pill-active px-3.5 py-2 rounded-full text-xs font-extrabold flex items-center gap-2 transition">
+          <span class="w-2.5 h-2.5 rounded-full bg-indigo-600"></span> Semua Kategori
+        </button>
+      </div>
+
+      <button onclick="fetchDriveData()" class="px-4 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-extrabold rounded-xl transition flex items-center gap-2 shadow-sm active:scale-95">
+        <i class="fa-solid fa-rotate"></i> Synchronize Data
       </button>
     </div>
 
-    <div class="flex items-center gap-3">
-      <span class="text-xs text-slate-500 font-semibold hidden sm:inline">
-        <i class="fa-solid fa-circle-info text-purple-600 mr-1"></i> Klik pada mana-mana gambar/PDF di bawah untuk pratonton penuh
-      </span>
-      <button onclick="reloadDriveFrame()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition flex items-center gap-1.5">
-        <i class="fa-solid fa-rotate"></i> Segar Semula
-      </button>
-    </div>
-  </div>
+    <!-- SUB-HEADER BANNER & KPI STAT CARDS -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
+      <!-- Blue Gradient Repository Title -->
+      <div class="lg:col-span-8 repo-banner rounded-2xl p-5 text-white shadow-sm flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h2 class="text-xl sm:text-2xl font-black tracking-tight" id="repoHeading">Repositori Laporan Bergambar (0 Laporan)</h2>
+          <p class="text-xs text-blue-100 font-medium mt-1">Bahagian Perancangan • Arkib Digital Foto Aktiviti & Laporan PDF</p>
+        </div>
+        <span id="sync-badge" class="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs font-extrabold bg-white text-emerald-700 shadow-xs">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 mr-2 animate-pulse"></span> Live Sync
+        </span>
+      </div>
 
-  <!-- Paparan Langsung Folder Google Drive (Grid / List) -->
-  <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden flex-grow min-h-[68vh] relative">
-    <iframe 
-      id="driveFrame"
-      src="https://drive.google.com/embeddedfolderview?id=1vTLtFmY1Ni6YxhoKllIGMLg0CrulZlR3#grid" 
-      class="w-full h-full min-h-[68vh] border-0"
-      title="Galeri Laporan Bergambar Google Drive">
-    </iframe>
+      <!-- Mini Stat Cards -->
+      <div class="lg:col-span-4 grid grid-cols-2 gap-3">
+        <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-2xs flex items-center gap-3">
+          <div class="w-11 h-11 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-xl">
+            <i class="fa-solid fa-folder-open"></i>
+          </div>
+          <div>
+            <span class="text-[11px] font-bold text-slate-500 block">Jumlah Laporan:</span>
+            <span class="text-2xl font-black text-slate-900" id="statTotal">0</span>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-2xs flex items-center gap-3">
+          <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center text-xl">
+            <i class="fa-solid fa-folder-tree"></i>
+          </div>
+          <div>
+            <span class="text-[11px] font-bold text-slate-500 block">Folder Aktiviti:</span>
+            <span class="text-2xl font-black text-slate-900" id="statFolders">0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RECORD COUNTER BAR -->
+    <div class="flex items-center justify-between text-xs font-bold text-slate-600 px-1">
+      <span id="showingTextLeft">Menunjukkan 0 laporan</span>
+      <span id="activeFolderLabel" class="text-purple-700">Kategori: Semua</span>
+    </div>
+
+    <!-- FOLDER CARDS SECTION (JIKA ADA SUBFOLDER DI DRIVE) -->
+    <div id="foldersSection" class="hidden space-y-2.5">
+      <h3 class="text-xs font-black uppercase tracking-wider text-slate-500 flex items-center gap-2">
+        <i class="fa-solid fa-folder text-purple-600"></i> Folder Kategori / Program
+      </h3>
+      <div id="foldersGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
+    </div>
+
+    <!-- GALLERY CARDS GRID (THUMBNAIL + FOLDER OVERLAY + TAJUK BESAR) -->
+    <div id="reportsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"></div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="max-w-7xl w-full mx-auto px-6 py-4 flex flex-wrap items-center justify-between text-xs font-bold text-slate-500 border-t border-slate-200 mt-6">
+    <span id="showingTextBottom">Menunjukkan 0 laporan</span>
+    <span>© 2026 JABATAN PERIKANAN SABAH</span>
+  </footer>
+
+  <!-- MODAL PAPARAN PENUH LAPORAN -->
+  <div id="reportModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-white rounded-3xl max-w-3xl w-full overflow-hidden shadow-2xl border border-slate-200 flex flex-col max-h-[90vh]">
+      <div class="px-6 py-4 border-b bg-slate-50 flex items-center justify-between">
+        <div>
+          <span id="modalMeta" class="text-[11px] font-extrabold text-purple-700 uppercase tracking-wider">TARIKH • KATEGORI</span>
+          <h3 id="modalTitle" class="font-black text-slate-900 text-base sm:text-lg mt-0.5">Tajuk Laporan</h3>
+        </div>
+        <button onclick="closeModal()" class="w-9 h-9 rounded-full bg-white border border-slate-200 text-slate-500 hover:text-slate-900 flex items-center justify-center transition">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <div class="p-6 overflow-y-auto flex flex-col items-center bg-slate-100/70">
+        <img id="modalImg" src="" alt="Pratonton Laporan" class="max-h-[55vh] rounded-2xl shadow-md object-contain bg-white border border-slate-200">
+        <p id="modalDesc" class="text-xs text-slate-600 font-medium mt-4 bg-white p-4 rounded-2xl border border-slate-200 w-full leading-relaxed"></p>
+      </div>
+
+      <div class="px-6 py-4 border-t bg-white flex justify-end gap-3">
+        <button onclick="closeModal()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition">Tutup</button>
+        <a id="modalDriveBtn" href="#" target="_blank" class="px-5 py-2.5 btn-lihat text-white text-xs font-extrabold rounded-xl transition flex items-center gap-2 shadow-md">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> Buka Fail Penuh Di Drive
+        </a>
+      </div>
+    </div>
   </div>
 
   <script>
-    const FOLDER_ID = "1vTLtFmY1Ni6YxhoKllIGMLg0CrulZlR3";
-    let currentMode = "grid";
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwfdbFw3L1Fm_p3pJYWtPxNBSeJzmAI1lYbbUq4b4omu2pMzyM6-ENUsgrkuvYGHvOc/exec";
 
-    function switchView(mode) {
-      currentMode = mode;
-      const frame = document.getElementById('driveFrame');
-      const btnGrid = document.getElementById('btnGrid');
-      const btnList = document.getElementById('btnList');
+    let allReports = [];
+    let allFolders = [];
+    let filteredReports = [];
+    let selectedCategory = "ALL";
 
-      if (mode === 'grid') {
-        btnGrid.className = "tab-active px-4 py-2 rounded-xl text-xs font-extrabold transition flex items-center gap-2";
-        btnList.className = "tab-inactive px-4 py-2 rounded-xl text-xs font-extrabold transition flex items-center gap-2";
-        frame.src = `https://drive.google.com/embeddedfolderview?id=${FOLDER_ID}#grid`;
+    function renderCategoryPills() {
+      const container = document.getElementById('categoryPills');
+      const categories = [...new Set(allReports.map(r => r.kategori))].filter(Boolean);
+
+      let html = `
+        <button onclick="selectCategory('ALL')" class="${selectedCategory === 'ALL' ? 'pill-active' : 'pill-inactive'} px-3.5 py-2 rounded-full text-xs font-extrabold flex items-center gap-2 transition">
+          <span class="w-2.5 h-2.5 rounded-full ${selectedCategory === 'ALL' ? 'bg-indigo-600' : 'bg-slate-300'}"></span> Semua Kategori
+        </button>
+      `;
+
+      categories.forEach(cat => {
+        const isActive = selectedCategory === cat;
+        html += `
+          <button onclick="selectCategory('${cat.replace(/'/g, "\\'")}')" class="${isActive ? 'pill-active' : 'pill-inactive'} px-3.5 py-2 rounded-full text-xs font-bold flex items-center gap-2 transition">
+            <span class="w-2.5 h-2.5 rounded-full ${isActive ? 'bg-purple-600' : 'bg-slate-300'}"></span> ${cat}
+          </button>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    function selectCategory(cat) {
+      selectedCategory = cat;
+      document.getElementById('activeFolderLabel').innerText = `Kategori: ${cat === 'ALL' ? 'Semua' : cat}`;
+      renderCategoryPills();
+      applyFilters();
+    }
+
+    function applyFilters() {
+      const keyword = document.getElementById('searchInput').value.toLowerCase();
+
+      filteredReports = allReports.filter(item => {
+        const matchCat = selectedCategory === "ALL" || item.kategori === selectedCategory;
+        const matchText = (item.tajuk || "").toLowerCase().includes(keyword) || 
+                          (item.kategori || "").toLowerCase().includes(keyword) ||
+                          (item.keterangan || "").toLowerCase().includes(keyword);
+        return matchCat && matchText;
+      });
+
+      renderReports(filteredReports);
+    }
+
+    function renderFolders(folders) {
+      const section = document.getElementById('foldersSection');
+      const grid = document.getElementById('foldersGrid');
+      document.getElementById('statFolders').innerText = folders.length;
+
+      if (!folders || folders.length === 0) {
+        section.classList.add('hidden');
+        return;
+      }
+
+      section.classList.remove('hidden');
+      grid.innerHTML = folders.map(f => `
+        <div onclick="selectCategory('${f.nama.replace(/'/g, "\\'")}')" class="report-card cursor-pointer bg-white rounded-2xl p-3.5 border border-slate-200 shadow-2xs flex items-center gap-3.5 hover:border-purple-400">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white flex items-center justify-center text-xl shadow-xs shrink-0">
+            <i class="fa-solid fa-folder-open"></i>
+          </div>
+          <div class="overflow-hidden">
+            <h4 class="font-extrabold text-slate-900 text-xs uppercase truncate">${f.nama}</h4>
+            <span class="text-[11px] font-bold text-purple-600">${f.jumlah} Laporan / Foto</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderReports(list) {
+      const grid = document.getElementById('reportsGrid');
+      const count = list.length;
+
+      document.getElementById('statTotal').innerText = allReports.length;
+      document.getElementById('repoHeading').innerText = `Repositori Laporan Bergambar (${allReports.length} Laporan)`;
+      document.getElementById('showingTextLeft').innerText = `Menunjukkan ${count} laporan`;
+      document.getElementById('showingTextBottom').innerText = `Menunjukkan ${count} laporan`;
+
+      if (count === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full bg-white rounded-2xl p-12 text-center border border-dashed border-slate-300">
+            <i class="fa-regular fa-folder-open text-4xl text-slate-300 mb-3"></i>
+            <p class="text-sm font-bold text-slate-500">Tiada laporan bergambar dijumpai untuk carian ini.</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = list.map((item, idx) => `
+        <div class="report-card bg-white rounded-2xl overflow-hidden border border-slate-200/90 shadow-xs flex flex-col justify-between">
+          <div>
+            <!-- Gambar Thumbnail + Tarikh + Ikon Folder Overlay -->
+            <div class="relative h-44 bg-slate-200 overflow-hidden cursor-pointer group" onclick="openModal(${idx})">
+              <img src="${item.thumb}" alt="${item.tajuk}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='https://placehold.co/600x400/e2e8f0/1e3a5f?text=Laporan+Bergambar+JPS'">
+              
+              <!-- Lencana Tarikh Hitam Lutsinar Atas Kiri -->
+              <span class="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-lg bg-slate-900/85 text-white text-[10px] font-bold backdrop-blur-xs shadow-xs">
+                ${item.tarikh}
+              </span>
+
+              <!-- Ikon Folder Visual Bawah Kiri -->
+              <div class="absolute bottom-2.5 left-2.5 w-11 h-9 rounded-lg bg-gradient-to-tr from-indigo-600/95 to-purple-400/95 text-white flex items-center justify-center shadow-md border border-white/40 backdrop-blur-xs">
+                <i class="fa-solid ${item.jenis === 'GAMBAR' ? 'fa-folder-open' : 'fa-file-pdf'} text-base"></i>
+              </div>
+            </div>
+
+            <!-- Tajuk Laporan -->
+            <div class="p-4 pb-3">
+              <span class="text-[10px] font-extrabold text-purple-600 uppercase tracking-wider block mb-1">${item.kategori}</span>
+              <h3 class="font-black text-slate-900 text-xs sm:text-[13px] uppercase leading-snug line-clamp-2" title="${item.tajuk}">
+                ${item.tajuk}
+              </h3>
+            </div>
+          </div>
+
+          <!-- Butang Lihat Laporan Ungu-Merah Jambu -->
+          <div class="px-4 pb-4">
+            <button onclick="openModal(${idx})" class="w-full py-2 btn-lihat text-white text-[11px] font-extrabold uppercase tracking-wider rounded-xl shadow-xs transition active:scale-95">
+              LIHAT LAPORAN
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openModal(idx) {
+      const item = filteredReports[idx];
+      if (!item) return;
+
+      document.getElementById('modalMeta').innerText = `${item.tarikh} • ${item.kategori}`;
+      document.getElementById('modalTitle').innerText = item.tajuk;
+      document.getElementById('modalImg').src = item.thumb;
+      document.getElementById('modalDesc').innerText = item.keterangan;
+      document.getElementById('modalDriveBtn').href = item.url;
+
+      document.getElementById('reportModal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('reportModal').classList.add('hidden');
+    }
+
+    function setSyncStatus(ok) {
+      const badge = document.getElementById('sync-badge');
+      if (ok) {
+        badge.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-emerald-500 mr-2 animate-pulse"></span> Live Sync`;
+        badge.className = "inline-flex items-center px-3.5 py-1.5 rounded-full text-xs font-extrabold bg-white text-emerald-700 shadow-xs";
       } else {
-        btnList.className = "tab-active px-4 py-2 rounded-xl text-xs font-extrabold transition flex items-center gap-2";
-        btnGrid.className = "tab-inactive px-4 py-2 rounded-xl text-xs font-extrabold transition flex items-center gap-2";
-        frame.src = `https://drive.google.com/embeddedfolderview?id=${FOLDER_ID}#list`;
+        badge.innerHTML = `<i class="fa-solid fa-triangle-exclamation mr-1.5"></i> Sila Semak URL API`;
+        badge.className = "inline-flex items-center px-3.5 py-1.5 rounded-full text-xs font-extrabold bg-rose-100 text-rose-700 shadow-xs";
       }
     }
 
-    function reloadDriveFrame() {
-      const frame = document.getElementById('driveFrame');
-      frame.src = `https://drive.google.com/embeddedfolderview?id=${FOLDER_ID}#${currentMode}`;
+    async function fetchDriveData() {
+      const badge = document.getElementById('sync-badge');
+      badge.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-amber-500 mr-2 animate-ping"></span> Menyegerak...`;
+
+      try {
+        const res = await fetch(APPS_SCRIPT_URL);
+        const data = await res.json();
+        allFolders = data.folders || [];
+        allReports = data.reports || [];
+        renderFolders(allFolders);
+        renderCategoryPills();
+        applyFilters();
+        setSyncStatus(true);
+      } catch (err) {
+        try {
+          const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(APPS_SCRIPT_URL)}`;
+          const res = await fetch(proxy);
+          const wrap = await res.json();
+          const data = JSON.parse(wrap.contents);
+          allFolders = data.folders || [];
+          allReports = data.reports || [];
+          renderFolders(allFolders);
+          renderCategoryPills();
+          applyFilters();
+          setSyncStatus(true);
+        } catch (e) {
+          console.error(e);
+          setSyncStatus(false);
+        }
+      }
     }
+
+    window.onload = fetchDriveData;
   </script>
 </body>
 </html>
