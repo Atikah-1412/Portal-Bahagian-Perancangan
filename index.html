@@ -528,8 +528,8 @@
       }
     }
 
-    // 3. ARKIB DOKUMENTASI (GOOGLE DRIVE SYNC + FALLBACK KE DEFAULT_ARKIB_ITEMS)
-    const DRIVE_ARKIB_URL = "https://drive.google.com/uc?export=download&id=1q_iRKCQPqddeUucOw8dlNWsq9wzqPjWR";
+    // 3. ARKIB DOKUMENTASI (GOOGLE APPS SCRIPT SYNC + FALLBACK KE DEFAULT_ARKIB_ITEMS)
+    const ARKIB_SYNC_URL = "https://script.google.com/macros/s/AKfycbyjKPVj31-Txq1P5r8Ib5G1LHPGWzDYJY3LHdp1PQEg_H9_W8DMiNkN_kncq1yV0fV6/exec";
 
     const DEFAULT_ARKIB_ITEMS = [
       {
@@ -555,24 +555,24 @@
     let arkibItems = JSON.parse(localStorage.getItem('dofs_arkib_items_v3')) || [...DEFAULT_ARKIB_ITEMS];
 
     async function syncArkibFromDrive() {
-      if (!DRIVE_ARKIB_URL) {
-        renderArkib();
-        return;
-      }
+      renderArkib();
+
+      if (!ARKIB_SYNC_URL) return;
 
       try {
-        const cacheBuster = (DRIVE_ARKIB_URL.includes('?') ? '&' : '?') + 't=' + Date.now();
-        const res = await fetch(DRIVE_ARKIB_URL + cacheBuster, { cache: 'no-store' });
-        if (!res.ok) throw new Error('Gagal memuatkan fail dari Google Drive');
+        const sep = ARKIB_SYNC_URL.includes('?') ? '&' : '?';
+        const res = await fetch(`${ARKIB_SYNC_URL}${sep}t=${Date.now()}`, {
+          method: 'GET',
+          cache: 'no-store'
+        });
+        if (!res.ok) throw new Error('Gagal memuatkan data arkib');
 
         const remoteData = await res.json();
         if (Array.isArray(remoteData)) {
           arkibItems = remoteData;
           localStorage.setItem('dofs_arkib_items_v3', JSON.stringify(arkibItems));
           renderArkib();
-          return;
         }
-        throw new Error('Format JSON tidak sah');
       } catch (err) {
         if (!localStorage.getItem('dofs_arkib_items_v3')) {
           arkibItems = [...DEFAULT_ARKIB_ITEMS];
