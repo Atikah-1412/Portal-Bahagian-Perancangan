@@ -9,22 +9,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #eef2f6; color: #0f172a; }
-    
-    /* Top Dark Navy Header */
     .top-banner { background: linear-gradient(90deg, #1e3a5f 0%, #2c5282 60%, #1e3a5f 100%); }
-    
-    /* Sub-banner Gradient Bar */
     .repo-banner { background: linear-gradient(90deg, #1e40af 0%, #3b82f6 55%, #60a5fa 100%); }
-
-    /* Card Hover & Folder Badge Effect */
     .report-card { transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
     .report-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(30, 58, 95, 0.14), 0 8px 10px -6px rgba(30, 58, 95, 0.08); }
-
-    /* Button Gradient Purple-Pink */
     .btn-lihat { background: linear-gradient(90deg, #9333ea 0%, #c026d3 100%); }
     .btn-lihat:hover { background: linear-gradient(90deg, #7e22ce 0%, #a21caf 100%); }
-
-    /* Category Pill Active */
     .pill-active { background-color: #ffffff; color: #1e3a5f; border: 1.5px solid #3b82f6; box-shadow: 0 2px 6px rgba(59, 130, 246, 0.2); }
     .pill-inactive { background-color: rgba(255, 255, 255, 0.85); color: #475569; border: 1px solid #cbd5e1; }
     .pill-inactive:hover { background-color: #ffffff; color: #0f172a; }
@@ -32,10 +22,9 @@
 </head>
 <body class="min-h-screen flex flex-col">
 
-  <!-- TOP HEADER BAR DENGAN LOGO RASMI TANPA BULATAN PUTIH -->
+  <!-- TOP HEADER BAR -->
   <header class="top-banner text-white px-6 py-3.5 shadow-md flex flex-wrap items-center justify-between gap-4">
     <div class="flex items-center gap-3.5">
-      <!-- Logo Rasmi Jabatan Perikanan Sabah (Lutsinar tanpa bulatan putih) -->
       <img src="LOGO PERIKANAN UPDATED (2024).png" alt="Logo Jabatan Perikanan Sabah" class="h-12 w-auto object-contain drop-shadow-md" onerror="this.style.display='none'">
       <div class="flex items-center gap-2.5">
         <h1 class="text-lg sm:text-xl font-black tracking-wide uppercase">GALERI LAPORAN BERGAMBAR</h1>
@@ -58,15 +47,10 @@
     <div class="bg-gradient-to-r from-slate-200/80 via-purple-100/60 to-slate-200/80 p-3.5 rounded-2xl border border-slate-300/80 shadow-xs flex flex-wrap items-center justify-between gap-3">
       <div class="relative w-full lg:w-80">
         <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-400 text-xs"></i>
-        <input type="text" id="searchInput" onkeyup="applyFilters()" placeholder="Cari laporan... (Program, Kursus, Lawatan)" class="w-full bg-white border border-slate-200 text-xs text-slate-800 font-semibold rounded-xl pl-9 pr-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-2xs">
+        <input type="text" id="searchInput" onkeyup="applyFilters()" placeholder="Cari folder / aktiviti..." class="w-full bg-white border border-slate-200 text-xs text-slate-800 font-semibold rounded-xl pl-9 pr-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-2xs">
       </div>
 
-      <!-- Dynamic Folder/Category Pills -->
-      <div id="categoryPills" class="flex flex-wrap items-center gap-2 flex-grow">
-        <button onclick="selectCategory('ALL')" class="pill-active px-3.5 py-2 rounded-full text-xs font-extrabold flex items-center gap-2 transition">
-          <span class="w-2.5 h-2.5 rounded-full bg-indigo-600"></span> Semua Kategori
-        </button>
-      </div>
+      <div id="categoryPills" class="flex flex-wrap items-center gap-2 flex-grow"></div>
 
       <button onclick="fetchDriveData()" class="px-4 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-extrabold rounded-xl transition flex items-center gap-2 shadow-sm active:scale-95">
         <i class="fa-solid fa-rotate"></i> Synchronize Data
@@ -75,25 +59,23 @@
 
     <!-- SUB-HEADER BANNER & KPI STAT CARDS -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
-      <!-- Blue Gradient Repository Title -->
       <div class="lg:col-span-8 repo-banner rounded-2xl p-5 text-white shadow-sm flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h2 class="text-xl sm:text-2xl font-black tracking-tight" id="repoHeading">Repositori Laporan Bergambar (0 Laporan)</h2>
-          <p class="text-xs text-blue-100 font-medium mt-1">Bahagian Perancangan • Arkib Digital Foto Aktiviti & Laporan PDF</p>
+          <h2 class="text-xl sm:text-2xl font-black tracking-tight" id="repoHeading">Galeri Foto & Aktiviti (0 Paparan)</h2>
+          <p class="text-xs text-blue-100 font-medium mt-1">Bahagian Perancangan • Arkib Digital Foto Aktiviti & Dokumentasi</p>
         </div>
         <span id="sync-badge" class="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs font-extrabold bg-white text-emerald-700 shadow-xs">
           <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 mr-2 animate-pulse"></span> Live Sync
         </span>
       </div>
 
-      <!-- Mini Stat Cards -->
       <div class="lg:col-span-4 grid grid-cols-2 gap-3">
         <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-2xs flex items-center gap-3">
           <div class="w-11 h-11 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-xl">
-            <i class="fa-solid fa-folder-open"></i>
+            <i class="fa-solid fa-images"></i>
           </div>
           <div>
-            <span class="text-[11px] font-bold text-slate-500 block">Jumlah Laporan:</span>
+            <span class="text-[11px] font-bold text-slate-500 block">Jumlah Foto/Fail:</span>
             <span class="text-2xl font-black text-slate-900" id="statTotal">0</span>
           </div>
         </div>
@@ -103,60 +85,79 @@
             <i class="fa-solid fa-folder-tree"></i>
           </div>
           <div>
-            <span class="text-[11px] font-bold text-slate-500 block">Folder Aktiviti:</span>
+            <span class="text-[11px] font-bold text-slate-500 block">Folder Program:</span>
             <span class="text-2xl font-black text-slate-900" id="statFolders">0</span>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- RECORD COUNTER BAR -->
-    <div class="flex items-center justify-between text-xs font-bold text-slate-600 px-1">
-      <span id="showingTextLeft">Menunjukkan 0 laporan</span>
-      <span id="activeFolderLabel" class="text-purple-700">Kategori: Semua</span>
-    </div>
-
-    <!-- FOLDER CARDS SECTION (JIKA ADA SUBFOLDER DI DRIVE) -->
+    <!-- BREADCRUMB & FOLDER UTAMA -->
     <div id="foldersSection" class="hidden space-y-2.5">
-      <h3 class="text-xs font-black uppercase tracking-wider text-slate-500 flex items-center gap-2">
-        <i class="fa-solid fa-folder text-purple-600"></i> Folder Kategori / Program
-      </h3>
-      <div id="foldersGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <h3 class="text-xs font-black uppercase tracking-wider text-slate-600 flex items-center gap-2">
+          <i class="fa-solid fa-folder text-purple-600"></i> Folder Kategori / Program
+        </h3>
+        <button onclick="selectCategory('ALL')" id="btnResetFolder" class="hidden text-xs font-extrabold text-purple-700 hover:underline">
+          <i class="fa-solid fa-arrow-left mr-1"></i> Papar Semua Folder Utama
+        </button>
+      </div>
+      <div id="foldersGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5"></div>
     </div>
 
-    <!-- GALLERY CARDS GRID (THUMBNAIL + FOLDER OVERLAY + TAJUK BESAR) -->
+    <!-- SUB-FOLDER SECTION (MUNCUL APABILA FOLDER SEPERTI FOLDER 6 MEMPUNYAI SUB-FOLDER DI DALAMNYA) -->
+    <div id="subFoldersSection" class="hidden bg-white p-4 rounded-2xl border border-purple-200 shadow-2xs space-y-3">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-2.5">
+        <div class="flex items-center gap-2 text-xs font-black text-purple-800 uppercase">
+          <i class="fa-solid fa-folder-tree text-purple-600"></i>
+          <span id="subFolderHeading">Sub-Folder Di Dalam Kategori Ini</span>
+        </div>
+        <button onclick="selectSubFolder('ALL')" id="btnResetSubFolder" class="hidden px-3 py-1 bg-purple-100 hover:bg-purple-200 text-purple-800 rounded-lg text-[11px] font-extrabold transition">
+          <i class="fa-solid fa-layer-group mr-1"></i> Papar Semua Sub-Folder
+        </button>
+      </div>
+      <div id="subFoldersGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+    </div>
+
+    <!-- RECORD COUNTER BAR -->
+    <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-bold text-slate-600 px-1 pt-2 border-t border-slate-200">
+      <span id="showingTextLeft">Menunjukkan 0 paparan</span>
+      <span id="activeFolderLabel" class="text-purple-700">Lokasi: Semua Program</span>
+    </div>
+
+    <!-- GALLERY CARDS GRID -->
     <div id="reportsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"></div>
 
   </main>
 
   <!-- FOOTER -->
   <footer class="max-w-7xl w-full mx-auto px-6 py-4 flex flex-wrap items-center justify-between text-xs font-bold text-slate-500 border-t border-slate-200 mt-6">
-    <span id="showingTextBottom">Menunjukkan 0 laporan</span>
+    <span id="showingTextBottom">Menunjukkan 0 paparan</span>
     <span>© 2026 JABATAN PERIKANAN SABAH</span>
   </footer>
 
-  <!-- MODAL PAPARAN PENUH LAPORAN -->
-  <div id="reportModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 hidden">
-    <div class="bg-white rounded-3xl max-w-3xl w-full overflow-hidden shadow-2xl border border-slate-200 flex flex-col max-h-[90vh]">
-      <div class="px-6 py-4 border-b bg-slate-50 flex items-center justify-between">
+  <!-- MODAL PAPARAN PENUH -->
+  <div id="reportModal" class="fixed inset-0 bg-slate-900/85 backdrop-blur-sm flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-white rounded-3xl max-w-4xl w-full overflow-hidden shadow-2xl border border-slate-200 flex flex-col max-h-[92vh]">
+      <div class="px-6 py-4 border-b bg-slate-50 flex items-center justify-between gap-4">
         <div>
-          <span id="modalMeta" class="text-[11px] font-extrabold text-purple-700 uppercase tracking-wider">TARIKH • KATEGORI</span>
-          <h3 id="modalTitle" class="font-black text-slate-900 text-base sm:text-lg mt-0.5">Tajuk Laporan</h3>
+          <span id="modalDate" class="text-[11px] font-extrabold text-purple-700 uppercase tracking-wider">TARIKH</span>
+          <h3 id="modalFolderTitle" class="font-black text-slate-900 text-sm sm:text-base mt-0.5">Nama Folder Program</h3>
         </div>
-        <button onclick="closeModal()" class="w-9 h-9 rounded-full bg-white border border-slate-200 text-slate-500 hover:text-slate-900 flex items-center justify-center transition">
+        <button onclick="closeModal()" class="w-9 h-9 rounded-full bg-white border border-slate-200 text-slate-500 hover:text-slate-900 flex items-center justify-center transition shrink-0">
           <i class="fa-solid fa-xmark text-lg"></i>
         </button>
       </div>
 
-      <div class="p-6 overflow-y-auto flex flex-col items-center bg-slate-100/70">
-        <img id="modalImg" src="" alt="Pratonton Laporan" class="max-h-[55vh] rounded-2xl shadow-md object-contain bg-white border border-slate-200">
-        <p id="modalDesc" class="text-xs text-slate-600 font-medium mt-4 bg-white p-4 rounded-2xl border border-slate-200 w-full leading-relaxed"></p>
+      <div class="p-3 sm:p-5 overflow-y-auto flex flex-col items-center justify-center bg-slate-900 min-h-[55vh]">
+        <img id="modalImg" src="" alt="Paparan Penuh" class="max-h-[65vh] rounded-xl shadow-lg object-contain hidden">
+        <iframe id="modalPlayer" src="" class="w-full h-[62vh] rounded-xl border-0 bg-black hidden" allow="autoplay; fullscreen" allowfullscreen></iframe>
       </div>
 
       <div class="px-6 py-4 border-t bg-white flex justify-end gap-3">
         <button onclick="closeModal()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition">Tutup</button>
         <a id="modalDriveBtn" href="#" target="_blank" class="px-5 py-2.5 btn-lihat text-white text-xs font-extrabold rounded-xl transition flex items-center gap-2 shadow-md">
-          <i class="fa-solid fa-arrow-up-right-from-square"></i> Buka Fail Penuh Di Drive
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> Buka Di Google Drive
         </a>
       </div>
     </div>
@@ -169,14 +170,21 @@
     let allFolders = [];
     let filteredReports = [];
     let selectedCategory = "ALL";
+    let selectedSubFolder = "ALL";
+
+    function naturalSort(a, b) {
+      return a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' });
+    }
 
     function renderCategoryPills() {
       const container = document.getElementById('categoryPills');
-      const categories = [...new Set(allReports.map(r => r.kategori))].filter(Boolean);
+      const categories = [...new Set(allReports.map(r => r.kategori))]
+        .filter(Boolean)
+        .sort(naturalSort);
 
       let html = `
         <button onclick="selectCategory('ALL')" class="${selectedCategory === 'ALL' ? 'pill-active' : 'pill-inactive'} px-3.5 py-2 rounded-full text-xs font-extrabold flex items-center gap-2 transition">
-          <span class="w-2.5 h-2.5 rounded-full ${selectedCategory === 'ALL' ? 'bg-indigo-600' : 'bg-slate-300'}"></span> Semua Kategori
+          <span class="w-2.5 h-2.5 rounded-full ${selectedCategory === 'ALL' ? 'bg-indigo-600' : 'bg-slate-300'}"></span> Semua Program
         </button>
       `;
 
@@ -194,20 +202,94 @@
 
     function selectCategory(cat) {
       selectedCategory = cat;
-      document.getElementById('activeFolderLabel').innerText = `Kategori: ${cat === 'ALL' ? 'Semua' : cat}`;
+      selectedSubFolder = "ALL"; // Reset sub-folder apabila tukar folder utama
+
+      const btnReset = document.getElementById('btnResetFolder');
+      if (btnReset) {
+        if (cat === 'ALL') btnReset.classList.add('hidden');
+        else btnReset.classList.remove('hidden');
+      }
+
       renderCategoryPills();
+      renderFolders(allFolders);
+      renderSubFolders();
       applyFilters();
+    }
+
+    function selectSubFolder(sub) {
+      selectedSubFolder = sub;
+      renderSubFolders();
+      applyFilters();
+    }
+
+    function renderSubFolders() {
+      const section = document.getElementById('subFoldersSection');
+      const grid = document.getElementById('subFoldersGrid');
+      const btnResetSub = document.getElementById('btnResetSubFolder');
+
+      if (selectedCategory === "ALL") {
+        section.classList.add('hidden');
+        return;
+      }
+
+      // Cari semua sub-folder unik di dalam folder utama yang dipilih
+      const itemsInCat = allReports.filter(r => r.kategori === selectedCategory);
+      const subNames = [...new Set(itemsInCat.map(r => r.subfolder).filter(s => s && s.trim() !== ""))].sort(naturalSort);
+
+      if (subNames.length === 0) {
+        section.classList.add('hidden');
+        return;
+      }
+
+      section.classList.remove('hidden');
+      document.getElementById('subFolderHeading').innerText = `Sub-Folder Di Dalam: ${selectedCategory}`;
+      
+      if (selectedSubFolder === "ALL") btnResetSub.classList.add('hidden');
+      else btnResetSub.classList.remove('hidden');
+
+      grid.innerHTML = subNames.map(sub => {
+        const count = itemsInCat.filter(r => r.subfolder === sub).length;
+        const isSelected = selectedSubFolder === sub;
+        return `
+          <div onclick="selectSubFolder('${sub.replace(/'/g, "\\'")}')" class="cursor-pointer rounded-xl p-3 border transition flex items-center gap-3 ${isSelected ? 'bg-indigo-600 text-white border-indigo-700 shadow-sm' : 'bg-slate-50 hover:bg-purple-50 text-slate-800 border-slate-200 hover:border-purple-300'}">
+            <div class="w-9 h-9 rounded-lg ${isSelected ? 'bg-white/20 text-white' : 'bg-purple-100 text-purple-700'} flex items-center justify-center shrink-0">
+              <i class="fa-solid fa-folder"></i>
+            </div>
+            <div class="overflow-hidden">
+              <h5 class="font-extrabold text-xs leading-snug line-clamp-2" title="${sub}">${sub}</h5>
+              <span class="text-[10px] font-bold ${isSelected ? 'text-indigo-100' : 'text-slate-500'}">${count} Fail</span>
+            </div>
+          </div>
+        `;
+      }).join('');
     }
 
     function applyFilters() {
       const keyword = document.getElementById('searchInput').value.toLowerCase();
 
+      // Kemas kini label lokasi semasa
+      let locationText = selectedCategory === 'ALL' ? 'Semua Program' : selectedCategory;
+      if (selectedSubFolder !== 'ALL') {
+        locationText += ` › ${selectedSubFolder}`;
+      }
+      document.getElementById('activeFolderLabel').innerText = `Lokasi: ${locationText}`;
+
       filteredReports = allReports.filter(item => {
         const matchCat = selectedCategory === "ALL" || item.kategori === selectedCategory;
-        const matchText = (item.tajuk || "").toLowerCase().includes(keyword) || 
-                          (item.kategori || "").toLowerCase().includes(keyword) ||
-                          (item.keterangan || "").toLowerCase().includes(keyword);
-        return matchCat && matchText;
+        const matchSub = selectedSubFolder === "ALL" || item.subfolder === selectedSubFolder;
+        const matchText = (item.kategori || "").toLowerCase().includes(keyword) || 
+                          (item.subfolder || "").toLowerCase().includes(keyword) || 
+                          (item.tarikh || "").toLowerCase().includes(keyword);
+        return matchCat && matchSub && matchText;
+      });
+
+      // Susun mengikut nombor folder utama -> nombor sub-folder -> tarikh
+      filteredReports.sort((a, b) => {
+        const catOrder = naturalSort(a.kategori || "", b.kategori || "");
+        if (catOrder !== 0) return catOrder;
+        const subOrder = naturalSort(a.subfolder || "", b.subfolder || "");
+        if (subOrder !== 0) return subOrder;
+        return (b.timestamp || 0) - (a.timestamp || 0);
       });
 
       renderReports(filteredReports);
@@ -216,25 +298,46 @@
     function renderFolders(folders) {
       const section = document.getElementById('foldersSection');
       const grid = document.getElementById('foldersGrid');
-      document.getElementById('statFolders').innerText = folders.length;
+      
+      const sortedFolders = [...folders].sort((a, b) => naturalSort(a.nama || "", b.nama || ""));
+      document.getElementById('statFolders').innerText = sortedFolders.length;
 
-      if (!folders || folders.length === 0) {
+      if (!sortedFolders || sortedFolders.length === 0) {
         section.classList.add('hidden');
         return;
       }
 
       section.classList.remove('hidden');
-      grid.innerHTML = folders.map(f => `
-        <div onclick="selectCategory('${f.nama.replace(/'/g, "\\'")}')" class="report-card cursor-pointer bg-white rounded-2xl p-3.5 border border-slate-200 shadow-2xs flex items-center gap-3.5 hover:border-purple-400">
-          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white flex items-center justify-center text-xl shadow-xs shrink-0">
-            <i class="fa-solid fa-folder-open"></i>
+      grid.innerHTML = sortedFolders.map(f => {
+        const isSelected = selectedCategory === f.nama;
+        return `
+          <div onclick="selectCategory('${f.nama.replace(/'/g, "\\'")}')" class="report-card cursor-pointer rounded-2xl p-3.5 border transition flex items-center gap-3.5 ${isSelected ? 'bg-purple-50 border-purple-500 ring-2 ring-purple-200 shadow-sm' : 'bg-white border-slate-200 shadow-2xs hover:border-purple-400'}">
+            <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-indigo-600 to-purple-600 text-white flex items-center justify-center text-lg shadow-xs shrink-0">
+              <i class="fa-solid fa-folder-open"></i>
+            </div>
+            <div class="overflow-hidden">
+              <h4 class="font-extrabold text-slate-900 text-xs leading-snug line-clamp-2" title="${f.nama}">${f.nama}</h4>
+              <span class="text-[11px] font-bold text-purple-600 mt-0.5 block">${f.jumlah} Fail</span>
+            </div>
           </div>
-          <div class="overflow-hidden">
-            <h4 class="font-extrabold text-slate-900 text-xs uppercase truncate">${f.nama}</h4>
-            <span class="text-[11px] font-bold text-purple-600">${f.jumlah} Laporan / Foto</span>
-          </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
+    }
+
+    function getMediaInfo(item) {
+      const tajukLower = (item.tajuk || "").toLowerCase();
+      const urlLower = (item.url || "").toLowerCase();
+      const isVideo = item.jenis === "VIDEO" || tajukLower.startsWith("vid") || 
+                      tajukLower.includes("video") || tajukLower.endsWith(".mp4") || 
+                      tajukLower.endsWith(".mov") || urlLower.includes("video");
+      
+      if (isVideo) {
+        return { type: "VIDEO", label: "TONTON VIDEO", icon: "fa-circle-play", badge: "VIDEO" };
+      }
+      if (item.jenis === "GAMBAR") {
+        return { type: "GAMBAR", label: "LIHAT GAMBAR", icon: "fa-image", badge: "FOTO" };
+      }
+      return { type: "DOKUMEN", label: "BUKA DOKUMEN", icon: "fa-file-pdf", badge: "DOKUMEN" };
     }
 
     function renderReports(list) {
@@ -242,71 +345,106 @@
       const count = list.length;
 
       document.getElementById('statTotal').innerText = allReports.length;
-      document.getElementById('repoHeading').innerText = `Repositori Laporan Bergambar (${allReports.length} Laporan)`;
-      document.getElementById('showingTextLeft').innerText = `Menunjukkan ${count} laporan`;
-      document.getElementById('showingTextBottom').innerText = `Menunjukkan ${count} laporan`;
+      document.getElementById('repoHeading').innerText = `Galeri Foto & Aktiviti (${allReports.length} Paparan)`;
+      document.getElementById('showingTextLeft').innerText = `Menunjukkan ${count} paparan`;
+      document.getElementById('showingTextBottom').innerText = `Menunjukkan ${count} paparan`;
 
       if (count === 0) {
         grid.innerHTML = `
           <div class="col-span-full bg-white rounded-2xl p-12 text-center border border-dashed border-slate-300">
-            <i class="fa-regular fa-folder-open text-4xl text-slate-300 mb-3"></i>
-            <p class="text-sm font-bold text-slate-500">Tiada laporan bergambar dijumpai untuk carian ini.</p>
+            <i class="fa-regular fa-images text-4xl text-slate-300 mb-3"></i>
+            <p class="text-sm font-bold text-slate-500">Tiada gambar atau fail dijumpai untuk pilihan ini.</p>
           </div>
         `;
         return;
       }
 
-      grid.innerHTML = list.map((item, idx) => `
-        <div class="report-card bg-white rounded-2xl overflow-hidden border border-slate-200/90 shadow-xs flex flex-col justify-between">
-          <div>
-            <!-- Gambar Thumbnail + Tarikh + Ikon Folder Overlay -->
-            <div class="relative h-44 bg-slate-200 overflow-hidden cursor-pointer group" onclick="openModal(${idx})">
-              <img src="${item.thumb}" alt="${item.tajuk}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='https://placehold.co/600x400/e2e8f0/1e3a5f?text=Laporan+Bergambar+JPS'">
-              
-              <!-- Lencana Tarikh Hitam Lutsinar Atas Kiri -->
-              <span class="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-lg bg-slate-900/85 text-white text-[10px] font-bold backdrop-blur-xs shadow-xs">
-                ${item.tarikh}
-              </span>
+      grid.innerHTML = list.map((item, idx) => {
+        const media = getMediaInfo(item);
+        // Jika ada sub-folder, paparkan nama sub-folder sebagai tajuk kad; jika tiada, paparkan nama folder utama
+        const displayTitle = item.subfolder ? item.subfolder : item.kategori;
 
-              <!-- Ikon Folder Visual Bawah Kiri -->
-              <div class="absolute bottom-2.5 left-2.5 w-11 h-9 rounded-lg bg-gradient-to-tr from-indigo-600/95 to-purple-400/95 text-white flex items-center justify-center shadow-md border border-white/40 backdrop-blur-xs">
-                <i class="fa-solid ${item.jenis === 'GAMBAR' ? 'fa-folder-open' : 'fa-file-pdf'} text-base"></i>
+        return `
+          <div class="report-card bg-white rounded-2xl overflow-hidden border border-slate-200/90 shadow-xs flex flex-col justify-between">
+            <div>
+              <div class="relative h-48 bg-slate-200 overflow-hidden cursor-pointer group" onclick="openModal(${idx})">
+                <img src="${item.thumb}" alt="${displayTitle}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='https://placehold.co/600x400/e2e8f0/1e3a5f?text=Galeri+JPS'">
+                
+                <span class="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-lg bg-slate-900/80 text-white text-[10px] font-bold backdrop-blur-xs shadow-xs">
+                  ${item.tarikh}
+                </span>
+
+                ${media.type === 'VIDEO' ? `
+                  <div class="absolute inset-0 bg-slate-900/25 flex items-center justify-center group-hover:bg-slate-900/40 transition">
+                    <div class="w-12 h-12 rounded-full bg-white/95 text-purple-700 flex items-center justify-center text-2xl shadow-lg group-hover:scale-110 transition">
+                      <i class="fa-solid fa-play ml-0.5"></i>
+                    </div>
+                  </div>
+                ` : ''}
+
+                <div class="absolute bottom-2.5 left-2.5 px-2.5 py-1 rounded-lg bg-gradient-to-tr from-indigo-600/95 to-purple-500/95 text-white flex items-center gap-1.5 shadow-md border border-white/30 backdrop-blur-xs text-[10px] font-extrabold">
+                  <i class="fa-solid ${media.icon}"></i>
+                  <span>${media.badge}</span>
+                </div>
+              </div>
+
+              <div class="p-4 pb-3">
+                ${item.subfolder ? `<span class="text-[10px] font-bold text-purple-600 block mb-0.5 truncate">${item.kategori}</span>` : ''}
+                <h3 class="font-extrabold text-slate-900 text-xs leading-snug line-clamp-2" title="${displayTitle}">
+                  ${displayTitle}
+                </h3>
               </div>
             </div>
 
-            <!-- Tajuk Laporan -->
-            <div class="p-4 pb-3">
-              <span class="text-[10px] font-extrabold text-purple-600 uppercase tracking-wider block mb-1">${item.kategori}</span>
-              <h3 class="font-black text-slate-900 text-xs sm:text-[13px] uppercase leading-snug line-clamp-2" title="${item.tajuk}">
-                ${item.tajuk}
-              </h3>
+            <div class="px-4 pb-4">
+              <button onclick="openModal(${idx})" class="w-full py-2.5 btn-lihat text-white text-[11px] font-extrabold uppercase tracking-wider rounded-xl shadow-xs transition active:scale-95 flex items-center justify-center gap-2">
+                <i class="fa-solid ${media.icon}"></i>
+                <span>${media.label}</span>
+              </button>
             </div>
           </div>
+        `;
+      }).join('');
+    }
 
-          <!-- Butang Lihat Laporan Ungu-Merah Jambu -->
-          <div class="px-4 pb-4">
-            <button onclick="openModal(${idx})" class="w-full py-2 btn-lihat text-white text-[11px] font-extrabold uppercase tracking-wider rounded-xl shadow-xs transition active:scale-95">
-              LIHAT LAPORAN
-            </button>
-          </div>
-        </div>
-      `).join('');
+    function getDriveFileId(item) {
+      if (item.id) return item.id;
+      const match = (item.url || "").match(/[-\w]{25,}/);
+      return match ? match[0] : "";
     }
 
     function openModal(idx) {
       const item = filteredReports[idx];
       if (!item) return;
 
-      document.getElementById('modalMeta').innerText = `${item.tarikh} • ${item.kategori}`;
-      document.getElementById('modalTitle').innerText = item.tajuk;
-      document.getElementById('modalImg').src = item.thumb;
-      document.getElementById('modalDesc').innerText = item.keterangan;
+      const media = getMediaInfo(item);
+      const imgEl = document.getElementById('modalImg');
+      const playerEl = document.getElementById('modalPlayer');
+
+      document.getElementById('modalDate').innerText = item.tarikh;
+      document.getElementById('modalFolderTitle').innerText = item.subfolder ? `${item.kategori} › ${item.subfolder}` : item.kategori;
       document.getElementById('modalDriveBtn').href = item.url;
+
+      if (media.type === "VIDEO" || media.type === "DOKUMEN") {
+        imgEl.classList.add('hidden');
+        imgEl.src = "";
+        const fileId = getDriveFileId(item);
+        playerEl.src = `https://drive.google.com/file/d/${fileId}/preview`;
+        playerEl.classList.remove('hidden');
+      } else {
+        playerEl.classList.add('hidden');
+        playerEl.src = "";
+        imgEl.src = item.thumb;
+        imgEl.classList.remove('hidden');
+      }
 
       document.getElementById('reportModal').classList.remove('hidden');
     }
 
     function closeModal() {
+      const playerEl = document.getElementById('modalPlayer');
+      playerEl.src = "";
+      playerEl.classList.add('hidden');
       document.getElementById('reportModal').classList.add('hidden');
     }
 
@@ -316,7 +454,7 @@
         badge.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-emerald-500 mr-2 animate-pulse"></span> Live Sync`;
         badge.className = "inline-flex items-center px-3.5 py-1.5 rounded-full text-xs font-extrabold bg-white text-emerald-700 shadow-xs";
       } else {
-        badge.innerHTML = `<i class="fa-solid fa-triangle-exclamation mr-1.5"></i> Sila Semak URL API`;
+        badge.innerHTML = `<i class="fa-solid fa-triangle-exclamation mr-1.5"></i> Ralat Sambungan`;
         badge.className = "inline-flex items-center px-3.5 py-1.5 rounded-full text-xs font-extrabold bg-rose-100 text-rose-700 shadow-xs";
       }
     }
@@ -332,6 +470,7 @@
         allReports = data.reports || [];
         renderFolders(allFolders);
         renderCategoryPills();
+        renderSubFolders();
         applyFilters();
         setSyncStatus(true);
       } catch (err) {
@@ -344,6 +483,7 @@
           allReports = data.reports || [];
           renderFolders(allFolders);
           renderCategoryPills();
+          renderSubFolders();
           applyFilters();
           setSyncStatus(true);
         } catch (e) {
