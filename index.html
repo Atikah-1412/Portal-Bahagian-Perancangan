@@ -528,7 +528,9 @@
       }
     }
 
-    // 3. ARKIB DOKUMENTASI (IKON PINTAR & AUTO-HIDE)
+    // 3. ARKIB DOKUMENTASI (GOOGLE DRIVE SYNC + FALLBACK KE DEFAULT_ARKIB_ITEMS)
+    const DRIVE_ARKIB_URL = "https://drive.google.com/uc?export=download&id=1q_iRKCQPqddeUucOw8dlNWsq9wzqPjWR";
+
     const DEFAULT_ARKIB_ITEMS = [
       {
         tajuk: "Laporan Tahunan Jabatan Perikanan Sabah 2025",
@@ -550,7 +552,34 @@
       }
     ];
 
-    let arkibItems = JSON.parse(localStorage.getItem('dofs_arkib_items_v3')) || DEFAULT_ARKIB_ITEMS;
+    let arkibItems = JSON.parse(localStorage.getItem('dofs_arkib_items_v3')) || [...DEFAULT_ARKIB_ITEMS];
+
+    async function syncArkibFromDrive() {
+      if (!DRIVE_ARKIB_URL) {
+        renderArkib();
+        return;
+      }
+
+      try {
+        const cacheBuster = (DRIVE_ARKIB_URL.includes('?') ? '&' : '?') + 't=' + Date.now();
+        const res = await fetch(DRIVE_ARKIB_URL + cacheBuster, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Gagal memuatkan fail dari Google Drive');
+
+        const remoteData = await res.json();
+        if (Array.isArray(remoteData)) {
+          arkibItems = remoteData;
+          localStorage.setItem('dofs_arkib_items_v3', JSON.stringify(arkibItems));
+          renderArkib();
+          return;
+        }
+        throw new Error('Format JSON tidak sah');
+      } catch (err) {
+        if (!localStorage.getItem('dofs_arkib_items_v3')) {
+          arkibItems = [...DEFAULT_ARKIB_ITEMS];
+        }
+        renderArkib();
+      }
+    }
 
     function resolveDocVisual(item) {
       const titleLower = (item.tajuk || '').toLowerCase();
@@ -678,7 +707,7 @@
       renderArkib();
     }
 
-    renderArkib();
+    syncArkibFromDrive();
 
     // 4. DASHBOARD NAVIGATION SYSTEM
     function openDashboard(filePath, title, type) {
