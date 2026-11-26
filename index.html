@@ -565,9 +565,11 @@
           method: 'GET',
           cache: 'no-store'
         });
-        if (!res.ok) throw new Error('Gagal memuatkan data arkib');
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
-        const remoteData = await res.json();
+        const text = await res.text();
+        const remoteData = JSON.parse(text);
+
         if (Array.isArray(remoteData)) {
           arkibItems = remoteData;
           localStorage.setItem('dofs_arkib_items_v3', JSON.stringify(arkibItems));
