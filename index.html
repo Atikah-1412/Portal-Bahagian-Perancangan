@@ -39,7 +39,11 @@
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
     }
     .nav-brand { display: flex; align-items: center; gap: 12px; }
-    .nav-logo-img { height: 42px; width: auto; object-fit: contain; filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.25)); }
+    .nav-logo-img {
+      height: 46px; width: auto; object-fit: contain; padding: 4px 8px; border-radius: 10px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.94) 0%, rgba(224, 242, 254, 0.8) 70%, rgba(255, 255, 255, 0) 100%);
+      box-shadow: 0 0 14px rgba(255, 255, 255, 0.3); filter: contrast(1.08);
+    }
     .nav-title {
       font-weight: 800; font-size: 0.95rem; letter-spacing: 0.3px;
       background: linear-gradient(135deg, #ffffff 30%, #a5f3fc 100%);
@@ -78,11 +82,19 @@
       position: relative; z-index: 1; min-height: 100vh; display: flex; flex-direction: column;
       justify-content: center; align-items: center; padding: 48px 24px 36px;
     }
-    .hero-header { text-align: center; max-width: 900px; margin-bottom: 34px; display: flex; flex-direction: column; align-items: center; }
+    .hero-header { text-align: center; max-width: 960px; margin-bottom: 34px; display: flex; flex-direction: column; align-items: center; }
+
+    /* Logo Rasmi Jabatan Perikanan Sabah (Lapisan kontras cerah lembut agar teks jelas) */
     .hero-logo {
-      height: 76px; width: auto; object-fit: contain; margin-bottom: 16px;
-      filter: drop-shadow(0 6px 18px rgba(255, 255, 255, 0.18));
+      height: 98px; width: auto; object-fit: contain; margin-bottom: 16px;
+      padding: 10px 16px; border-radius: 20px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.92) 0%, rgba(224, 242, 254, 0.78) 65%, rgba(255, 255, 255, 0) 100%);
+      box-shadow: 0 0 28px rgba(255, 255, 255, 0.35);
+      filter: contrast(1.08);
+      transition: transform 0.3s ease;
     }
+    .hero-logo:hover { transform: scale(1.04); }
+
     .hero-meta-row {
       display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; margin-bottom: 18px;
     }
@@ -93,11 +105,13 @@
       letter-spacing: 0.7px; box-shadow: 0 0 25px rgba(99, 102, 241, 0.25);
     }
     .widget-pill {
-      display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px;
+      display: inline-flex; align-items: center; gap: 8px; padding: 8px 15px;
       background: rgba(15, 23, 42, 0.75); border: 1px solid rgba(255, 255, 255, 0.12);
       backdrop-filter: blur(12px); border-radius: 30px; color: #e2e8f0;
-      font-size: 0.78rem; font-weight: 700;
+      font-size: 0.76rem; font-weight: 700; transition: border-color 0.25s ease;
     }
+    .widget-pill.clickable { cursor: pointer; }
+    .widget-pill.clickable:hover { border-color: rgba(56, 189, 248, 0.55); color: #fff; }
     .badge-pulse { width: 9px; height: 9px; background-color: #10b981; border-radius: 50%; box-shadow: 0 0 12px #10b981; animation: pulse 1.5s infinite; }
     @keyframes pulse { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(1.3); } 100% { opacity: 1; transform: scale(1); } }
     .hero-header h1 {
@@ -161,7 +175,7 @@
     .card-galeri .btn-open { background: linear-gradient(135deg, #a855f7, #ec4899); color: #fff; box-shadow: 0 8px 25px rgba(168, 85, 247, 0.4); }
     .btn-open:hover { filter: brightness(1.18); transform: translateZ(40px) scale(1.02); }
 
-    /* Arkib Minit Mesyuarat & Slide Pembentangan (Glass Section - Auto Hide if empty) */
+    /* Panel Arkib Dokumentasi (Auto Hide jika kosong) */
     .arkib-panel {
       width: 100%; max-width: 1320px; margin-top: 26px;
       background: rgba(15, 23, 42, 0.65); border: 1px solid rgba(255, 255, 255, 0.1);
@@ -194,22 +208,25 @@
     .arkib-item:hover {
       background: rgba(30, 41, 59, 0.75); border-color: rgba(56, 189, 248, 0.45); transform: translateY(-2px);
     }
-    /* Ikon Dokumen Padat (Kecil & Kemas) */
+
+    /* Ikon Dokumen Pintar & Padat */
     .arkib-icon {
-      width: 38px; height: 38px; border-radius: 10px; display: flex; flex-direction: column;
-      align-items: center; justify-content: center; flex-shrink: 0; font-size: 13px;
+      width: 42px; height: 42px; border-radius: 11px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; flex-shrink: 0; font-size: 14px;
     }
-    .arkib-icon span { font-size: 7px; font-weight: 900; margin-top: 2px; letter-spacing: 0.4px; }
-    .icon-pdf { background: rgba(244, 63, 94, 0.18); border: 1px solid rgba(244, 63, 94, 0.4); color: #fda4af; }
-    .icon-pptx { background: rgba(245, 158, 11, 0.18); border: 1px solid rgba(245, 158, 11, 0.4); color: #fcd34d; }
-    .icon-drive { background: rgba(14, 165, 233, 0.18); border: 1px solid rgba(14, 165, 233, 0.4); color: #7dd3fc; }
+    .arkib-icon span { font-size: 6.5px; font-weight: 900; margin-top: 2px; letter-spacing: 0.4px; }
+    .icon-book { background: rgba(16, 185, 129, 0.18); border: 1px solid rgba(16, 185, 129, 0.4); color: #6ee7b7; }
+    .icon-minit { background: rgba(56, 189, 248, 0.18); border: 1px solid rgba(56, 189, 248, 0.4); color: #7dd3fc; }
+    .icon-slide { background: rgba(245, 158, 11, 0.18); border: 1px solid rgba(245, 158, 11, 0.4); color: #fcd34d; }
+    .icon-dasar { background: rgba(168, 85, 247, 0.18); border: 1px solid rgba(168, 85, 247, 0.4); color: #d8b4fe; }
+    .icon-general { background: rgba(99, 102, 241, 0.18); border: 1px solid rgba(99, 102, 241, 0.4); color: #a5b4fc; }
 
     .arkib-info { flex: 1; min-width: 0; }
     .arkib-info h4 { font-size: 0.84rem; font-weight: 700; color: #f8fafc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 3px; }
     .arkib-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.72rem; color: #94a3b8; }
     .arkib-action { color: #38bdf8; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; }
 
-    /* Modal Urus Arkib */
+    /* Modal Urus Dokumen */
     .modal-backdrop {
       display: none; position: fixed; inset: 0; background: rgba(2, 6, 23, 0.85);
       backdrop-filter: blur(8px); z-index: 2000; align-items: center; justify-content: center; padding: 20px;
@@ -305,7 +322,7 @@
   <!-- LANDING PAGE -->
   <div class="landing-wrapper" id="landingPage">
     <div class="hero-header">
-      <!-- Logo Rasmi Jabatan Perikanan Sabah (Tanpa bulatan/kotak putih) -->
+      <!-- Logo Rasmi Jabatan Perikanan Sabah -->
       <img src="LOGO PERIKANAN UPDATED (2024).png" alt="Logo Jabatan Perikanan Sabah" class="hero-logo" onerror="this.style.display='none'">
 
       <div class="hero-meta-row">
@@ -325,13 +342,19 @@
           <i class="fa-solid fa-cloud-sun" style="color: #fbbf24;" id="weatherIcon"></i>
           <span id="heroWeather">Kota Kinabalu: 30°C</span>
         </div>
+
+        <!-- Widget Pasang Surut Sabah (Klik untuk kemas kini catatan pasang surut) -->
+        <div class="widget-pill clickable" id="heroTidePill" onclick="editTideInfo()" title="Klik untuk kemas kini catatan pasang surut Sabah">
+          <i class="fa-solid fa-water" style="color: #38bdf8;"></i>
+          <span id="heroTide">Pasang Surut KK: 1.8m (21:15)</span>
+        </div>
       </div>
 
       <h1>Pusat Pemantauan & Repositori Utama</h1>
       <p>Akses pantas kepada analisa pencapaian KPI, slaid pembentangan mesyuarat pembangunan, repositori dokumen dasar & pekeliling DOFS, serta galeri laporan bergambar.</p>
     </div>
 
-    <!-- 4 KAD UTAMA (KEKAL KONSEP ASAL) -->
+    <!-- 4 KAD UTAMA -->
     <div class="card-container">
       <!-- Kad 1: KPI -->
       <div class="dash-card card-kpi" id="cardKpi">
@@ -386,15 +409,15 @@
       </div>
     </div>
 
-    <!-- PANEL ARKIB MINIT MESYUARAT & SLIDE PEMBENTANGAN (MUNCUL BILA ADA DOKUMEN) -->
+    <!-- PANEL ARKIB DOKUMENTASI (MUNCUL BILA ADA DOKUMEN) -->
     <div class="arkib-panel" id="arkibSection">
       <div class="arkib-header">
         <div class="arkib-title">
           <i class="fa-solid fa-box-archive" style="color: #38bdf8;"></i>
-          <span>Arkib Minit Mesyuarat & Slide Pembentangan</span>
+          <span>Arkib Dokumentasi</span>
         </div>
         <button class="btn-edit-arkib" onclick="playClickSound(); openArkibModal()">
-          <i class="fa-solid fa-pen-to-square"></i> Urus / Tambah Arkib
+          <i class="fa-solid fa-pen-to-square"></i> Urus Dokumen
         </button>
       </div>
       <div class="arkib-grid" id="arkibGrid"></div>
@@ -402,27 +425,30 @@
 
     <div class="footer-info">
       <span>© 2026 JABATAN PERIKANAN SABAH — PORTAL PELAPORAN EKSEKUTIF</span>
-      <button class="footer-manage-link" onclick="openArkibModal()">Urus Arkib Minit & Slide</button>
+      <button class="footer-manage-link" onclick="openArkibModal()">Urus Arkib Dokumentasi</button>
     </div>
   </div>
 
-  <!-- MODAL URUS ARKIB (EDITABLE) -->
+  <!-- MODAL URUS ARKIB DOKUMENTASI (EDITABLE) -->
   <div class="modal-backdrop" id="arkibModal">
     <div class="modal-box">
       <div class="modal-head">
-        <h3><i class="fa-solid fa-folder-plus" style="margin-right: 6px;"></i> Urus Arkib Minit Mesyuarat & Slide</h3>
+        <h3><i class="fa-solid fa-folder-plus" style="margin-right: 6px;"></i> Urus Arkib Dokumentasi</h3>
         <button class="btn-del" style="background: rgba(255,255,255,0.1); color: #fff;" onclick="closeArkibModal()"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <div class="modal-body">
         <div class="form-row">
-          <input type="text" id="inpArkibTitle" class="modal-input" placeholder="Tajuk (cth: Minit Mesyuarat Bil. 3/2026)">
-          <input type="text" id="inpArkibDate" class="modal-input" placeholder="Tarikh (cth: 26 Nov 2026)">
+          <input type="text" id="inpArkibTitle" class="modal-input" placeholder="Tajuk (cth: Laporan Tahunan Jabatan 2025)">
+          <input type="text" id="inpArkibDate" class="modal-input" placeholder="Tarikh / Tahun (cth: 26 Nov 2026)">
         </div>
         <div class="form-row">
           <select id="inpArkibType" class="modal-select">
-            <option value="PDF">Dokumen PDF</option>
-            <option value="PPTX">Slide Pembentangan (PPTX)</option>
-            <option value="DRIVE">Pautan Google Drive / Sistem</option>
+            <option value="AUTO">Auto-Kesan Ikon (Ikut Tajuk Fail)</option>
+            <option value="LAPORAN">Buku / Laporan Tahunan / Perangkaan</option>
+            <option value="MINIT">Minit Mesyuarat / Kertas Kerja</option>
+            <option value="SLIDE">Slide Pembentangan / Taklimat</option>
+            <option value="DASAR">Dasar / Pelan Strategik / Pekeliling</option>
+            <option value="DOKUMEN">Dokumen Am Bahagian</option>
           </select>
           <input type="url" id="inpArkibUrl" class="modal-input" placeholder="Pautan fail / Google Drive (https://...)">
         </div>
@@ -432,7 +458,7 @@
 
         <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 12px;">
           <p style="font-size: 0.75rem; color: #94a3b8; margin-bottom: 8px; font-weight: 700;">
-            Senarai Semasa (Jika dipadam semua, panel arkib akan tersembunyi secara automatik):
+            Senarai Semasa (Jika dipadam semua, panel ini akan tersembunyi secara automatik):
           </p>
           <div id="arkibModalList" style="display: flex; flex-direction: column; gap: 8px;"></div>
         </div>
@@ -488,35 +514,79 @@
     }
     loadKKWeather();
 
-    // 3. ARKIB MINIT MESYUARAT & SLIDE PEMBENTANGAN (EDITABLE & AUTO-HIDE)
+    // 2b. PASANG SURUT SABAH (BOLEH DIKEMAS KINI DENGAN KLIK KAPSUL)
+    const DEFAULT_TIDE_TEXT = "Pasang Surut KK: 1.8m (21:15)";
+    let currentTideText = localStorage.getItem('dofs_tide_sabah') || DEFAULT_TIDE_TEXT;
+    document.getElementById('heroTide').innerText = currentTideText;
+
+    function editTideInfo() {
+      const updated = prompt("Kemas kini maklumat pasang surut Sabah (cth: Pasang Surut KK: 1.8m (21:15)):", currentTideText);
+      if (updated && updated.trim()) {
+        currentTideText = updated.trim();
+        localStorage.setItem('dofs_tide_sabah', currentTideText);
+        document.getElementById('heroTide').innerText = currentTideText;
+      }
+    }
+
+    // 3. ARKIB DOKUMENTASI (IKON PINTAR & AUTO-HIDE)
     const DEFAULT_ARKIB_ITEMS = [
+      {
+        tajuk: "Laporan Tahunan Jabatan Perikanan Sabah 2025",
+        tarikh: "Edisi Terkini",
+        jenis: "LAPORAN",
+        url: "SENARAI_DASAR_JABATAN_DLL.html"
+      },
       {
         tajuk: "Minit Mesyuarat Pembangunan Bil. 2/2026",
         tarikh: "20 Okt 2026",
-        jenis: "PDF",
+        jenis: "MINIT",
         url: "PEMBENTANGAN_MESYUARAT_PEMBANGUNAN.html"
       },
       {
         tajuk: "Slide Taklimat Hala Tuju Perancangan 2026",
         tarikh: "12 Sept 2026",
-        jenis: "PPTX",
+        jenis: "SLIDE",
         url: "PEMBENTANGAN_MESYUARAT_PEMBANGUNAN.html"
-      },
-      {
-        tajuk: "Ringkasan Eksekutif Projek RMKe-13 DOFS",
-        tarikh: "15 Okt 2026",
-        jenis: "PDF",
-        url: "SENARAI_DASAR_JABATAN_DLL.html"
       }
     ];
 
-    let arkibItems = JSON.parse(localStorage.getItem('dofs_arkib_items')) || DEFAULT_ARKIB_ITEMS;
+    let arkibItems = JSON.parse(localStorage.getItem('dofs_arkib_items_v3')) || DEFAULT_ARKIB_ITEMS;
+
+    function resolveDocVisual(item) {
+      const titleLower = (item.tajuk || '').toLowerCase();
+      const urlLower = (item.url || '').toLowerCase();
+      let type = item.jenis || 'AUTO';
+
+      if (type === 'AUTO') {
+        if (titleLower.includes('laporan tahunan') || titleLower.includes('buku') || titleLower.includes('perangkaan') || titleLower.includes('buletin') || titleLower.includes('pelan')) {
+          type = 'LAPORAN';
+        } else if (titleLower.includes('slide') || titleLower.includes('slaid') || titleLower.includes('taklimat') || titleLower.includes('pembentangan') || urlLower.endsWith('.pptx') || urlLower.endsWith('.ppt')) {
+          type = 'SLIDE';
+        } else if (titleLower.includes('minit') || titleLower.includes('mesyuarat') || titleLower.includes('kertas kerja')) {
+          type = 'MINIT';
+        } else if (titleLower.includes('dasar') || titleLower.includes('pekeliling') || titleLower.includes('sop') || titleLower.includes('garis panduan')) {
+          type = 'DASAR';
+        } else {
+          type = 'DOKUMEN';
+        }
+      }
+
+      if (type === 'LAPORAN') {
+        return { iconClass: 'icon-book', faIcon: 'fa-book-open', label: 'LAPORAN' };
+      } else if (type === 'SLIDE') {
+        return { iconClass: 'icon-slide', faIcon: 'fa-file-powerpoint', label: 'SLIDE' };
+      } else if (type === 'MINIT') {
+        return { iconClass: 'icon-minit', faIcon: 'fa-file-lines', label: 'MINIT' };
+      } else if (type === 'DASAR') {
+        return { iconClass: 'icon-dasar', faIcon: 'fa-scale-balanced', label: 'DASAR' };
+      }
+      return { iconClass: 'icon-general', faIcon: 'fa-file-alt', label: 'DOKUMEN' };
+    }
 
     function renderArkib() {
       const section = document.getElementById('arkibSection');
       const grid = document.getElementById('arkibGrid');
 
-      // Sembunyikan panel secara automatik jika tiada item
       if (!arkibItems || arkibItems.length === 0) {
         section.style.display = 'none';
         return;
@@ -524,19 +594,15 @@
 
       section.style.display = 'block';
       grid.innerHTML = arkibItems.map(item => {
-        let iconClass = 'icon-pdf';
-        let faIcon = 'fa-file-pdf';
-        if (item.jenis === 'PPTX') { iconClass = 'icon-pptx'; faIcon = 'fa-file-powerpoint'; }
-        else if (item.jenis === 'DRIVE') { iconClass = 'icon-drive'; faIcon = 'fa-folder-open'; }
-
+        const visual = resolveDocVisual(item);
         const isInternalHtml = item.url.endsWith('.html');
         const targetAttr = isInternalHtml ? '' : 'target="_blank"';
 
         return `
           <a href="${item.url}" ${targetAttr} class="arkib-item">
-            <div class="arkib-icon ${iconClass}">
-              <i class="fa-solid ${faIcon}"></i>
-              <span>${item.jenis}</span>
+            <div class="arkib-icon ${visual.iconClass}">
+              <i class="fa-solid ${visual.faIcon}"></i>
+              <span>${visual.label}</span>
             </div>
             <div class="arkib-info">
               <h4 title="${item.tajuk}">${item.tajuk}</h4>
@@ -562,18 +628,21 @@
     function renderArkibModalList() {
       const listEl = document.getElementById('arkibModalList');
       if (arkibItems.length === 0) {
-        listEl.innerHTML = `<div style="font-size:0.76rem; color:#64748b; font-style:italic;">Tiada dokumen aktif (Panel arkib kini tersembunyi).</div>`;
+        listEl.innerHTML = `<div style="font-size:0.76rem; color:#64748b; font-style:italic;">Tiada dokumen aktif (Panel ini kini tersembunyi).</div>`;
         return;
       }
-      listEl.innerHTML = arkibItems.map((item, idx) => `
-        <div class="saved-item-row">
-          <div style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
-            <strong style="color:#f8fafc;">${item.tajuk}</strong>
-            <span style="color:#94a3b8; margin-left:6px;">(${item.jenis} • ${item.tarikh})</span>
+      listEl.innerHTML = arkibItems.map((item, idx) => {
+        const visual = resolveDocVisual(item);
+        return `
+          <div class="saved-item-row">
+            <div style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+              <strong style="color:#f8fafc;">${item.tajuk}</strong>
+              <span style="color:#94a3b8; margin-left:6px;">(${visual.label} • ${item.tarikh})</span>
+            </div>
+            <button class="btn-del" onclick="deleteArkibItem(${idx})"><i class="fa-solid fa-trash"></i></button>
           </div>
-          <button class="btn-del" onclick="deleteArkibItem(${idx})"><i class="fa-solid fa-trash"></i></button>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
 
     function addArkibItem() {
@@ -585,7 +654,7 @@
       if (!tajuk) return;
 
       arkibItems.push({ tajuk, tarikh, jenis, url });
-      localStorage.setItem('dofs_arkib_items', JSON.stringify(arkibItems));
+      localStorage.setItem('dofs_arkib_items_v3', JSON.stringify(arkibItems));
 
       document.getElementById('inpArkibTitle').value = '';
       document.getElementById('inpArkibDate').value = '';
@@ -597,13 +666,13 @@
 
     function deleteArkibItem(idx) {
       arkibItems.splice(idx, 1);
-      localStorage.setItem('dofs_arkib_items', JSON.stringify(arkibItems));
+      localStorage.setItem('dofs_arkib_items_v3', JSON.stringify(arkibItems));
       renderArkibModalList();
       renderArkib();
     }
 
     function resetArkibDefault() {
-      localStorage.removeItem('dofs_arkib_items');
+      localStorage.removeItem('dofs_arkib_items_v3');
       arkibItems = [...DEFAULT_ARKIB_ITEMS];
       renderArkibModalList();
       renderArkib();
