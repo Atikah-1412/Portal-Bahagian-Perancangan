@@ -39,12 +39,7 @@
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
     }
     .nav-brand { display: flex; align-items: center; gap: 12px; }
-    .nav-logo-badge {
-      width: 40px; height: 40px; border-radius: 12px;
-      background: linear-gradient(135deg, #3b82f6, #6366f1, #a855f7);
-      display: flex; align-items: center; justify-content: center; font-size: 18px;
-      box-shadow: 0 0 20px rgba(99, 102, 241, 0.5); border: 1px solid rgba(255, 255, 255, 0.2);
-    }
+    .nav-logo-img { height: 42px; width: auto; object-fit: contain; filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.25)); }
     .nav-title {
       font-weight: 800; font-size: 0.95rem; letter-spacing: 0.3px;
       background: linear-gradient(135deg, #ffffff 30%, #a5f3fc 100%);
@@ -81,25 +76,38 @@
     /* Landing Page View */
     .landing-wrapper {
       position: relative; z-index: 1; min-height: 100vh; display: flex; flex-direction: column;
-      justify-content: center; align-items: center; padding: 60px 24px 40px;
+      justify-content: center; align-items: center; padding: 48px 24px 36px;
     }
-    .hero-header { text-align: center; max-width: 850px; margin-bottom: 42px; }
+    .hero-header { text-align: center; max-width: 900px; margin-bottom: 34px; display: flex; flex-direction: column; align-items: center; }
+    .hero-logo {
+      height: 76px; width: auto; object-fit: contain; margin-bottom: 16px;
+      filter: drop-shadow(0 6px 18px rgba(255, 255, 255, 0.18));
+    }
+    .hero-meta-row {
+      display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; margin-bottom: 18px;
+    }
     .hero-badge {
-      display: inline-flex; align-items: center; gap: 10px; padding: 8px 22px;
+      display: inline-flex; align-items: center; gap: 10px; padding: 8px 20px;
       background: rgba(99, 102, 241, 0.14); border: 1px solid rgba(99, 102, 241, 0.4);
-      border-radius: 30px; color: #a5b4fc; font-size: 0.85rem; font-weight: 800;
-      margin-bottom: 20px; letter-spacing: 0.8px; box-shadow: 0 0 25px rgba(99, 102, 241, 0.25);
+      border-radius: 30px; color: #a5b4fc; font-size: 0.82rem; font-weight: 800;
+      letter-spacing: 0.7px; box-shadow: 0 0 25px rgba(99, 102, 241, 0.25);
+    }
+    .widget-pill {
+      display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px;
+      background: rgba(15, 23, 42, 0.75); border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(12px); border-radius: 30px; color: #e2e8f0;
+      font-size: 0.78rem; font-weight: 700;
     }
     .badge-pulse { width: 9px; height: 9px; background-color: #10b981; border-radius: 50%; box-shadow: 0 0 12px #10b981; animation: pulse 1.5s infinite; }
     @keyframes pulse { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(1.3); } 100% { opacity: 1; transform: scale(1); } }
     .hero-header h1 {
-      font-size: 2.6rem; font-weight: 900; line-height: 1.15; margin-bottom: 14px;
+      font-size: 2.5rem; font-weight: 900; line-height: 1.15; margin-bottom: 12px;
       background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #94a3b8 100%);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
-    .hero-header p { color: #94a3b8; font-size: 1.05rem; font-weight: 400; max-width: 680px; margin: 0 auto; line-height: 1.6; }
+    .hero-header p { color: #94a3b8; font-size: 1rem; font-weight: 400; max-width: 700px; margin: 0 auto; line-height: 1.6; }
 
-    /* 3D Glassmorphism Cards Grid (4 Kad seimbang: 2x2 pada skrin sederhana, 4 sebaris pada skrin besar) */
+    /* 3D Glassmorphism Cards Grid */
     .card-container {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(275px, 1fr)); gap: 24px;
       width: 100%; max-width: 1320px; perspective: 1000px;
@@ -107,9 +115,9 @@
     .dash-card {
       background: rgba(15, 23, 42, 0.65); border: 1px solid rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(25px) saturate(190%); -webkit-backdrop-filter: blur(25px) saturate(190%);
-      border-radius: 24px; padding: 32px 26px; transition: transform 0.1s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      border-radius: 24px; padding: 30px 25px; transition: transform 0.1s ease, box-shadow 0.3s ease, border-color 0.3s ease;
       position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between;
-      transform-style: preserve-3d; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4); min-height: 375px;
+      transform-style: preserve-3d; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4); min-height: 360px;
     }
     .dash-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3.5px; transition: all 0.4s ease; }
     .card-kpi::before { background: linear-gradient(90deg, #6366f1, #8b5cf6, #3b82f6); }
@@ -131,19 +139,19 @@
     .card-galeri:hover { box-shadow: 0 30px 60px rgba(168, 85, 247, 0.28), 0 0 30px rgba(236, 72, 153, 0.2); }
 
     .card-icon-wrapper {
-      width: 62px; height: 62px; border-radius: 18px; display: flex; align-items: center; justify-content: center;
-      font-size: 26px; margin-bottom: 22px; position: relative; transform: translateZ(30px);
+      width: 60px; height: 60px; border-radius: 18px; display: flex; align-items: center; justify-content: center;
+      font-size: 25px; margin-bottom: 20px; position: relative; transform: translateZ(30px);
     }
     .card-kpi .card-icon-wrapper { background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(139, 92, 246, 0.25)); border: 1px solid rgba(139, 92, 246, 0.4); box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3); color: #a5b4fc; }
     .card-mesyuarat .card-icon-wrapper { background: linear-gradient(135deg, rgba(14, 165, 233, 0.25), rgba(59, 130, 246, 0.25)); border: 1px solid rgba(59, 130, 246, 0.4); box-shadow: 0 10px 25px rgba(14, 165, 233, 0.3); color: #38bdf8; }
     .card-dokumen .card-icon-wrapper { background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(6, 182, 212, 0.25)); border: 1px solid rgba(16, 185, 129, 0.4); box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3); color: #34d399; }
     .card-galeri .card-icon-wrapper { background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(236, 72, 153, 0.25)); border: 1px solid rgba(236, 72, 153, 0.4); box-shadow: 0 10px 25px rgba(168, 85, 247, 0.3); color: #f472b6; }
 
-    .dash-card h3 { font-size: 1.28rem; font-weight: 800; margin-bottom: 10px; color: #f8fafc; transform: translateZ(25px); line-height: 1.3; }
-    .dash-card p { color: #94a3b8; font-size: 0.88rem; line-height: 1.6; margin-bottom: 24px; transform: translateZ(20px); }
+    .dash-card h3 { font-size: 1.25rem; font-weight: 800; margin-bottom: 10px; color: #f8fafc; transform: translateZ(25px); line-height: 1.3; }
+    .dash-card p { color: #94a3b8; font-size: 0.87rem; line-height: 1.6; margin-bottom: 22px; transform: translateZ(20px); }
 
     .btn-open {
-      width: 100%; padding: 14px; border-radius: 14px; border: none; font-weight: 800; font-size: 0.88rem;
+      width: 100%; padding: 13px; border-radius: 14px; border: none; font-weight: 800; font-size: 0.86rem;
       cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center;
       gap: 10px; letter-spacing: 0.4px; transform: translateZ(35px);
     }
@@ -153,16 +161,105 @@
     .card-galeri .btn-open { background: linear-gradient(135deg, #a855f7, #ec4899); color: #fff; box-shadow: 0 8px 25px rgba(168, 85, 247, 0.4); }
     .btn-open:hover { filter: brightness(1.18); transform: translateZ(40px) scale(1.02); }
 
+    /* Arkib Minit Mesyuarat & Slide Pembentangan (Glass Section - Auto Hide if empty) */
+    .arkib-panel {
+      width: 100%; max-width: 1320px; margin-top: 26px;
+      background: rgba(15, 23, 42, 0.65); border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(22px) saturate(180%); -webkit-backdrop-filter: blur(22px) saturate(180%);
+      border-radius: 22px; padding: 20px 24px; box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+    }
+    .arkib-header {
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
+      padding-bottom: 14px; margin-bottom: 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      flex-wrap: wrap;
+    }
+    .arkib-title {
+      font-size: 0.84rem; font-weight: 800; letter-spacing: 0.8px; color: #e2e8f0;
+      display: flex; align-items: center; gap: 9px; text-transform: uppercase;
+    }
+    .btn-edit-arkib {
+      background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.3);
+      color: #7dd3fc; padding: 6px 13px; border-radius: 10px; font-size: 0.74rem;
+      font-weight: 700; cursor: pointer; transition: all 0.25s ease; display: inline-flex; align-items: center; gap: 6px;
+    }
+    .btn-edit-arkib:hover { background: rgba(56, 189, 248, 0.25); color: #fff; }
+    .arkib-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px;
+    }
+    .arkib-item {
+      background: rgba(2, 6, 23, 0.65); border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px; padding: 13px 16px; display: flex; align-items: center; gap: 14px;
+      text-decoration: none; color: inherit; transition: all 0.25s ease;
+    }
+    .arkib-item:hover {
+      background: rgba(30, 41, 59, 0.75); border-color: rgba(56, 189, 248, 0.45); transform: translateY(-2px);
+    }
+    /* Ikon Dokumen Padat (Kecil & Kemas) */
+    .arkib-icon {
+      width: 38px; height: 38px; border-radius: 10px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; flex-shrink: 0; font-size: 13px;
+    }
+    .arkib-icon span { font-size: 7px; font-weight: 900; margin-top: 2px; letter-spacing: 0.4px; }
+    .icon-pdf { background: rgba(244, 63, 94, 0.18); border: 1px solid rgba(244, 63, 94, 0.4); color: #fda4af; }
+    .icon-pptx { background: rgba(245, 158, 11, 0.18); border: 1px solid rgba(245, 158, 11, 0.4); color: #fcd34d; }
+    .icon-drive { background: rgba(14, 165, 233, 0.18); border: 1px solid rgba(14, 165, 233, 0.4); color: #7dd3fc; }
+
+    .arkib-info { flex: 1; min-width: 0; }
+    .arkib-info h4 { font-size: 0.84rem; font-weight: 700; color: #f8fafc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 3px; }
+    .arkib-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.72rem; color: #94a3b8; }
+    .arkib-action { color: #38bdf8; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; }
+
+    /* Modal Urus Arkib */
+    .modal-backdrop {
+      display: none; position: fixed; inset: 0; background: rgba(2, 6, 23, 0.85);
+      backdrop-filter: blur(8px); z-index: 2000; align-items: center; justify-content: center; padding: 20px;
+    }
+    .modal-box {
+      background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 22px;
+      max-width: 580px; width: 100%; overflow: hidden; box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+    }
+    .modal-head {
+      padding: 16px 22px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .modal-head h3 { font-size: 0.92rem; font-weight: 800; color: #38bdf8; }
+    .modal-body { padding: 20px 22px; max-height: 70vh; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .modal-input, .modal-select {
+      width: 100%; background: #020617; border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #f8fafc; padding: 10px 12px; border-radius: 10px; font-size: 0.8rem; outline: none;
+    }
+    .modal-input:focus, .modal-select:focus { border-color: #38bdf8; }
+    .btn-add-item {
+      background: linear-gradient(135deg, #0ea5e9, #6366f1); color: #fff; border: none;
+      padding: 10px 16px; border-radius: 10px; font-weight: 800; font-size: 0.78rem; cursor: pointer;
+    }
+    .saved-item-row {
+      display: flex; justify-content: space-between; align-items: center; gap: 10px;
+      background: #020617; border: 1px solid rgba(255, 255, 255, 0.08); padding: 9px 12px; border-radius: 10px; font-size: 0.78rem;
+    }
+    .btn-del { background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: none; padding: 5px 9px; border-radius: 7px; cursor: pointer; }
+    .modal-foot {
+      padding: 14px 22px; border-top: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex; justify-content: flex-end; gap: 10px; background: rgba(2, 6, 23, 0.5);
+    }
+
     /* Frame View Container */
     .frame-container { display: none; width: 100vw; height: calc(100vh - 72px); margin-top: 72px; position: relative; z-index: 10; }
     iframe { width: 100%; height: 100%; border: none; background: #090d16; }
 
-    .footer-info { margin-top: 42px; color: #64748b; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.5px; text-align: center; }
+    .footer-info {
+      margin-top: 34px; color: #64748b; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.5px;
+      text-align: center; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px;
+    }
+    .footer-manage-link { color: #64748b; background: none; border: none; font-size: 0.76rem; font-weight: 700; cursor: pointer; text-decoration: underline; }
+    .footer-manage-link:hover { color: #38bdf8; }
 
     @media (max-width: 1024px) {
       .top-nav { height: auto; padding: 12px 16px; flex-direction: column; gap: 10px; }
       .frame-container { height: calc(100vh - 115px); margin-top: 115px; }
       .live-clock { display: none; }
+      .form-row { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -176,7 +273,7 @@
   <!-- TOP NAVIGATION BAR -->
   <div class="top-nav" id="topNav">
     <div class="nav-brand">
-      <div class="nav-logo-badge"><i class="fa-solid fa-fish-fins"></i></div>
+      <img src="LOGO PERIKANAN UPDATED (2024).png" alt="Logo Jabatan Perikanan Sabah" class="nav-logo-img" onerror="this.style.display='none'">
       <div class="nav-title" id="navTitle">PORTAL EKSEKUTIF JABATAN PERIKANAN SABAH</div>
     </div>
     
@@ -208,14 +305,33 @@
   <!-- LANDING PAGE -->
   <div class="landing-wrapper" id="landingPage">
     <div class="hero-header">
-      <div class="hero-badge">
-        <span class="badge-pulse"></span>
-        PORTAL EKSEKUTIF & DASHBOARD BAHAGIAN PERANCANGAN 2026
+      <!-- Logo Rasmi Jabatan Perikanan Sabah (Tanpa bulatan/kotak putih) -->
+      <img src="LOGO PERIKANAN UPDATED (2024).png" alt="Logo Jabatan Perikanan Sabah" class="hero-logo" onerror="this.style.display='none'">
+
+      <div class="hero-meta-row">
+        <div class="hero-badge">
+          <span class="badge-pulse"></span>
+          PORTAL EKSEKUTIF & DASHBOARD BAHAGIAN PERANCANGAN 2026
+        </div>
+
+        <!-- Widget Tarikh & Masa -->
+        <div class="widget-pill" id="heroClockPill">
+          <i class="fa-regular fa-calendar-check" style="color: #38bdf8;"></i>
+          <span id="heroDateTime">Memuatkan waktu...</span>
+        </div>
+
+        <!-- Widget Cuaca Semasa Kota Kinabalu -->
+        <div class="widget-pill" id="heroWeatherPill">
+          <i class="fa-solid fa-cloud-sun" style="color: #fbbf24;" id="weatherIcon"></i>
+          <span id="heroWeather">Kota Kinabalu: 30°C</span>
+        </div>
       </div>
+
       <h1>Pusat Pemantauan & Repositori Utama</h1>
       <p>Akses pantas kepada analisa pencapaian KPI, slaid pembentangan mesyuarat pembangunan, repositori dokumen dasar & pekeliling DOFS, serta galeri laporan bergambar.</p>
     </div>
 
+    <!-- 4 KAD UTAMA (KEKAL KONSEP ASAL) -->
     <div class="card-container">
       <!-- Kad 1: KPI -->
       <div class="dash-card card-kpi" id="cardKpi">
@@ -270,8 +386,61 @@
       </div>
     </div>
 
+    <!-- PANEL ARKIB MINIT MESYUARAT & SLIDE PEMBENTANGAN (MUNCUL BILA ADA DOKUMEN) -->
+    <div class="arkib-panel" id="arkibSection">
+      <div class="arkib-header">
+        <div class="arkib-title">
+          <i class="fa-solid fa-box-archive" style="color: #38bdf8;"></i>
+          <span>Arkib Minit Mesyuarat & Slide Pembentangan</span>
+        </div>
+        <button class="btn-edit-arkib" onclick="playClickSound(); openArkibModal()">
+          <i class="fa-solid fa-pen-to-square"></i> Urus / Tambah Arkib
+        </button>
+      </div>
+      <div class="arkib-grid" id="arkibGrid"></div>
+    </div>
+
     <div class="footer-info">
-      © 2026 JABATAN PERIKANAN SABAH — PORTAL PELAPORAN EKSEKUTIF
+      <span>© 2026 JABATAN PERIKANAN SABAH — PORTAL PELAPORAN EKSEKUTIF</span>
+      <button class="footer-manage-link" onclick="openArkibModal()">Urus Arkib Minit & Slide</button>
+    </div>
+  </div>
+
+  <!-- MODAL URUS ARKIB (EDITABLE) -->
+  <div class="modal-backdrop" id="arkibModal">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h3><i class="fa-solid fa-folder-plus" style="margin-right: 6px;"></i> Urus Arkib Minit Mesyuarat & Slide</h3>
+        <button class="btn-del" style="background: rgba(255,255,255,0.1); color: #fff;" onclick="closeArkibModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-row">
+          <input type="text" id="inpArkibTitle" class="modal-input" placeholder="Tajuk (cth: Minit Mesyuarat Bil. 3/2026)">
+          <input type="text" id="inpArkibDate" class="modal-input" placeholder="Tarikh (cth: 26 Nov 2026)">
+        </div>
+        <div class="form-row">
+          <select id="inpArkibType" class="modal-select">
+            <option value="PDF">Dokumen PDF</option>
+            <option value="PPTX">Slide Pembentangan (PPTX)</option>
+            <option value="DRIVE">Pautan Google Drive / Sistem</option>
+          </select>
+          <input type="url" id="inpArkibUrl" class="modal-input" placeholder="Pautan fail / Google Drive (https://...)">
+        </div>
+        <div style="display: flex; justify-content: flex-end;">
+          <button class="btn-add-item" onclick="addArkibItem()"><i class="fa-solid fa-plus"></i> Tambah Dokumen</button>
+        </div>
+
+        <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 12px;">
+          <p style="font-size: 0.75rem; color: #94a3b8; margin-bottom: 8px; font-weight: 700;">
+            Senarai Semasa (Jika dipadam semua, panel arkib akan tersembunyi secara automatik):
+          </p>
+          <div id="arkibModalList" style="display: flex; flex-direction: column; gap: 8px;"></div>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn-nav" onclick="resetArkibDefault()">Set Semula Asal</button>
+        <button class="btn-add-item" onclick="closeArkibModal()">Selesai</button>
+      </div>
     </div>
   </div>
 
@@ -281,7 +450,7 @@
   </div>
 
   <script>
-    // 1. LIVE CLOCK
+    // 1. LIVE CLOCK & HERO DATE
     function updateClock() {
       const now = new Date();
       let hours = now.getHours();
@@ -290,12 +459,159 @@
       const ampm = hours >= 12 ? 'PM' : 'AM';
       hours = hours % 12;
       hours = hours ? hours : 12;
-      document.getElementById('liveClock').innerHTML = `<i class="fa-regular fa-clock mr-1"></i> ${String(hours).padStart(2, '0')}:${minutes}:${seconds} ${ampm}`;
+      const timeFormatted = `${String(hours).padStart(2, '0')}:${minutes}:${seconds} ${ampm}`;
+      const dateFormatted = now.toLocaleDateString('ms-MY', { day: '2-digit', month: 'short', year: 'numeric' });
+
+      document.getElementById('liveClock').innerHTML = `<i class="fa-regular fa-clock mr-1"></i> ${timeFormatted}`;
+      const heroDt = document.getElementById('heroDateTime');
+      if (heroDt) heroDt.innerText = `${dateFormatted} • ${timeFormatted}`;
     }
     setInterval(updateClock, 1000);
     updateClock();
 
-    // 2. DASHBOARD NAVIGATION SYSTEM
+    // 2. LIVE WEATHER WIDGET (KOTA KINABALU)
+    async function loadKKWeather() {
+      try {
+        const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=5.9804&longitude=116.0735&current=temperature_2m,wind_speed_10m,weather_code&timezone=Asia%2FKuala_Lumpur');
+        const data = await res.json();
+        if (data && data.current) {
+          const temp = Math.round(data.current.temperature_2m);
+          const wind = Math.round(data.current.wind_speed_10m);
+          const code = data.current.weather_code;
+          document.getElementById('heroWeather').innerText = `Kota Kinabalu: ${temp}°C • Angin ${wind} km/j`;
+          if (code >= 51) {
+            document.getElementById('weatherIcon').className = 'fa-solid fa-cloud-rain';
+            document.getElementById('weatherIcon').style.color = '#38bdf8';
+          }
+        }
+      } catch (e) {}
+    }
+    loadKKWeather();
+
+    // 3. ARKIB MINIT MESYUARAT & SLIDE PEMBENTANGAN (EDITABLE & AUTO-HIDE)
+    const DEFAULT_ARKIB_ITEMS = [
+      {
+        tajuk: "Minit Mesyuarat Pembangunan Bil. 2/2026",
+        tarikh: "20 Okt 2026",
+        jenis: "PDF",
+        url: "PEMBENTANGAN_MESYUARAT_PEMBANGUNAN.html"
+      },
+      {
+        tajuk: "Slide Taklimat Hala Tuju Perancangan 2026",
+        tarikh: "12 Sept 2026",
+        jenis: "PPTX",
+        url: "PEMBENTANGAN_MESYUARAT_PEMBANGUNAN.html"
+      },
+      {
+        tajuk: "Ringkasan Eksekutif Projek RMKe-13 DOFS",
+        tarikh: "15 Okt 2026",
+        jenis: "PDF",
+        url: "SENARAI_DASAR_JABATAN_DLL.html"
+      }
+    ];
+
+    let arkibItems = JSON.parse(localStorage.getItem('dofs_arkib_items')) || DEFAULT_ARKIB_ITEMS;
+
+    function renderArkib() {
+      const section = document.getElementById('arkibSection');
+      const grid = document.getElementById('arkibGrid');
+
+      // Sembunyikan panel secara automatik jika tiada item
+      if (!arkibItems || arkibItems.length === 0) {
+        section.style.display = 'none';
+        return;
+      }
+
+      section.style.display = 'block';
+      grid.innerHTML = arkibItems.map(item => {
+        let iconClass = 'icon-pdf';
+        let faIcon = 'fa-file-pdf';
+        if (item.jenis === 'PPTX') { iconClass = 'icon-pptx'; faIcon = 'fa-file-powerpoint'; }
+        else if (item.jenis === 'DRIVE') { iconClass = 'icon-drive'; faIcon = 'fa-folder-open'; }
+
+        const isInternalHtml = item.url.endsWith('.html');
+        const targetAttr = isInternalHtml ? '' : 'target="_blank"';
+
+        return `
+          <a href="${item.url}" ${targetAttr} class="arkib-item">
+            <div class="arkib-icon ${iconClass}">
+              <i class="fa-solid ${faIcon}"></i>
+              <span>${item.jenis}</span>
+            </div>
+            <div class="arkib-info">
+              <h4 title="${item.tajuk}">${item.tajuk}</h4>
+              <div class="arkib-meta">
+                <span>${item.tarikh}</span>
+                <span class="arkib-action">Buka <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 9px;"></i></span>
+              </div>
+            </div>
+          </a>
+        `;
+      }).join('');
+    }
+
+    function openArkibModal() {
+      renderArkibModalList();
+      document.getElementById('arkibModal').style.display = 'flex';
+    }
+
+    function closeArkibModal() {
+      document.getElementById('arkibModal').style.display = 'none';
+    }
+
+    function renderArkibModalList() {
+      const listEl = document.getElementById('arkibModalList');
+      if (arkibItems.length === 0) {
+        listEl.innerHTML = `<div style="font-size:0.76rem; color:#64748b; font-style:italic;">Tiada dokumen aktif (Panel arkib kini tersembunyi).</div>`;
+        return;
+      }
+      listEl.innerHTML = arkibItems.map((item, idx) => `
+        <div class="saved-item-row">
+          <div style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+            <strong style="color:#f8fafc;">${item.tajuk}</strong>
+            <span style="color:#94a3b8; margin-left:6px;">(${item.jenis} • ${item.tarikh})</span>
+          </div>
+          <button class="btn-del" onclick="deleteArkibItem(${idx})"><i class="fa-solid fa-trash"></i></button>
+        </div>
+      `).join('');
+    }
+
+    function addArkibItem() {
+      const tajuk = document.getElementById('inpArkibTitle').value.trim();
+      const tarikh = document.getElementById('inpArkibDate').value.trim() || 'Terkini';
+      const jenis = document.getElementById('inpArkibType').value;
+      const url = document.getElementById('inpArkibUrl').value.trim() || '#';
+
+      if (!tajuk) return;
+
+      arkibItems.push({ tajuk, tarikh, jenis, url });
+      localStorage.setItem('dofs_arkib_items', JSON.stringify(arkibItems));
+
+      document.getElementById('inpArkibTitle').value = '';
+      document.getElementById('inpArkibDate').value = '';
+      document.getElementById('inpArkibUrl').value = '';
+
+      renderArkibModalList();
+      renderArkib();
+    }
+
+    function deleteArkibItem(idx) {
+      arkibItems.splice(idx, 1);
+      localStorage.setItem('dofs_arkib_items', JSON.stringify(arkibItems));
+      renderArkibModalList();
+      renderArkib();
+    }
+
+    function resetArkibDefault() {
+      localStorage.removeItem('dofs_arkib_items');
+      arkibItems = [...DEFAULT_ARKIB_ITEMS];
+      renderArkibModalList();
+      renderArkib();
+    }
+
+    renderArkib();
+
+    // 4. DASHBOARD NAVIGATION SYSTEM
     function openDashboard(filePath, title, type) {
       document.getElementById('landingPage').style.display = 'none';
       document.getElementById('topNav').style.display = 'flex';
@@ -304,7 +620,6 @@
       document.getElementById('dashFrame').src = filePath;
       document.getElementById('navTitle').innerHTML = title;
 
-      // Reset Active Navigation Buttons
       document.getElementById('btnNavKpi').className = 'btn-nav';
       document.getElementById('btnNavMesyuarat').className = 'btn-nav';
       document.getElementById('btnNavDokumen').className = 'btn-nav';
@@ -328,7 +643,7 @@
       document.getElementById('dashFrame').src = '';
     }
 
-    // 3. SYNTHESIZED CLICK SOUND EFFECT (Web Audio API)
+    // 5. SYNTHESIZED CLICK SOUND EFFECT (Web Audio API)
     function playClickSound() {
       try {
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -346,7 +661,7 @@
       } catch (e) {}
     }
 
-    // 4. 3D TILT EFFECT & MOUSE TRACKING ON CARDS
+    // 6. 3D TILT EFFECT & MOUSE TRACKING ON CARDS
     const cards = document.querySelectorAll('.dash-card');
     cards.forEach(card => {
       card.addEventListener('mousemove', (e) => {
@@ -370,7 +685,7 @@
       });
     });
 
-    // 5. BACKGROUND PARTICLES CANVAS
+    // 7. BACKGROUND PARTICLES CANVAS
     const canvas = document.getElementById('bgCanvas');
     const ctx = canvas.getContext('2d');
     let particles = [];
