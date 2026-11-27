@@ -47,15 +47,12 @@
       box-shadow: 0 0 14px rgba(255, 255, 255, 0.3); filter: contrast(1.08);
     }
     .nav-title {
-      font-weight: 800; font-size: 0.9rem; letter-spacing: 0.3px;
+      font-weight: 800; font-size: 0.92rem; letter-spacing: 0.3px;
       background: linear-gradient(135deg, #ffffff 30%, #a5f3fc 100%);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
-    .nav-sublink {
-      font-size: 0.7rem; color: #94a3b8; font-weight: 600; display: flex; align-items: center; gap: 6px; margin-top: 2px;
-    }
-    .nav-sublink code {
-      color: #fcd34d; background: rgba(255, 255, 255, 0.06); padding: 1px 6px; border-radius: 6px;
+    .nav-subtitle {
+      font-size: 0.72rem; color: #94a3b8; font-weight: 600; margin-top: 2px;
     }
     .nav-controls { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
     .live-clock {
@@ -132,17 +129,17 @@
     }
     .hero-header p { color: #94a3b8; font-size: 0.96rem; max-width: 740px; margin: 0 auto; line-height: 1.6; }
 
-    /* 5 Kad Modul Utama */
+    /* 5 Kad Modul Utama (Bersih Tanpa Label Laluan) */
     .card-container {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(245px, 1fr)); gap: 20px;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 22px;
       width: 100%; max-width: 1420px; perspective: 1000px;
     }
     .dash-card {
       background: rgba(15, 23, 42, 0.68); border: 1px solid rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(25px) saturate(190%); -webkit-backdrop-filter: blur(25px) saturate(190%);
-      border-radius: 24px; padding: 26px 22px; transition: transform 0.12s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      border-radius: 24px; padding: 28px 24px; transition: transform 0.12s ease, box-shadow 0.3s ease, border-color 0.3s ease;
       position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between;
-      transform-style: preserve-3d; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4); min-height: 355px;
+      transform-style: preserve-3d; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4); min-height: 330px;
     }
     .dash-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3.5px; }
     .card-kpi::before { background: linear-gradient(90deg, #6366f1, #8b5cf6, #3b82f6); }
@@ -172,15 +169,8 @@
     .card-galeri .card-icon-wrapper { background: rgba(168, 85, 247, 0.2); border: 1px solid rgba(236, 72, 153, 0.4); color: #f472b6; }
     .card-jadual .card-icon-wrapper { background: rgba(245, 158, 11, 0.2); border: 1px solid rgba(245, 158, 11, 0.45); color: #fbbf24; }
 
-    .dash-card h3 { font-size: 1.18rem; font-weight: 800; margin-bottom: 8px; color: #f8fafc; transform: translateZ(20px); }
-    .dash-card p { color: #94a3b8; font-size: 0.84rem; line-height: 1.55; margin-bottom: 14px; transform: translateZ(15px); }
-
-    .card-target-chip {
-      font-size: 0.7rem; font-weight: 700; color: #cbd5e1; background: rgba(2, 6, 23, 0.65);
-      border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 7px 10px;
-      margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; gap: 6px;
-    }
-    .card-target-chip code { color: #fcd34d; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .dash-card h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: 9px; color: #f8fafc; transform: translateZ(20px); }
+    .dash-card p { color: #94a3b8; font-size: 0.85rem; line-height: 1.58; margin-bottom: 22px; transform: translateZ(15px); }
 
     .btn-open {
       width: 100%; padding: 12px 14px; border-radius: 14px; border: none; font-weight: 800; font-size: 0.84rem;
@@ -210,7 +200,7 @@
     .arkib-meta { font-size: 0.7rem; color: #94a3b8; display: flex; justify-content: space-between; gap: 8px; }
 
     /* =====================================================================
-       RUANG DASHBOARD JADUAL PELAKSANAAN 2026 (MODUL BERASINGAN)
+       RUANG DASHBOARD JADUAL PELAKSANAAN 2026
        ===================================================================== */
     .dashboard-stage {
       display: none; position: relative; z-index: 10; min-height: 100vh;
@@ -225,11 +215,6 @@
       --text-main: #0f172a;
       --text-sub: #475569;
       --border-hair: rgba(15, 23, 42, 0.1);
-      --accent-indigo: #4f46e5;
-      --accent-sky: #0284c7;
-      --accent-emerald: #059669;
-      --accent-amber: #d97706;
-      --accent-rose: #e11d48;
 
       max-width: 1380px; margin: 0 auto; border-radius: 28px;
       background: var(--bg-grad); background-color: var(--bg-solid);
@@ -249,11 +234,6 @@
       --text-main: #f8fafc;
       --text-sub: #94a3b8;
       --border-hair: rgba(148, 163, 184, 0.2);
-      --accent-indigo: #818cf8;
-      --accent-sky: #38bdf8;
-      --accent-emerald: #34d399;
-      --accent-amber: #fbbf24;
-      --accent-rose: #fb7185;
       border-color: rgba(148, 163, 184, 0.22);
     }
 
@@ -311,18 +291,13 @@
   <div class="aurora-1"></div>
   <div class="aurora-2"></div>
 
-  <!-- BAR NAVIGASI ATAS (MUNCUL APABILA MEMBUKA MODUL) -->
+  <!-- BAR NAVIGASI ATAS -->
   <div class="top-nav" id="topNav">
     <div class="nav-brand">
       <img src="LOGO PERIKANAN UPDATED (2024).png" alt="Logo Jabatan Perikanan Sabah" class="nav-logo-img" onerror="this.onerror=null;this.src='https://placehold.co/110x42/0f172a/7dd3fc?text=DOFS';">
       <div>
         <div class="nav-title" id="navTitle">PORTAL EKSEKUTIF JABATAN PERIKANAN SABAH</div>
-        <div class="nav-sublink" id="navPathBar">
-          <i class="fa-solid fa-server text-cyan-400"></i>
-          <span>Laluan Pelayan:</span>
-          <code id="navActivePathDisplay">DASHBOARD_JADUAL_PELAKSANAAN_2026.html</code>
-          <span id="navFallbackTag" class="hidden px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-500/20 text-amber-300 border border-amber-400/30"></span>
-        </div>
+        <div class="nav-subtitle" id="navSubtitle">Bahagian Perancangan • Tahun 2026</div>
       </div>
     </div>
 
@@ -355,7 +330,7 @@
     </div>
   </div>
 
-  <!-- HALAMAN PORTAL UTAMA (GAYA INDEX_3.HTML) -->
+  <!-- HALAMAN PORTAL UTAMA -->
   <div class="landing-wrapper" id="landingPage">
     <div class="hero-header">
       <img src="LOGO PERIKANAN UPDATED (2024).png" alt="Logo Jabatan Perikanan Sabah" class="hero-logo" onerror="this.onerror=null;this.src='https://placehold.co/170x74/0f172a/7dd3fc?text=DOFS+SABAH';">
@@ -386,7 +361,7 @@
       <p>Akses pantas kepada analisa pencapaian KPI, slaid pembentangan mesyuarat pembangunan, repositori dokumen dasar & pekeliling DOFS, galeri laporan bergambar, serta Dashboard Jadual Pelaksanaan Bahagian Perancangan 2026.</p>
     </div>
 
-    <!-- 5 KAD UTAMA -->
+    <!-- 5 KAD UTAMA (BERSIH TANPA LABEL LALUAN) -->
     <div class="card-container">
       <!-- Kad 1: KPI -->
       <div class="dash-card card-kpi" id="cardKpi">
@@ -396,15 +371,9 @@
           <h3>Pencapaian KPI 2026</h3>
           <p>Pemantauan Sasaran Prestasi Utama (KPI), analisis perbandingan sasaran vs pencapaian, serta status kemajuan pencapaian tahunan.</p>
         </div>
-        <div>
-          <div class="card-target-chip">
-            <span><i class="fa-solid fa-link text-indigo-400 mr-1"></i>Laluan:</span>
-            <code id="chipPath-kpi">DASHBOARD_PENCAPAIAN_KPI_2026.html</code>
-          </div>
-          <button class="btn-open" onclick="playClickSound(); openDashboard('kpi')">
-            <span>Buka Dashboard</span> <i class="fa-solid fa-arrow-right"></i>
-          </button>
-        </div>
+        <button class="btn-open" onclick="playClickSound(); openDashboard('kpi')">
+          <span>Buka Dashboard</span> <i class="fa-solid fa-arrow-right"></i>
+        </button>
       </div>
 
       <!-- Kad 2: Mesyuarat -->
@@ -415,15 +384,9 @@
           <h3>Mesyuarat Pembangunan</h3>
           <p>Slaid pembentangan, status peruntukan fizikal & kewangan P21, D28, DOFM & K75, serta unjuran sebutharga projek.</p>
         </div>
-        <div>
-          <div class="card-target-chip">
-            <span><i class="fa-solid fa-link text-sky-400 mr-1"></i>Laluan:</span>
-            <code id="chipPath-mesyuarat">PEMBENTANGAN_MESYUARAT_PEMBANGUNAN.html</code>
-          </div>
-          <button class="btn-open" onclick="playClickSound(); openDashboard('mesyuarat')">
-            <span>Buka Laporan</span> <i class="fa-solid fa-arrow-right"></i>
-          </button>
-        </div>
+        <button class="btn-open" onclick="playClickSound(); openDashboard('mesyuarat')">
+          <span>Buka Laporan</span> <i class="fa-solid fa-arrow-right"></i>
+        </button>
       </div>
 
       <!-- Kad 3: Repositori DOFS -->
@@ -434,15 +397,9 @@
           <h3>Repositori Dokumen, Dasar & Pekeliling DOFS</h3>
           <p>Repositori carian interaktif bagi Dasar, SOP, Pekeliling Dalaman (PPPS & JPIN), Kod Amalan, dan Garis Panduan semua bahagian.</p>
         </div>
-        <div>
-          <div class="card-target-chip">
-            <span><i class="fa-solid fa-link text-emerald-400 mr-1"></i>Laluan:</span>
-            <code id="chipPath-dokumen">SENARAI_DASAR_JABATAN_DLL.html</code>
-          </div>
-          <button class="btn-open" onclick="playClickSound(); openDashboard('dokumen')">
-            <span>Buka Repositori</span> <i class="fa-solid fa-arrow-right"></i>
-          </button>
-        </div>
+        <button class="btn-open" onclick="playClickSound(); openDashboard('dokumen')">
+          <span>Buka Repositori</span> <i class="fa-solid fa-arrow-right"></i>
+        </button>
       </div>
 
       <!-- Kad 4: Laporan Bergambar -->
@@ -453,15 +410,9 @@
           <h3>Laporan Bergambar</h3>
           <p>Arkib digital dan galeri foto aktiviti, bengkel, lawatan tapak, serta dokumentasi bergambar Bahagian Perancangan dari Google Drive.</p>
         </div>
-        <div>
-          <div class="card-target-chip">
-            <span><i class="fa-solid fa-link text-pink-400 mr-1"></i>Laluan:</span>
-            <code id="chipPath-galeri">DASHBOARD_LAPORAN_BERGAMBAR.html</code>
-          </div>
-          <button class="btn-open" onclick="playClickSound(); openDashboard('galeri')">
-            <span>Buka Galeri</span> <i class="fa-solid fa-arrow-right"></i>
-          </button>
-        </div>
+        <button class="btn-open" onclick="playClickSound(); openDashboard('galeri')">
+          <span>Buka Galeri</span> <i class="fa-solid fa-arrow-right"></i>
+        </button>
       </div>
 
       <!-- Kad 5: Dashboard Jadual Pelaksanaan Bahagian Perancangan 2026 -->
@@ -470,17 +421,11 @@
         <div>
           <div class="card-icon-wrapper"><i class="fa-solid fa-calendar-check"></i></div>
           <h3>Jadual Pelaksanaan 2026</h3>
-          <p>Dashboard berasingan jadual pelaksanaan Bahagian Perancangan 2026 dengan kemajuan 0–100%, amaran tarikh sasaran, Suku S1–S4, Senarai & Kanban, serta eksport/import JSON.</p>
+          <p>Dashboard jadual pelaksanaan Bahagian Perancangan 2026 dengan kemajuan 0–100%, amaran tarikh sasaran, Suku S1–S4, Senarai & Kanban, serta eksport/import JSON.</p>
         </div>
-        <div>
-          <div class="card-target-chip">
-            <span><i class="fa-solid fa-link text-amber-400 mr-1"></i>Laluan:</span>
-            <code id="chipPath-jadual">DASHBOARD_JADUAL_PELAKSANAAN_2026.html</code>
-          </div>
-          <button class="btn-open" onclick="playClickSound(); openDashboard('jadual')">
-            <span>Buka Dashboard Jadual</span> <i class="fa-solid fa-arrow-right"></i>
-          </button>
-        </div>
+        <button class="btn-open" onclick="playClickSound(); openDashboard('jadual')">
+          <span>Buka Dashboard Jadual</span> <i class="fa-solid fa-arrow-right"></i>
+        </button>
       </div>
     </div>
 
@@ -505,33 +450,6 @@
        ===================================================================== -->
   <section class="dashboard-stage" id="scheduleStage">
     <div class="sched-shell" id="schedShell">
-      <!-- Bar Konfigurasi Laluan Pelayan & Simulasi Fallback -->
-      <div class="s-soft rounded-2xl p-3.5 mb-5 flex flex-col lg:flex-row lg:items-center justify-between gap-3">
-        <div class="flex flex-wrap items-center gap-2 text-xs">
-          <span class="px-2.5 py-1 rounded-full font-extrabold bg-amber-500/15 text-amber-600 border border-amber-500/30">
-            <i class="fa-solid fa-server mr-1"></i> PAUTAN DASHBOARD PELAYAN
-          </span>
-          <span class="s-muted font-semibold">Laluan / Nama Fail Semasa:</span>
-          <code id="schedServerPathText" class="px-2.5 py-1 rounded-lg bg-indigo-500/10 text-indigo-600 font-extrabold">DASHBOARD_JADUAL_PELAKSANAAN_2026.html</code>
-          <span id="schedFallbackNotice" class="hidden px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-emerald-500/15 text-emerald-600 border border-emerald-500/30"></span>
-        </div>
-
-        <div class="flex flex-wrap items-center gap-2">
-          <input
-            type="text"
-            id="customServerPathInput"
-            placeholder="Contoh: jadual_2026_pelayan.html atau ./modul/jadual.html"
-            class="s-card rounded-xl px-3 py-1.5 text-xs font-semibold outline-none w-56 sm:w-64"
-          >
-          <button type="button" onclick="applyCustomSchedulePath()" class="s-btn s-btn-primary">
-            <i class="fa-solid fa-check"></i> Tetap Laluan
-          </button>
-          <button type="button" onclick="simulateFallbackPath()" class="s-btn" title="Simulasikan fail utama tidak ditemui dan beralih ke fallback">
-            <i class="fa-solid fa-shuffle text-amber-500"></i> Simulasi Fallback
-          </button>
-        </div>
-      </div>
-
       <!-- Header Utama Dashboard Jadual -->
       <div class="s-card p-5 mb-5 flex flex-col xl:flex-row xl:items-center justify-between gap-4">
         <div class="flex items-start gap-4">
@@ -677,7 +595,7 @@
     </div>
   </section>
 
-  <!-- IFRAME VIEWER UNTUK MODUL LAIN (KPI, MESYUARAT, REPOSITORI, GALERI) -->
+  <!-- IFRAME VIEWER UNTUK MODUL LAIN -->
   <div class="iframe-stage" id="iframeStage">
     <iframe id="moduleIframe" src=""></iframe>
   </div>
@@ -859,185 +777,44 @@
     renderArkib();
 
     // =========================================================================
-    // 2. KONFIGURASI PAUTAN / NAMA FAIL PELAYAN & SIMULASI FALLBACK
+    // 2. NAVIGASI ANTARA PORTAL UTAMA DAN DASHBOARD MODUL
     // =========================================================================
-    const PATH_STORAGE_KEY = "dofs_portal_module_paths_v2";
-
-    const DEFAULT_MODULES = {
+    const MODULE_META = {
       kpi: {
-        key: "kpi",
-        label: "Pencapaian KPI 2026",
         title: "🎯 DASHBOARD PENCAPAIAN KPI 2026",
-        path: "DASHBOARD_PENCAPAIAN_KPI_2026.html",
-        fallbackPath: "kpi_2026.html",
-        activePath: "DASHBOARD_PENCAPAIAN_KPI_2026.html",
-        isFallbackActive: false
+        subtitle: "Pemantauan Sasaran Prestasi Utama • Bahagian Perancangan",
+        src: "DASHBOARD_PENCAPAIAN_KPI_2026.html"
       },
       mesyuarat: {
-        key: "mesyuarat",
-        label: "Mesyuarat Pembangunan",
         title: "🏗️ PEMBENTANGAN MESYUARAT PEMBANGUNAN",
-        path: "PEMBENTANGAN_MESYUARAT_PEMBANGUNAN.html",
-        fallbackPath: "mesyuarat_pembangunan.html",
-        activePath: "PEMBENTANGAN_MESYUARAT_PEMBANGUNAN.html",
-        isFallbackActive: false
+        subtitle: "Status Peruntukan Fizikal & Kewangan • Bahagian Perancangan",
+        src: "PEMBENTANGAN_MESYUARAT_PEMBANGUNAN.html"
       },
       dokumen: {
-        key: "dokumen",
-        label: "Repositori DOFS",
         title: "📁 REPOSITORI DOKUMEN, DASAR & PEKELILING DOFS",
-        path: "SENARAI_DASAR_JABATAN_DLL.html",
-        fallbackPath: "repositori_dofs.html",
-        activePath: "SENARAI_DASAR_JABATAN_DLL.html",
-        isFallbackActive: false
+        subtitle: "Dasar, SOP, Pekeliling & Garis Panduan • Jabatan Perikanan Sabah",
+        src: "SENARAI_DASAR_JABATAN_DLL.html"
       },
       galeri: {
-        key: "galeri",
-        label: "Laporan Bergambar",
         title: "📸 GALERI LAPORAN BERGAMBAR PERANCANGAN",
-        path: "DASHBOARD_LAPORAN_BERGAMBAR.html",
-        fallbackPath: "galeri_laporan_bergambar.html",
-        activePath: "DASHBOARD_LAPORAN_BERGAMBAR.html",
-        isFallbackActive: false
+        subtitle: "Dokumentasi Aktiviti & Bengkel • Bahagian Perancangan",
+        src: "DASHBOARD_LAPORAN_BERGAMBAR.html"
       },
       jadual: {
-        key: "jadual",
-        label: "Jadual Pelaksanaan 2026",
         title: "📅 DASHBOARD JADUAL PELAKSANAAN BAHAGIAN PERANCANGAN 2026",
-        path: "DASHBOARD_JADUAL_PELAKSANAAN_2026.html",
-        fallbackPath: "jadual_pelaksanaan_2026.html",
-        activePath: "DASHBOARD_JADUAL_PELAKSANAAN_2026.html",
-        isFallbackActive: false
+        subtitle: "Pemantauan Aktiviti & Kemajuan S1–S4 • Tahun 2026",
+        src: ""
       }
     };
 
-    let portalModules = loadPortalModules();
-    let currentModuleKey = null;
-
-    function loadPortalModules() {
-      try {
-        const raw = localStorage.getItem(PATH_STORAGE_KEY);
-        if (raw) {
-          const saved = JSON.parse(raw);
-          const base = JSON.parse(JSON.stringify(DEFAULT_MODULES));
-          Object.keys(base).forEach(k => {
-            if (saved[k] && saved[k].path) {
-              base[k].path = String(saved[k].path).trim();
-              base[k].activePath = base[k].path;
-              base[k].isFallbackActive = false;
-            }
-          });
-          return base;
-        }
-      } catch (e) {}
-      return JSON.parse(JSON.stringify(DEFAULT_MODULES));
-    }
-
-    function savePortalModules() {
-      const compact = {};
-      Object.keys(portalModules).forEach(k => {
-        compact[k] = { path: portalModules[k].path };
-      });
-      localStorage.setItem(PATH_STORAGE_KEY, JSON.stringify(compact));
-    }
-
-    function refreshPathChips() {
-      Object.values(portalModules).forEach(mod => {
-        const chip = document.getElementById(`chipPath-${mod.key}`);
-        if (chip) chip.innerText = mod.activePath;
-      });
-      if (currentModuleKey && portalModules[currentModuleKey]) {
-        const cur = portalModules[currentModuleKey];
-        document.getElementById("navActivePathDisplay").innerText = cur.activePath;
-        const tag = document.getElementById("navFallbackTag");
-        if (cur.isFallbackActive) {
-          tag.classList.remove("hidden");
-          tag.innerText = `FALLBACK DARI: ${cur.path}`;
-        } else {
-          tag.classList.add("hidden");
-        }
-        if (currentModuleKey === "jadual") {
-          document.getElementById("schedServerPathText").innerText = cur.activePath;
-          document.getElementById("customServerPathInput").value = cur.path;
-          const notice = document.getElementById("schedFallbackNotice");
-          if (cur.isFallbackActive) {
-            notice.classList.remove("hidden");
-            notice.innerText = `Fallback aktif (fail "${cur.path}" tidak ditemui -> guna "${cur.activePath}")`;
-          } else {
-            notice.classList.add("hidden");
-          }
-        }
-      }
-    }
-
-    async function resolveModulePath(mod) {
-      mod.isFallbackActive = false;
-      mod.activePath = mod.path;
-
-      // Jika berjalan di pelayan HTTP/HTTPS, semak kewujudan fail utama dan fallback
-      if (window.location.protocol === "http:" || window.location.protocol === "https:") {
-        try {
-          const r1 = await fetch(mod.path, { method: "HEAD", cache: "no-store" });
-          if (r1.ok) {
-            mod.activePath = mod.path;
-            return mod;
-          }
-        } catch (e) {}
-
-        try {
-          const r2 = await fetch(mod.fallbackPath, { method: "HEAD", cache: "no-store" });
-          if (r2.ok) {
-            mod.activePath = mod.fallbackPath;
-            mod.isFallbackActive = true;
-            return mod;
-          }
-        } catch (e) {}
-      }
-      return mod;
-    }
-
-    async function applyCustomSchedulePath() {
-      const inp = document.getElementById("customServerPathInput");
-      const val = (inp.value || "").trim();
-      if (!val) {
-        showToast("Sila masukkan nama fail atau URL di pelayan.");
-        return;
-      }
-      portalModules.jadual.path = val;
-      portalModules.jadual.activePath = val;
-      portalModules.jadual.isFallbackActive = false;
-      savePortalModules();
-      await resolveModulePath(portalModules.jadual);
-      refreshPathChips();
-      showToast(`Laluan pelayan Jadual 2026 ditetapkan ke: ${portalModules.jadual.activePath}`);
-    }
-
-    function simulateFallbackPath() {
-      const mod = portalModules.jadual;
-      if (!mod.isFallbackActive) {
-        mod.isFallbackActive = true;
-        mod.activePath = mod.fallbackPath;
-        showToast(`Simulasi: "${mod.path}" tidak ditemui -> beralih ke fallback "${mod.activePath}"`);
-      } else {
-        mod.isFallbackActive = false;
-        mod.activePath = mod.path;
-        showToast(`Kembali ke laluan asal: ${mod.activePath}`);
-      }
-      refreshPathChips();
-    }
-
-    // =========================================================================
-    // 3. NAVIGASI ANTARA PORTAL UTAMA DAN DASHBOARD BERASINGAN
-    // =========================================================================
-    async function openDashboard(key) {
-      const mod = portalModules[key];
-      if (!mod) return;
-      currentModuleKey = key;
-      await resolveModulePath(mod);
+    function openDashboard(key) {
+      const meta = MODULE_META[key];
+      if (!meta) return;
 
       document.getElementById("landingPage").style.display = "none";
       document.getElementById("topNav").style.display = "flex";
-      document.getElementById("navTitle").innerHTML = mod.title;
+      document.getElementById("navTitle").innerHTML = meta.title;
+      document.getElementById("navSubtitle").innerText = meta.subtitle;
 
       ["kpi", "mesyuarat", "dokumen", "galeri", "jadual"].forEach(k => {
         const el = document.getElementById("btnNav" + k.charAt(0).toUpperCase() + k.slice(1));
@@ -1052,8 +829,6 @@
         else activeBtn.className = "btn-nav active";
       }
 
-      refreshPathChips();
-
       if (key === "jadual") {
         document.getElementById("iframeStage").style.display = "none";
         document.getElementById("moduleIframe").src = "";
@@ -1062,22 +837,20 @@
       } else {
         document.getElementById("scheduleStage").style.display = "none";
         document.getElementById("iframeStage").style.display = "block";
-        document.getElementById("moduleIframe").src = mod.activePath;
+        document.getElementById("moduleIframe").src = meta.src;
       }
     }
 
     function goHome() {
-      currentModuleKey = null;
       document.getElementById("landingPage").style.display = "flex";
       document.getElementById("topNav").style.display = "none";
       document.getElementById("scheduleStage").style.display = "none";
       document.getElementById("iframeStage").style.display = "none";
       document.getElementById("moduleIframe").src = "";
-      refreshPathChips();
     }
 
     // =========================================================================
-    // 4. LOGIK PENUH DASHBOARD JADUAL PELAKSANAAN 2026
+    // 3. LOGIK PENUH DASHBOARD JADUAL PELAKSANAAN 2026
     // =========================================================================
     const SCHED_DATA_KEY = "dofs_jadual_pelaksanaan_2026_v2";
     const SCHED_THEME_KEY = "dofs_jadual_theme_v2";
@@ -1279,7 +1052,6 @@
         ? `<i class="fa-solid fa-bell mr-1"></i> Aktiviti Akan Datang: <strong>${escapeHtml(nextAct.tajuk)}</strong> (${nextAct.kemajuan ?? 0}% kemajuan) • ${escapeHtml(nextAct.tarikhPenuh)}`
         : `<i class="fa-solid fa-circle-check mr-1"></i> Semua aktiviti dalam jadual 2026 telah selesai dilaksanakan.`;
 
-      // Suku S1 - S4
       const quarters = [
         { code: "S1", label: "Suku 1 (Jan–Mac)" },
         { code: "S2", label: "Suku 2 (Apr–Jun)" },
@@ -1306,7 +1078,6 @@
         `;
       }).join("");
 
-      // Kategori dropdown & pills
       const categories = [...new Set(scheduleList.map(i => (i.kategori || "UMUM").trim()).filter(Boolean))];
       const catSelect = document.getElementById("scheduleCategorySelect");
       catSelect.innerHTML = `<option value="SEMUA_KATEGORI">Semua Kategori</option>` +
@@ -1374,7 +1145,6 @@
                   ${alertBadge}
                 </div>
 
-                <!-- Kemajuan Interaktif Pantas (Slider) -->
                 <div class="flex items-center gap-2.5 my-2 max-w-md">
                   <input
                     type="range"
@@ -1706,7 +1476,7 @@
     }
 
     // =========================================================================
-    // 5. UTILITI, BUNYI, EFEK 3D & PARTIKEL
+    // 4. UTILITI, BUNYI, EFEK 3D & PARTIKEL
     // =========================================================================
     function showToast(msg) {
       const el = document.getElementById("portalToast");
@@ -1812,7 +1582,6 @@
     }
 
     window.onload = function () {
-      refreshPathChips();
       animate();
     };
   </script>
